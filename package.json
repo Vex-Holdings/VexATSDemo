@@ -1,0 +1,28 @@
+{
+  "name": "vexatsdemo",
+  "version": "1.0.0",
+  "description": "ATS and TA Demo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vex-Holdings/VexATSDemo.git"
+  },
+  "author": "John Crossman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vex-Holdings/VexATSDemo/issues"
+  },
+  "homepage": "https://github.com/Vex-Holdings/VexATSDemo#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "connect-pg-simple": "^7.0.0",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "mustache-express": "^1.3.2",
+    "pg-promise": "^10.11.1"
+  }
+}
