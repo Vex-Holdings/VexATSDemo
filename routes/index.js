@@ -7,4 +7,12 @@ router.get('/',(req,res) => {
     res.render('start')
 });
 
+router.get('/atsportal',(req,res) => {
+    res.render('atsportal')
+});
+
+router.get('/taportal',(req,res) => {
+    res.render('taportal')
+});
+
 module.exports = router;
