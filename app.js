@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const pgp = require('pg-promise')();
 const session = require('express-session');
 const path = require('path');
-const checkAuthorization = required('./utils/authorization');
+// const checkAuthorization = required('./utils/authorization');
 
 const userRoutes = require('./routes/users');
 const indexRoutes = require('./routes/index');
@@ -38,7 +38,7 @@ db = pgp(CONNECTION_STRING);
 
 // set up a middleware for routes
 app.use('/',indexRoutes);
-app.use('/users',checkAuthorization,userRoutes);
+// app.use('/users',checkAuthorization,userRoutes);
 
 app.listen(PORT,() => {
     console.log(`Server has started on ${PORT}`)
