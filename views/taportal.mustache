@@ -10,6 +10,45 @@
         <h1>TA Portal</h1>
         <p>This will be a "control panel" to access the various elements of the TA program.
         </p>
+        <h2>User types</h2>
+        <div class=row>
+            <div class=col>
+                Flux Registry<br>Managers and employees of the Transfer Agent
+            </div>
+            <div class=col>
+                Issuers<br>Representative(s) of the Issuing company who has authorization to make changes to the Control Book
+            </div>
+            <div class=col>
+                Account Holders<br>Holders of CUTE certificates
+            </div>
+            <div class=col>
+                SEC Audit<br>Representatives of the SEC who are authorized to audit the system.
+            </div>
+        </div>
+        <h2>Database Tables</h2>
+        <div class=row>
+            <div class=col>
+                Control Book<br>The control book authorizes the number of certificates. While changes can be proposed by either Flux managers or the Issuing company, changes only go into effect on the Issuer's confirmation.
+            </div>
+            <div class=col>
+                Master Security Holders File<br>The MSHF is contains the registered certificates. Registered certificates are held in the name of the Account Holder.
+            </div>
+            <div class=col>
+                TA Account Holders<br>This contains the name and pertinant details of each account holder who is eligible to be recorded as the holder of a registered certificate in the MSHF.
+            </div>
+            <div class=col>
+                Cash Balances<br>Any cash balances or movements of those balances that are being held pending settlement of COD instructions or other Corporate Actions (ie. dividend payments) will be recorded here.
+            </div>
+            <div class=col>
+                Queries<br>All queries and responses will be contained in this database along with timestamps to show when they were received and responded to.
+            </div>
+            <div class=col>
+                Consideration on Demand Transfers<br>Account holders will have the right to propose COD transfers of certificates. All proposals, completions and incompletions will be recorded here.
+            </div>
+            <div class=col>
+                Change Log<br>All changes to the overall database along with the identity of the participant responsible for the change shall be located here for audit purposes.
+            </div>
+        </div>
     </div>
 {{> footer}}
 </body>
