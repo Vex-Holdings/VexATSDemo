@@ -6,28 +6,18 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                {{^authenticated}}
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Register</a>
                 </li>
-                {{/authenticated}}
                 <li class="nav-item">
                     <a class="nav-link" href="/">Back to Start Page</a>
-                </li>
-                {{#authenticated}}
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/add-article">Add Article</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/articles">My Articles</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
-                {{/authenticated}}
             </ul>
         </div>
     </div>
