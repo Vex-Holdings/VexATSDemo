@@ -15,4 +15,8 @@ router.get('/taportal',(req,res) => {
     res.render('taportal')
 });
 
+router.get('/register',(req,res) => {
+    res.render('register')
+})
+
 module.exports = router;

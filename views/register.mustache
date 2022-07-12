@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{> header}}
+<title>ATS Portal</title>
+</head>
+
+<body>
+    <div class="container">
+        {{> menu}}
+        <form action="#" method="post">
+            <hr />
+            <table>
+                <tr><th>Contact Information:</th></tr>
+                <tr><td><label for = "contacttitle">Name:</label></td>
+                    <td><select id="contacttitle" name="contacttitle">
+                            <option value="Mr.">Mr.</option>
+                            <option value="Ms.">Ms.</option>
+                            <option value="Mrs.">Mrs.</option>
+                            <option value="Miss">Miss</option>
+                            <option value="Dr.">Dr.</option>
+                        </select>
+                        <input required type="text" id="contactfirstname" name="contactfirstname" pattern="^[a-zA-Z][a-zA-Z0-9-_\.']{1,25}$" placeholder="first name">
+                        <input required type="text" id="contactlastname" name="contactlastname" pattern="^[a-zA-Z][a-zA-Z0-9-_\.']{1,35}$" placeholder="last name"></td></tr>
+                <tr><td><label for="contactprefphone">Phone:</label></td>
+                    <td><select required id="contactprefphone" name="contactprefphone">
+                            <option value="Mobile">Mobile Phone</option>
+                            <option value="Office">Office Phone</option>
+                            <option value="Home">Home Phone</option>
+                        </select>
+                        <input required type="text" id="contacttelnum" name="contacttelnum" placeholder="telephone number"></td></tr>
+                <tr><td><label for="contactemail">Email:</label></td>
+                    <td><input type="email" id="contactemail" name="contactemail" required placeholder="name@company.com"></td></tr>
+            </table>
+            <hr />
+            <table>
+                <tr><th>Account Type:</th></tr>
+                <tr><td><input type="radio" checked id="accounttype1" name="accounttype" value="Individual" onclick="changeButtonText('Next: Personal Details')"/><label for="accounttype1">Individual</label></td>
+                    <td>| <span title="A taxable account in one's own name.">Description</span></td>
+                    <td>| <span title="Drivers License and/or Passport">Documents and Information</span></td></tr>
+                <tr><td><input type="radio" id="accounttype2" name="accounttype" value="Joint" onclick="changeButtonText('Next: Personal Details')"/><label for="accounttype2">Joint</label></td>
+                    <td>| <span title="An account where two people, typically spouses, have joint ownership of the assets.">Description</span></td>
+                    <td>| <span title="Drivers License and/or Passport">Documents and Information</span></td></tr>
+                <tr><td><input type="radio" id="accounttype3" name="accounttype" value="Corporate" onclick="changeButtonText('Next: Corporate Details')"/><label for="accounttype3">Corporate</label></td>
+                    <td>| <span title="Designed for family offices and non-financial services companies.">Description</span></td>
+                    <td>| <span title="Drivers License and/or Passport for Directors, Corporate Resolution">Documents and Information</span></td></tr>
+                <tr><td><input type="radio" id="accounttype4" name="accounttype" value="TrustInd" onclick="changeButtonText('Next: Trust Details')"/><label for="accounttype4">Trust - Individual Trustee</label></td>
+                    <td>| <span title="Typically Self Managed Super Funds and Family Trusts where the trustee(s) is/are individual(s).">Description</span></td>
+                    <td>| <span title="Drivers License and/or Passport for Trustees, Trust Deed">Documents and Information</span></td></tr>
+                <tr><td><input type="radio" id="accounttype5" name="accounttype" value="TrustCorp" onclick="changeButtonText('Next: Trust Details')"/><label for="accounttype5">Trust - Corporate Trustee</label></td>
+                    <td>| <span title="Typically Self Managed Super Funds and Family Trusts where the trustee is a corporate entity.">Description</span></td>
+                    <td>| <span title="Corporate Resolution for Trustee, Trust Deed">Documents and Information</span></td></tr>
+            </table>	
+	        <input type="submit" id="submitbutton" class="buttoncolor" value="Next: Personal Details" />
+        </form>
+        <hr />
+        <p>Note: The information collected in this form will be used exclusively for the purposes of registering, logging into and accessing an account at Vex Securities. In order to use the ATS to trade CUTEs, you will need to have a separate account at Flux Registry LLC in order to initiate and settle trades. By opening an account at Vex Securities, you agree that information may be shared with Flux Registry for the purpose of initiating trades and settlement of those trades. You will be asked to confirm your agreement with a check box when placing orders each time.</p>
+        <p>Other important information is contained in our Legal Disclaimer and Privacy Policies documents.</p>
+        <hr />
+    </div>
+{{> footer}}
+</body>
+</html>
