@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- From header.mustache file -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/site.css">
+    <!-- end header.mustache file -->
+    <title>Registration</title>
+</head>
+<body>
+    <div class="container">
+    <!-- from menu.mustache file-->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Vex Demo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Back to Start Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- end menu.mustache file-->
+    <h1>ATS Demo - Register as a User Page</h1>
+    <!-- from register.mustache file -->
+    <form action="personal.html" method="post" name="register-action" id="register-action">
+        <hr />
+        <h2>Contact Information:</h2>
+        <div class="row">
+            <div class="col-2">
+                <label for="contactTitle" class="form-label">Title</label>
+                <select class="form-select" aria-label="Default select" id="contactTitle">
+                    <option selected="">Select</option>
+                    <option value="Mr.">Mr.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Miss">Miss</option>
+                    <option value="Dr.">Dr.</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <label for="contactFirstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" id="contactFirstname">
+            </div>
+            <div class="col-6">
+                <label for="contactLastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" id="contactLastname">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label for="contactPrefPhone" class="form-label">Phone Type</label>
+                <select class="form-select" aria-label="Default select" id="contactPrefPhone">
+                    <option selected="">Select</option>
+                    <option value="Mobile">Mobile Phone</option>
+                    <option value="Office">Office Phone</option>
+                    <option value="Home">Home Phone</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <label for="contactPhoneNumber" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" placeholder="Format: 123-456-7890" id="contactPhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label for="contactEmail" class="form-label">Email Address</label>
+                <input type="email" class="form-control" placeholder="Enter your email" id="contactEmail">
+            </div>
+        </div>
+        <hr />
+        <h2>Account Type:</h2>
+        <div class="form-check">
+            <label class="form-check-label" for="accounttype1">Personal - Individual, JTWROS, Joint Tenants</label>
+            <input type="radio" class="form-check-input" checked id="accounttype1" name="accounttype" value="Personal" onclick="changeButtonText('Next: Personal Details')">
+        </div>
+        <div class="form-check">
+            <label class="form-check-label" for="accounttype2">Corporate - Corp, LLC</label>
+            <input type="radio" class="form-check-input" id="accounttype2" name="accounttype" value="Corporate" onclick="changeButtonText('Next: Corporate Details')">
+        </div>
+        <input type="submit" id="submitbutton" class="btn btn-primary" value="Next: Personal Details" />
+    </form>
+    <div id="personalbutton">
+        <a href="personal.html"><button  type="button" class="btn btn-secondary">Personal</button></a> <span class="mark"><-- Click this one instead</span>, because we are not quite ready to really submit things.
+    </div>
+    <div id="corporatebutton">
+        <a href="corporate.html"><button type="button" class="btn btn-secondary">Corporate</button></a> <span class="mark"><-- Click this one instead</span>, because we are not quite ready to really submit things.
+    </div>
+    <hr />
+    <p>Note: The information collected in this form will be used exclusively for the purposes of registering, logging into and accessing an account at Vex Securities. In order to use the ATS to trade CUTEs, you will need to have a separate account at Flux Registry LLC in order to initiate and settle trades. By opening an account at Vex Securities, you agree that information may be shared with Flux Registry for the purpose of initiating trades and settlement of those trades. You will be asked to confirm your agreement with a check box when placing orders each time.</p>
+    <p>Other important information is contained in our Legal Disclaimer and Privacy Policies documents.</p>
+    <hr />
+
+    <!-- end register.mustache file -->
+    </div>
+    <!-- from footer.mustache file -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <!-- end footer.mustache file -->
+    <script src="script.js"></script>
+</body>
+</html>
