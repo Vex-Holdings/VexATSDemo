@@ -40,6 +40,39 @@
     <!-- from menu.mustache file-->
     <h1>ATS Demo Asset Pages</h1>
     <p>Because it is easier to knock it up in HTML first before transferring to Node.js</p>
+    <h2>Demo Flow</h2>
+    <ol>
+        <li>Market Summary Page - Public facing showing quote wall</li>
+        <li>Register - collect basic contact info to build Magic login</li>
+        <li>B/D Account Application
+            <ul>
+                <li>Personal Accredited</li>
+                <li>Corporate, LLC</li>
+            </ul>
+        </li>
+        <li>Link to Transfer Agent
+            <ul>
+                <li>Set up link to existing account</li>
+                <li>or, agree to send over info to set up an account</li>
+            </ul>
+        </li>
+        <li>Order Form with COD setup</li>
+        <li>Order entry into the book</li>
+        <li>Order match</li>
+        <li>Match reported to clients</li>
+        <li>Match reported to Transfer Agent</li>
+        <li>Transfer Agent checks match report against outstanding COD instructions
+            <ul>
+                <li>if no good, DK settlement back to the ATS</li>
+                <li>if good, execute on COD instructions</li>
+                <li>debit and credit certificates on MSHF</li>
+                <li>transfer money to seller</li>
+                <li>report partial/whole completion of COD instructions</li>
+                <li>report transfer complete on match report to ATS</li>
+            </ul>
+        </li>
+        <li>ATS receives settlement report from Transfer Agent</li>
+    </ol>
     </div>
     <!-- from footer.mustache file -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
