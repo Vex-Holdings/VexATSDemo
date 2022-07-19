@@ -771,9 +771,163 @@
                 </div>
             </div>
         </div>
+        <br>
         <div class="row">
             <div class="col-8">
-                
+                <p>If the global stock markets declines 10% in a month, what would you do?</p>
+                <div class="form-check form-check-inline">
+                    <label for="sellall" class="form-check-label">Sell all investments</label>
+                    <input type="radio" class="form-check-input" name="risktolerance" id="sellall" value="sellall">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="sellsome" class="form-check-label">Sell some of my investments</label>
+                    <input type="radio" class="form-check-input" name="risktolerance" id="sellsome" value="sellsome">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="holdbuy" class="form-check-label">Keep all and buy more</label>
+                    <input type="radio" class="form-check-input" name="risktolerance" id="holdbuy" value="holdbuy">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-8">
+                <p>How long to you plan to invest your money?</p>
+                <div class="form-check form-check-inline">
+                    <label for="short" class="form-check-label">Less than 4 years</label>
+                    <input type="radio" class="form-check-input" name="timehorizon" id="short" value="short">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="medium" class="form-check-label">Between 4 and 7 years</label>
+                    <input type="radio" class="form-check-input" name="timehorizon" id="medium" value="medium">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="long" class="form-check-label">Longer than 7 years</label>
+                    <input type="radio" class="form-check-input" name="timehorizon" id="long" value="long">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-8">
+                <p>How important is liquidity to you?</p>
+                <div class="form-check form-check-inline">
+                    <label for="notliquid" class="form-check-label">Not important</label>
+                    <input type="radio" class="form-check-input" name="liquidity" id="notliquid" value="notliquid">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="someliquid" class="form-check-label">Somewhat important</label>
+                    <input type="radio" class="form-check-input" name="liquidity" id="someliquid" value="someliquid">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="liquid" class="form-check-label">Very important</label>
+                    <input type="radio" class="form-check-input" name="liquidity" id="liquid" value="liquid">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <p>Annual Income (from all sources)</p>
+                <div class="form-check form-check-inline">
+                    <label for="25k" class="form-check-label">$25,000 and under</label>
+                    <input type="radio" class="form-check-input" id="25k" name="income" value="25000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="50k" class="form-check-label">$25,001 to $50,000</label>
+                    <input type="radio" class="form-check-input" id="50k" name="income" value="50000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="100k" class="form-check-label">$50,001 to $100,000</label>
+                    <input type="radio" class="form-check-input" id="100k" name="income" value="100000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="250k" class="form-check-label">$100,001 to $250,000</label>
+                    <input type="radio" class="form-check-input" id="250k" name="income" value="250000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="500k" class="form-check-label">$250,001 to $500,000</label>
+                    <input type="radio" class="form-check-input" id="500k" name="income" value="500000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="500kplus" class="form-check-label">Over $500,000</label>
+                    <input type="radio" class="form-check-input" id="500kplus" name="income" value="500000p">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <p>Net Worth (excluding primary residence)</p>
+                <div class="form-check form-check-inline">
+                    <label for="25k" class="form-check-label">$25,000 and under</label>
+                    <input type="radio" class="form-check-input" name="networth" id="25k" value="25000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="50k" class="form-check-label">$25,001 to $50,000</label>
+                    <input type="radio" class="form-check-input" id="50k" name="networth" value="50000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="200k" class="form-check-label">$50,001 to $200,000</label>
+                    <input type="radio" class="form-check-input" id="200k" name="networth" value="200000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="500k" class="form-check-label">$200,001 to $500,000</label>
+                    <input type="radio" class="form-check-input" id="500k" name="networth" value="500000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="1m" class="form-check-label">$500,001 to $1,000,000</label>
+                    <input type="radio" class="form-check-input" id="1m" name="networth" value="1000000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="3m" class="form-check-label">$1,000,001 to $3,000,000</label>
+                    <input type="radio" class="form-check-input" id="3m" name="networth" value="3000000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="3mplus" class="form-check-label">Over $3,000,000</label>
+                    <input type="radio" class="form-check-input" id="3mplus" name="networth" value="3000000p">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h2>Tax Certification</h2>
+        <p>Please check the box that applies, sign and date below.</p>
+        <div class="row">
+            <div class="col-2">
+                <p>Primary Applicant</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <div class="form-check">
+                    <input type="radio" name="taxstatus" id="w9" value="w9">
+                </div>
+            </div>
+            <div class="col-8">
+                <p><strong>U.S. Person:</strong> Under penalty of perjury, I certify that: (1) I am a U.S. citizen, U.S. resident alien or other U.S. person, and the Social Security Number or Taxpayer Identification Number provided in this Form is correct (or I am waiting for a number to be issued to me); and (2) I am not subject to backup withholding because: (a) I am exempt from backup withholding; or (b) I have not been notified by the Internal Revenue Service (IRS) that I am subject to backup withholding as a result of a failure to report all interest or dividends; or (c) the IRS has notified me that I am no longer subject to backup withholding.  
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <div class="form-check">
+                    <input type="radio" name="taxstatus" id="w9a" value="w9a">
+                </div>
+            </div>
+            <div class="col-8">
+                <p><strong>Certification Instructions:</strong> You must check this box if you cannot certify to item (2) above, meaning that you have been notified by the IRS that you are currently subject to backup withholding because you have failed to report all interest and dividends on your tax return.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <div class="form-check">
+                    <input type="radio" name="taxstatus" id="w8" value="w8">
+                </div>
+            </div>
+            <div class="col-8">
+                <p><strong>Non-Resident Alien:</strong> I certify that I am not a U.S. citizen, U.S. resident alien, or other U.S. person for U.S. tax purposes, and I am submitting the applicable Form W-8 with this form to certify my foreign status and, if applicable, claim tax treaty benefits.
+                </p>
             </div>
         </div>
         <hr>
