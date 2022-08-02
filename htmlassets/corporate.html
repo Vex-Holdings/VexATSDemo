@@ -103,29 +103,29 @@
                     <input type="radio" class="form-check-input" id="divorced" name="corptype" value="other">
                 </div>
                 <div class="form-check form-check-inline">
-                    <input type="text" class="form-control" placeholder="Other Corporation Type" id="othercorptype">
+                    <input type="text" class="form-control" placeholder="Other Corporation Type" id="othercorptype" name="othercorptype">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Legal Corporate Name" id="corpname">
+                <input type="text" class="form-control" placeholder="Legal Corporate Name" id="corpname" name="corpname">
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <input type="text" class="form-control" placeholder="Corporate Address" id="corpaddress">
+                <input type="text" class="form-control" placeholder="Corporate Address" id="corpaddress" name="corpaddress">
             </div>
             <div class="col-2">
-                <input type="text" class="form-control" placeholder="Suite/Floor/Apt" id="corpsuite">
+                <input type="text" class="form-control" placeholder="Suite/Floor/Apt" id="corpsuite" name="corpsuite">
             </div>
         </div>
         <div class="row">
             <div class="col-5">
-                <input type="text" class="form-control" placeholder="City/Town" id="corpcity">
+                <input type="text" class="form-control" placeholder="City/Town" id="corpcity" name="corpcity">
             </div>
             <div class="col-3">
-                <select class="form-select" aria-label="Default select" id="corpstate">
+                <select class="form-select" aria-label="Default select" id="corpstate" name="corpstate">
                     <option selected="">Select</option>
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
@@ -183,7 +183,7 @@
                 </select>
             </div>
             <div class="col-2">
-                <input type="number" class="form-control" id="corpzip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+                <input type="number" class="form-control" id="corpzip" name="corpzip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
             </div>
         </div>
         <br>
@@ -191,13 +191,13 @@
             <div class="col-6">
                 <p>Upload Business Formation Document</p>
                 <div class="input-group">
-                    <label class="input-group-text" for="file">Upload</label>
-                    <input type="file" class="form-control" id="file">
+                    <label class="input-group-text" for="bizdocfile">Upload</label>
+                    <input type="file" class="form-control" id="bizdocfile" name="bizdocfile">
                 </div>
             </div>
             <div class="col-3">
                 <p>Employer Identification Number (EIN)</p>
-                <input type="text" class="form-control" id="corptaxid" placeholder="Format: xx-xxxxxxx" pattern="^\d{2}-\d{7}$">
+                <input type="text" class="form-control" id="corptaxid" name="corptaxid" placeholder="Format: xx-xxxxxxx" pattern="^\d{2}-\d{7}$">
             </div>
         </div>
         <br>
@@ -205,8 +205,8 @@
             <div class="col-6">
                 <p>Upload Authorization to Trade (generally letter from Company Secretary)</p>
                 <div class="input-group">
-                    <label class="input-group-text" for="file1">Upload</label>
-                    <input type="file" class="form-control" id="file1">
+                    <label class="input-group-text" for="authdocfile">Upload</label>
+                    <input type="file" class="form-control" id="authdocfile" name="authdocfile">
                 </div>
             </div>
         </div>
@@ -221,15 +221,15 @@
             </div>
             <div class="col-4">
                 <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir1management">
+                    <input type="checkbox" class="form-check-input" id="corpdir1management" name="corpdir1management">
                     <label class="form-check-label" for="corpdir1management">Management</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir1director">
+                    <input type="checkbox" class="form-check-input" id="corpdir1director" name="corpdir1director">
                     <label class="form-check-label" for="corpdir1director">Director</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir1shareholder">
+                    <input type="checkbox" class="form-check-input" id="corpdir1shareholder" name="corpdir1shareholder">
                     <label class="form-check-label" for="corpdir1shareholder">Over 10%</label>
                   </div>
             </div>
@@ -243,15 +243,15 @@
             </div>
             <div class="col-4">
                 <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir2management">
+                    <input type="checkbox" class="form-check-input" id="corpdir2management" name="corpdir2management">
                     <label class="form-check-label" for="corpdir2management">Management</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir2director">
+                    <input type="checkbox" class="form-check-input" id="corpdir2director" name="corpdir2director">
                     <label class="form-check-label" for="corpdir2director">Director</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir2shareholder">
+                    <input type="checkbox" class="form-check-input" id="corpdir2shareholder" name="corpdir2shareholder">
                     <label class="form-check-label" for="corpdir2shareholder">Over 10%</label>
                   </div>
             </div>
@@ -265,15 +265,15 @@
             </div>
             <div class="col-4">
                 <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir3management">
+                    <input type="checkbox" class="form-check-input" id="corpdir3management" name="corpdir3management">
                     <label class="form-check-label" for="corpdir3management">Management</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir3director">
+                    <input type="checkbox" class="form-check-input" id="corpdir3director" name="corpdir3director">
                     <label class="form-check-label" for="corpdir3director">Director</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir3shareholder">
+                    <input type="checkbox" class="form-check-input" id="corpdir3shareholder" name="corpdir3shareholder">
                     <label class="form-check-label" for="corpdir3shareholder">Over 10%</label>
                   </div>
             </div>
@@ -287,15 +287,15 @@
             </div>
             <div class="col-4">
                 <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir4management">
+                    <input type="checkbox" class="form-check-input" id="corpdir4management" name="corpdir4management">
                     <label class="form-check-label" for="corpdir4management">Management</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir4director">
+                    <input type="checkbox" class="form-check-input" id="corpdir4director" name="corpdir4director">
                     <label class="form-check-label" for="corpdir4director">Director</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir4shareholder">
+                    <input type="checkbox" class="form-check-input" id="corpdir4shareholder" name="corpdir4shareholder">
                     <label class="form-check-label" for="corpdir4shareholder">Over 10%</label>
                   </div>
             </div>
@@ -309,15 +309,15 @@
             </div>
             <div class="col-4">
                 <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir5management">
+                    <input type="checkbox" class="form-check-input" id="corpdir5management" name="corpdir5management">
                     <label class="form-check-label" for="corpdir5management">Management</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir5director">
+                    <input type="checkbox" class="form-check-input" id="corpdir5director" name="corpdir5director">
                     <label class="form-check-label" for="corpdir5director">Director</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="corpdir5shareholder">
+                    <input type="checkbox" class="form-check-input" id="corpdir5shareholder" name="corpdir5shareholder">
                     <label class="form-check-label" for="corpdir5shareholder">Over 10%</label>
                   </div>
             </div>
@@ -328,7 +328,7 @@
         <div class="row">
             <div class="col-2">
                 <label for="auth1Title" class="form-label">Title</label>
-                <select class="form-select" aria-label="Default select" id="auth1Title">
+                <select class="form-select" aria-label="Default select" id="auth1Title" name="auth1Title">
                     <option selected="">Select</option>
                     <option value="Mr.">Mr.</option>
                     <option value="Ms.">Ms.</option>
@@ -339,18 +339,18 @@
             </div>
             <div class="col-4">
                 <label for="auth1Firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" placeholder="First Name" id="auth1Firstname">
+                <input type="text" class="form-control" placeholder="First Name" id="auth1Firstname" name="auth1Firstname">
             </div>
             <div class="col-6">
                 <label for="auth1Lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" placeholder="Last Name" id="auth1Lastname">
+                <input type="text" class="form-control" placeholder="Last Name" id="auth1Lastname" name="auth1Lastname">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-2">
                 <label for="auth1PrefPhone" class="form-label">Phone Type</label>
-                <select class="form-select" aria-label="Default select" id="auth1PrefPhone">
+                <select class="form-select" aria-label="Default select" id="auth1PrefPhone" name="auth1PrefPhone">
                     <option selected="">Select</option>
                     <option value="Mobile">Mobile Phone</option>
                     <option value="Office">Office Phone</option>
@@ -359,34 +359,34 @@
             </div>
             <div class="col-4">
                 <label for="auth1PhoneNumber" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" placeholder="Format: 123-456-7890" id="auth1PhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                <input type="tel" class="form-control" placeholder="Format: 123-456-7890" id="auth1PhoneNumber" name="auth1PhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-6">
                 <label for="auth1Email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" placeholder="Enter your email" id="auth1Email">
+                <input type="email" class="form-control" placeholder="Enter your email" id="auth1Email" name="auth1Email">
             </div>
         </div>
         <br>
         <div class="row">
             <p>Residential Address</p>
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="auth1addressline1">
+                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="auth1addressline1" name="auth1addressline1">
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="auth1addressline2">
+                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="auth1addressline2" name="auth1addressline2">
             </div>
         </div>
         <div class="row">
             <div class="col-5">
-                <input type="text" class="form-control" placeholder="City/Town" id="auth1addresscity">
+                <input type="text" class="form-control" placeholder="City/Town" id="auth1addresscity" name="auth1addresscity">
             </div>
             <div class="col-3">
-                <select class="form-select" aria-label="Default select" id="auth1addressstate">
+                <select class="form-select" aria-label="Default select" id="auth1addressstate" name="auth1addressstate">
                     <option selected="">Select</option>
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
@@ -444,18 +444,18 @@
                 </select>
             </div>
             <div class="col-2">
-                <input type="number" class="form-control" id="auth1addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+                <input type="number" class="form-control" id="auth1addresszip" name="auth1addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
             </div>  
         </div>
         <br>
         <div class="row">
             <div class="col-3">
                 <p>Date of Birth</p>
-                <input type="date" class="form-control" id="auth1dateofbirth">
+                <input type="date" class="form-control" id="auth1dateofbirth" name="auth1dateofbirth">
             </div>
             <div class="col-3">
                 <p>Country of Citizenship</p>
-                <select id="auth1citizenship" class="form-select">
+                <select id="auth1citizenship" name="auth1citizenship" class="form-select">
                     <option selected="US">United States</option>
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Aland Islands</option>
@@ -710,11 +710,11 @@
             <div class="col-3">
                 <p>Social Security Number (or ITIN)</p>
                 <div class="input-group">
-                    <select id="auth1taxidtype" class="form-select">
+                    <select id="auth1taxidtype" name="auth1taxidtype" class="form-select">
                         <option value="ssn">SSN</option>
                         <option value="itin">ITIN</option>
                     </select>
-                    <input type="text" class="form-control" id="auth1taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
+                    <input type="text" class="form-control" id="auth1taxidnumber" name="auth1taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
                 </div>
             </div>
         </div>
@@ -724,39 +724,39 @@
                 <p>Identification Document</p>
                 <div class="form-check form-check-inline">
                     <label for="auth1driverslicense" class="form-check-label">Driver's License</label>
-                    <input type="radio" class="form-check-input" id="auth1driverslicense" name="identitydocument" value="driverslicense">
+                    <input type="radio" class="form-check-input" id="auth1driverslicense" name="auth1identitydocument" value="driverslicense">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth1passport" class="form-check-label">Passport</label>
-                    <input type="radio" class="form-check-input" id="auth1passport" name="identitydocument" value="passport">
+                    <input type="radio" class="form-check-input" id="auth1passport" name="auth1identitydocument" value="passport">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth1stateid" class="form-check-label">State ID</label>
-                    <input type="radio" class="form-check-input" id="auth1stateid" name="identitydocument" value="stateid">
+                    <input type="radio" class="form-check-input" id="auth1stateid" name="auth1identitydocument" value="stateid">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth1othergovtid" class="form-check-label">Other Goverment-issued ID</label>
-                    <input type="radio" class="form-check-input" id="auth1othergovtid" name="identitydocument" value="othergovtid">
+                    <input type="radio" class="form-check-input" id="auth1othergovtid" name="auth1identitydocument" value="othergovtid">
                 </div>
             </div>
             <div class="col-4">
                 <p>State/Country of Issuance</p>
-                <input type="text" class="form-control" placeholder="Enter Here" id="auth1identityissuer">
+                <input type="text" class="form-control" placeholder="Enter Here" id="auth1identityissuer" name="auth1identityissuer">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-3">
                 <p>ID Number</p>
-                <input type="text" class="form-control" placeholder="Enter here" id="auth1identityidnumber">
+                <input type="text" class="form-control" placeholder="Enter here" id="auth1identityidnumber" name="auth1identityidnumber">
             </div>
             <div class="col-3">
                 <p>Issued Date</p>
-                <input type="date" class="form-control" id="auth1identityissuedate">
+                <input type="date" class="form-control" id="auth1identityissuedate" name="auth1identityissuedate">
             </div>
             <div class="col-3">
                 <p>Expiration Date</p>
-                <input type="date" class="form-control" id="auth1identityexpiredate">
+                <input type="date" class="form-control" id="auth1identityexpiredate" name="auth1identityexpiredate">
             </div>
         </div>
         <hr>
@@ -768,7 +768,7 @@
         <div class="row">
             <div class="col-2">
                 <label for="auth2Title" class="form-label">Title</label>
-                <select class="form-select" aria-label="Default select" id="auth2Title">
+                <select class="form-select" aria-label="Default select" id="auth2Title" name="auth2Title">
                     <option selected="">Select</option>
                     <option value="Mr.">Mr.</option>
                     <option value="Ms.">Ms.</option>
@@ -779,18 +779,18 @@
             </div>
             <div class="col-4">
                 <label for="auth2Firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" placeholder="First Name" id="auth2Firstname">
+                <input type="text" class="form-control" placeholder="First Name" id="auth2Firstname" name="auth2Firstname">
             </div>
             <div class="col-6">
                 <label for="auth2Lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" placeholder="Last Name" id="auth2Lastname">
+                <input type="text" class="form-control" placeholder="Last Name" id="auth2Lastname" name="auth2Lastname">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-2">
                 <label for="auth2PrefPhone" class="form-label">Phone Type</label>
-                <select class="form-select" aria-label="Default select" id="auth2PrefPhone">
+                <select class="form-select" aria-label="Default select" id="auth2PrefPhone" name="auth2PrefPhone">
                     <option selected="">Select</option>
                     <option value="Mobile">Mobile Phone</option>
                     <option value="Office">Office Phone</option>
@@ -799,34 +799,34 @@
             </div>
             <div class="col-4">
                 <label for="auth2PhoneNumber" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" placeholder="Format: 123-456-7890" id="auth2PhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                <input type="tel" class="form-control" placeholder="Format: 123-456-7890" id="auth2PhoneNumber" name="auth2PhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-6">
                 <label for="auth2Email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" placeholder="Enter your email" id="auth2Email">
+                <input type="email" class="form-control" placeholder="Enter your email" id="auth2Email" name="auth2Email">
             </div>
         </div>
         <br>
         <div class="row">
             <p>Residential Address</p>
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="auth1addressline1">
+                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="auth2addressline1" name="auth2addressline1">
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="auth1addressline2">
+                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="auth2addressline2" name="auth2addressline2">
             </div>
         </div>
         <div class="row">
             <div class="col-5">
-                <input type="text" class="form-control" placeholder="City/Town" id="auth1addresscity">
+                <input type="text" class="form-control" placeholder="City/Town" id="auth2addresscity" name="auth2addresscity">
             </div>
             <div class="col-3">
-                <select class="form-select" aria-label="Default select" id="auth1addressstate">
+                <select class="form-select" aria-label="Default select" id="auth2addressstate" name="auth2addressstate">
                     <option selected="">Select</option>
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
@@ -884,18 +884,18 @@
                 </select>
             </div>
             <div class="col-2">
-                <input type="number" class="form-control" id="auth2addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+                <input type="number" class="form-control" id="auth2addresszip" name="auth2addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
             </div>  
         </div>
         <br>
         <div class="row">
             <div class="col-3">
                 <p>Date of Birth</p>
-                <input type="date" class="form-control" id="auth2dateofbirth">
+                <input type="date" class="form-control" id="auth2dateofbirth" name="auth2dateofbirth">
             </div>
             <div class="col-3">
                 <p>Country of Citizenship</p>
-                <select id="auth2citizenship" class="form-select">
+                <select id="auth2citizenship" name="auth2citizenship" class="form-select">
                     <option selected="US">United States</option>
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Aland Islands</option>
@@ -1150,11 +1150,11 @@
             <div class="col-3">
                 <p>Social Security Number (or ITIN)</p>
                 <div class="input-group">
-                    <select id="auth2taxidtype" class="form-select">
+                    <select id="auth2taxidtype" name="auth2taxidtype" class="form-select">
                         <option value="ssn">SSN</option>
                         <option value="itin">ITIN</option>
                     </select>
-                    <input type="text" class="form-control" id="auth2taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
+                    <input type="text" class="form-control" id="auth2taxidnumber" name="auth2taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
                 </div>
             </div>
         </div>
@@ -1164,39 +1164,39 @@
                 <p>Identification Document</p>
                 <div class="form-check form-check-inline">
                     <label for="auth2driverslicense" class="form-check-label">Driver's License</label>
-                    <input type="radio" class="form-check-input" id="auth2driverslicense" name="identitydocument" value="driverslicense">
+                    <input type="radio" class="form-check-input" id="auth2driverslicense" name="auth2identitydocument" value="driverslicense">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth2passport" class="form-check-label">Passport</label>
-                    <input type="radio" class="form-check-input" id="auth2passport" name="identitydocument" value="passport">
+                    <input type="radio" class="form-check-input" id="auth2passport" name="auth2identitydocument" value="passport">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth2stateid" class="form-check-label">State ID</label>
-                    <input type="radio" class="form-check-input" id="auth2stateid" name="identitydocument" value="stateid">
+                    <input type="radio" class="form-check-input" id="auth2stateid" name="auth2identitydocument" value="stateid">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth2othergovtid" class="form-check-label">Other Goverment-issued ID</label>
-                    <input type="radio" class="form-check-input" id="auth2othergovtid" name="identitydocument" value="othergovtid">
+                    <input type="radio" class="form-check-input" id="auth2othergovtid" name="auth2identitydocument" value="othergovtid">
                 </div>
             </div>
             <div class="col-4">
                 <p>State/Country of Issuance</p>
-                <input type="text" class="form-control" placeholder="Enter Here" id="auth2identityissuer">
+                <input type="text" class="form-control" placeholder="Enter Here" id="auth2identityissuer" name="auth2identityissuer">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-3">
                 <p>ID Number</p>
-                <input type="text" class="form-control" placeholder="Enter here" id="auth2identityidnumber">
+                <input type="text" class="form-control" placeholder="Enter here" id="auth2identityidnumber" name="auth2identityidnumber">
             </div>
             <div class="col-3">
                 <p>Issued Date</p>
-                <input type="date" class="form-control" id="auth2identityissuedate">
+                <input type="date" class="form-control" id="auth2identityissuedate" name="auth2identityissuedate">
             </div>
             <div class="col-3">
                 <p>Expiration Date</p>
-                <input type="date" class="form-control" id="auth2identityexpiredate">
+                <input type="date" class="form-control" id="auth2identityexpiredate" name="auth2identityexpiredate">
             </div>
         </div>
         <hr>
@@ -1208,7 +1208,7 @@
         <div class="row">
             <div class="col-2">
                 <label for="auth3Title" class="form-label">Title</label>
-                <select class="form-select" aria-label="Default select" id="auth3Title">
+                <select class="form-select" aria-label="Default select" id="auth3Title" name="auth3Title">
                     <option selected="">Select</option>
                     <option value="Mr.">Mr.</option>
                     <option value="Ms.">Ms.</option>
@@ -1219,18 +1219,18 @@
             </div>
             <div class="col-4">
                 <label for="auth3Firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" placeholder="First Name" id="auth3Firstname">
+                <input type="text" class="form-control" placeholder="First Name" id="auth3Firstname" name="auth3Firstname">
             </div>
             <div class="col-6">
                 <label for="auth3Lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" placeholder="Last Name" id="auth3Lastname">
+                <input type="text" class="form-control" placeholder="Last Name" id="auth3Lastname" name="auth3Lastname">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-2">
                 <label for="auth3PrefPhone" class="form-label">Phone Type</label>
-                <select class="form-select" aria-label="Default select" id="auth3PrefPhone">
+                <select class="form-select" aria-label="Default select" id="auth3PrefPhone" name="auth3PrefPhone">
                     <option selected="">Select</option>
                     <option value="Mobile">Mobile Phone</option>
                     <option value="Office">Office Phone</option>
@@ -1239,34 +1239,34 @@
             </div>
             <div class="col-4">
                 <label for="auth3PhoneNumber" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" placeholder="Format: 123-456-7890" id="auth3PhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                <input type="tel" class="form-control" placeholder="Format: 123-456-7890" id="auth3PhoneNumber" name="auth3PhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-6">
                 <label for="auth3Email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" placeholder="Enter your email" id="auth3Email">
+                <input type="email" class="form-control" placeholder="Enter your email" id="auth3Email" name="auth3Email">
             </div>
         </div>
         <br>
         <div class="row">
             <p>Residential Address</p>
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="auth3addressline1">
+                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="auth3addressline1" name="auth3addressline1">
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="auth3addressline2">
+                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="auth3addressline2" name="auth3addressline2">
             </div>
         </div>
         <div class="row">
             <div class="col-5">
-                <input type="text" class="form-control" placeholder="City/Town" id="auth3addresscity">
+                <input type="text" class="form-control" placeholder="City/Town" id="auth3addresscity" name="auth3addresscity">
             </div>
             <div class="col-3">
-                <select class="form-select" aria-label="Default select" id="auth3addressstate">
+                <select class="form-select" aria-label="Default select" id="auth3addressstate" name="auth3addressstate">
                     <option selected="">Select</option>
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
@@ -1324,18 +1324,18 @@
                 </select>
             </div>
             <div class="col-2">
-                <input type="number" class="form-control" id="auth3addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+                <input type="number" class="form-control" id="auth3addresszip" name="auth3addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
             </div>  
         </div>
         <br>
         <div class="row">
             <div class="col-3">
                 <p>Date of Birth</p>
-                <input type="date" class="form-control" id="auth3dateofbirth">
+                <input type="date" class="form-control" id="auth3dateofbirth" name="auth3dateofbirth">
             </div>
             <div class="col-3">
                 <p>Country of Citizenship</p>
-                <select id="auth3citizenship" class="form-select">
+                <select id="auth3citizenship" name="auth3citizenship" class="form-select">
                     <option selected="US">United States</option>
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Aland Islands</option>
@@ -1590,11 +1590,11 @@
             <div class="col-3">
                 <p>Social Security Number (or ITIN)</p>
                 <div class="input-group">
-                    <select id="auth3taxidtype" class="form-select">
+                    <select id="auth3taxidtype" name="auth3taxidtype" class="form-select">
                         <option value="ssn">SSN</option>
                         <option value="itin">ITIN</option>
                     </select>
-                    <input type="text" class="form-control" id="auth3taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
+                    <input type="text" class="form-control" id="auth3taxidnumber" name="auth3taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
                 </div>
             </div>
         </div>
@@ -1604,39 +1604,39 @@
                 <p>Identification Document</p>
                 <div class="form-check form-check-inline">
                     <label for="auth3driverslicense" class="form-check-label">Driver's License</label>
-                    <input type="radio" class="form-check-input" id="auth3driverslicense" name="identitydocument" value="driverslicense">
+                    <input type="radio" class="form-check-input" id="auth3driverslicense" name="auth3identitydocument" value="driverslicense">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth3passport" class="form-check-label">Passport</label>
-                    <input type="radio" class="form-check-input" id="auth3passport" name="identitydocument" value="passport">
+                    <input type="radio" class="form-check-input" id="auth3passport" name="auth3identitydocument" value="passport">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth3stateid" class="form-check-label">State ID</label>
-                    <input type="radio" class="form-check-input" id="auth3stateid" name="identitydocument" value="stateid">
+                    <input type="radio" class="form-check-input" id="auth3stateid" name="auth3identitydocument" value="stateid">
                 </div>
                 <div class="form-check form-check-inline">
                     <label for="auth3othergovtid" class="form-check-label">Other Goverment-issued ID</label>
-                    <input type="radio" class="form-check-input" id="auth3othergovtid" name="identitydocument" value="othergovtid">
+                    <input type="radio" class="form-check-input" id="auth3othergovtid" name="auth3identitydocument" value="othergovtid">
                 </div>
             </div>
             <div class="col-4">
                 <p>State/Country of Issuance</p>
-                <input type="text" class="form-control" placeholder="Enter Here" id="auth3identityissuer">
+                <input type="text" class="form-control" placeholder="Enter Here" id="auth3identityissuer" name="auth3identityissuer">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-3">
                 <p>ID Number</p>
-                <input type="text" class="form-control" placeholder="Enter here" id="auth3identityidnumber">
+                <input type="text" class="form-control" placeholder="Enter here" id="auth3identityidnumber" name="auth3identityidnumber">
             </div>
             <div class="col-3">
                 <p>Issued Date</p>
-                <input type="date" class="form-control" id="auth3identityissuedate">
+                <input type="date" class="form-control" id="auth3identityissuedate" name="auth3identityissuedate">
             </div>
             <div class="col-3">
                 <p>Expiration Date</p>
-                <input type="date" class="form-control" id="auth3identityexpiredate">
+                <input type="date" class="form-control" id="auth3identityexpiredate" name="auth3identityexpiredate">
             </div>
         </div>
         <hr>

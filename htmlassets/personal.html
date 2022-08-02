@@ -89,20 +89,20 @@
         <h2>Primary Address</h2>
         <div class="row">
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="addressline1">
+                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="addressline1" name="addressline1">
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="addressline2">
+                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="addressline2" name="addressline2">
             </div>
         </div>
         <div class="row">
             <div class="col-5">
-                <input type="text" class="form-control" placeholder="City/Town" id="addresscity">
+                <input type="text" class="form-control" placeholder="City/Town" id="addresscity" name="addresscity">
             </div>
             <div class="col-3">
-                <select class="form-select" aria-label="Default select" id="addressstate">
+                <select class="form-select" aria-label="Default select" id="addressstate" name="addressstate">
                     <option selected="">Select</option>
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
@@ -160,7 +160,7 @@
                 </select>
             </div>
             <div class="col-2">
-                <input type="number" class="form-control" id="addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+                <input type="number" class="form-control" id="addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$" name="addresszip">
             </div>
             
         </div>
@@ -189,7 +189,7 @@
             </div>
             <div class="col-2">
                 <p>Number of Dependents</p>
-                <select id="dependants" class="form-select">
+                <select id="dependants" name="dependants" class="form-select">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -228,34 +228,34 @@
         <br>
         <div class="row">
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="Job Title" id="jobtitle">
+                <input type="text" class="form-control" placeholder="Job Title" id="jobtitle" name="jobtitle">
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="Occupation" id="occupation">
+                <input type="text" class="form-control" placeholder="Occupation" id="occupation" name="occupation">
             </div>
         </div>
         <div class="row">
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="Employer Name" id="employername">
+                <input type="text" class="form-control" placeholder="Employer Name" id="employername" name="employername">
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="Years with this Employer" id="employertime">
+                <input type="text" class="form-control" placeholder="Years with this Employer" id="employertime" name="employertime">
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <input type="text" class="form-control" placeholder="Business Address" id="employeraddress">
+                <input type="text" class="form-control" placeholder="Business Address" id="employeraddress" name="employeraddress">
             </div>
             <div class="col-2">
-                <input type="text" class="form-control" placeholder="Suite/Floor/Apt" id="employersuite">
+                <input type="text" class="form-control" placeholder="Suite/Floor/Apt" id="employersuite" name="employersuite">
             </div>
         </div>
         <div class="row">
             <div class="col-5">
-                <input type="text" class="form-control" placeholder="City/Town" id="employercity">
+                <input type="text" class="form-control" placeholder="City/Town" id="employercity" name="employercity">
             </div>
             <div class="col-3">
-                <select class="form-select" aria-label="Default select" id="employerstate">
+                <select class="form-select" aria-label="Default select" id="employerstate" name="employerstate">
                     <option selected="">Select</option>
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
@@ -313,18 +313,18 @@
                 </select>
             </div>
             <div class="col-2">
-                <input type="number" class="form-control" id="employerzip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+                <input type="number" class="form-control" id="employerzip" name="employerzip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-3">
                 <p>Date of Birth</p>
-                <input type="date" class="form-control" id="dateofbirth">
+                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth">
             </div>
             <div class="col-3">
                 <p>Country of Citizenship</p>
-                <select id="citizenship" class="form-select">
+                <select id="citizenship" name="citizenship" class="form-select">
                     <option selected="US">United States</option>
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Aland Islands</option>
@@ -579,11 +579,11 @@
             <div class="col-3">
                 <p>Social Security Number (or ITIN)</p>
                 <div class="input-group">
-                    <select id="taxidtype" class="form-select">
+                    <select id="taxidtype" name="taxidtype" class="form-select">
                         <option value="ssn">SSN</option>
                         <option value="itin">ITIN</option>
                     </select>
-                    <input type="text" class="form-control" id="taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
+                    <input type="text" class="form-control" id="taxidnumber" name="taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
                 </div>
             </div>
         </div>
@@ -610,22 +610,22 @@
             </div>
             <div class="col-4">
                 <p>State/Country of Issuance</p>
-                <input type="text" class="form-control" placeholder="Enter Here" id="identityissuer">
+                <input type="text" class="form-control" placeholder="Enter Here" id="identityissuer" name="identityissuer">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-3">
                 <p>ID Number</p>
-                <input type="text" class="form-control" placeholder="Enter here" id="identityidnumber">
+                <input type="text" class="form-control" placeholder="Enter here" id="identityidnumber" name="identityidnumber">
             </div>
             <div class="col-3">
                 <p>Issued Date</p>
-                <input type="date" class="form-control" id="identityissuedate">
+                <input type="date" class="form-control" id="identityissuedate" name="identityissuedate">
             </div>
             <div class="col-3">
                 <p>Expiration Date</p>
-                <input type="date" class="form-control" id="identityexpiredate">
+                <input type="date" class="form-control" id="identityexpiredate" name="identityexpiredate">
             </div>
         </div>
         <hr>
@@ -692,7 +692,7 @@
                     <input type="radio" class="form-check-input" id="regulator" name="associatedtype" value="regulator">
                 </div>
                 <p>(*Including a national securities exchange, registered securities association, registered clearing agency or the Municipal Securities Rulemaking Board.)</p>
-                <input type="text" class="form-control" id="associatedorganization" placeholder="Name of entity(ies)">
+                <input type="text" class="form-control" id="associatedorganization" name="associatedorganization" placeholder="Name of entity(ies)">
             </div>
         </div>
         <br>
@@ -709,7 +709,7 @@
             </div>
             <div class="col-6">
                 <p>An officer, director or 10% (or more) shareholder in a publicly-owned company?</p>
-                <input type="text" class="form-control" id="pubconame" placeholder="Name of company and symbol/ticker">
+                <input type="text" class="form-control" id="pubconame" name="pubconame" placeholder="Name of company and symbol/ticker">
             </div>
         </div>
         <br>
@@ -726,7 +726,7 @@
             </div>
             <div class="col-6">
                 <p>A senior military, governmental or political official in a non-US country?</p>
-                <input type="text" class="form-control" id="pepcountry" placeholder="Name of Country">
+                <input type="text" class="form-control" id="pepcountry" name="pepcountry" placeholder="Name of Country">
             </div>
         </div>
         <hr>
