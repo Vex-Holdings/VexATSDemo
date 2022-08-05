@@ -1,11 +1,11 @@
 
 {{> header}}
-<title>ATS Portal</title>
+<title>ATS Portal - Register Regulator, Auditor, Staff</title>
 </head>
 <body>
     <div class="container">
         {{> menu}}
-        <h1>ATS Demo - Register as Staff, Regulator or Auditor Page</h1>
+        <h1>ATS Demo - Register as Regulator, Auditor or Staff Page</h1>
         <form action="/register" method="POST">
             <div class="row">
                 <div class="col-4">
@@ -24,17 +24,17 @@
             <div class="row">
                 <div class="col-4">
                     <label for="contactFirstname" class="form-label">First Name</label>
-                    <input type="text" class="form-control" placeholder="First Name" id="contactFirstname">
+                    <input type="text" class="form-control" placeholder="First Name" name="firstname" id="contactFirstname">
                 </div>
                 <div class="col-6">
                     <label for="contactLastname" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" placeholder="Last Name" id="contactLastname">
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastname" id="contactLastname">
                 </div>
             </div>
             <div class="row">
                 <div class="col-2">
                     <label for="contactPrefPhone" class="form-label">Phone Type</label>
-                    <select class="form-select" aria-label="Default select" id="contactPrefPhone">
+                    <select class="form-select" aria-label="Default select" name="prefphone" id="contactPrefPhone">
                         <option selected="">Select</option>
                         <option value="Mobile">Mobile</option>
                         <option value="Office">Office</option>
@@ -43,13 +43,13 @@
                 </div>
                 <div class="col-4">
                     <label for="contactPhoneNumber" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" placeholder="Format: 123-456-7890" id="contactPhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                    <input type="tel" class="form-control" placeholder="Format: 123-456-7890" name="phonenumber" id="contactPhoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
                     <label for="contactEmail" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" placeholder="Enter your email" id="contactEmail">
+                    <input type="email" class="form-control" placeholder="Enter your email" name="email" id="contactEmail">
                 </div>
             </div>
             <hr />
