@@ -5,7 +5,7 @@
 <body>
     <div class="container">
         {{> menu}}
-        <h1>ATS Demo - Register as a User Page</h1>
+        <h1>ATS Demo - Register as Staff, Regulator or Auditor Page</h1>
         <form action="/register" method="POST">
             <div class="row">
                 <div class="col-4">
@@ -55,12 +55,16 @@
             <hr />
             <h3>Account Type:</h3>
             <div class="form-check">
-                <label class="form-check-label" for="accounttype1">Personal - Individual</label>
-                <input type="radio" class="form-check-input" checked id="accounttype1" name="accounttype" value="Personal">
+                <label class="form-check-label" for="accounttype1">Regulator - SEC, FINRA</label>
+                <input type="radio" class="form-check-input" checked id="accounttype1" name="accounttype" value="Regulator">
             </div>
             <div class="form-check">
-                <label class="form-check-label" for="accounttype2">Corporate - Corp, LLC</label>
-                <input type="radio" class="form-check-input" id="accounttype2" name="accounttype" value="Corporate">
+                <label class="form-check-label" for="accounttype2">Auditor - Armanino</label>
+                <input type="radio" class="form-check-input" id="accounttype2" name="accounttype" value="Auditor">
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="accounttype3">Vex Securities - Staff</label>
+                <input type="radio" class="form-check-input" id="accounttype3" name="accounttype" value="Staff">
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
