@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
-// const models = require('../models')
+const models = require('../models')
 
 const SALT_ROUNDS = 10;
 
@@ -32,12 +32,96 @@ router.get('/login',(req,res) => {
 
 // POST pages
 
-router.post('/',(req,res) => {
+router.post('/register', async (req,res) => {
+    let firstname = req.body.firstname
+    let lastname = req.body.lastname
+    let prefphone = req.body.prefphone
+    let phonenumber = req.body.phonenumber
+    let email = req.body.email
+    let accounttype = req.body.accounttype
+    let username = req.body.username
+    let password = req.body.password
+    
+    let persistedUser = await models.User.findOne({
+        where: {
+            username: username
+        }
+    })
 
+    if(persistedUser == null) {
+
+        bcrypt.hash(password, SALT_ROUNDS, async (error, hash) => {
+            if(error) {
+                res.render('register',{message: 'Error creating user!'})
+            } else {
+                let user = models.User.build({
+                    username: username,
+                    password: hash,
+                    firstname: firstname,
+                    lastname: lastname,
+                    prefphone: prefphone,
+                    phonenumber: phonenumber,
+                    email: email,
+                    accounttype: accounttype
+                })
+
+                let savedUser = await user.save()
+                if(savedUser != null) {
+                    res.redirect('login')
+                } else {
+                    res.render('register',{message: 'User already exists!'})
+                }
+            }
+        })
+    } else {
+        res.render('register',{message: 'User already exists!'})
+    }
 })
 
-router.post('/',(req,res) => {
+router.post('/register2', async (req,res) => {
+    let firstname = req.body.firstname
+    let lastname = req.body.lastname
+    let prefphone = req.body.prefphone
+    let phonenumber = req.body.phonenumber
+    let email = req.body.email
+    let accounttype = req.body.accounttype
+    let username = req.body.username
+    let password = req.body.password
+    
+    let persistedUser = await models.User.findOne({
+        where: {
+            username: username
+        }
+    })
 
+    if(persistedUser == null) {
+
+        bcrypt.hash(password, SALT_ROUNDS, async (error, hash) => {
+            if(error) {
+                res.render('register2',{message: 'Error creating user!'})
+            } else {
+                let user = models.User.build({
+                    username: username,
+                    password: hash,
+                    firstname: firstname,
+                    lastname: lastname,
+                    prefphone: prefphone,
+                    phonenumber: phonenumber,
+                    email: email,
+                    accounttype: accounttype
+                })
+
+                let savedUser = await user.save()
+                if(savedUser != null) {
+                    res.redirect('login')
+                } else {
+                    res.render('register2',{message: 'User already exists!'})
+                }
+            }
+        })
+    } else {
+        res.render('register2',{message: 'User already exists!'})
+    }
 })
 
 router.post('/',(req,res) => {
