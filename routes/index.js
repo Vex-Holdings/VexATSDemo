@@ -32,6 +32,32 @@ router.get('/login',(req,res) => {
 
 // POST pages
 
+router.post('/login', async (req,res) => {
+    let username = req.body.username
+    let password = req.body.password
+
+    let user = await models.User.findOne({
+        where: {
+            username: username
+        }
+    })
+    if(user != null) {
+        bcrypt.compare(password, user.password,(error, result) => {
+            if(result) {
+                // create a session
+                if(req.session) {
+                    req.session.user = {userId: user.id}
+                    res.redirect('/users/dashboard')
+                }
+            } else {
+                res.render('login',{message: 'Incorrect username or password'})
+            }
+        })
+    } else { // if the user is null
+        res.render('login',{message: 'Incorrect username or password'})
+    }
+})
+
 router.post('/register', async (req,res) => {
     let firstname = req.body.firstname
     let lastname = req.body.lastname
