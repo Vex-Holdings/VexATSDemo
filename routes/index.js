@@ -47,6 +47,9 @@ router.post('/login', async (req,res) => {
                 // create a session
                 if(req.session) {
                     req.session.user = {userId: user.id}
+                    let session = req.session
+                    console.log(session)
+                    console.log(session.user.userId)
                     res.redirect('/users/dashboard')
                 }
             } else {

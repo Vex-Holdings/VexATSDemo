@@ -44,6 +44,7 @@ db = pgp(CONNECTION_STRING);
 // set up a middleware for routes
 app.use('/',indexRoutes);
 // app.use('/users',checkAuthorization,userRoutes);
+app.use('/users',userRoutes)
 
 app.listen(PORT,() => {
     console.log(`Server has started on ${PORT}`)
