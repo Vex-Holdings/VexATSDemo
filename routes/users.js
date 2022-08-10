@@ -6,7 +6,9 @@ const models = require('../models')
 // GET Pages
 
 router.get('/dashboard',(req,res) => {
-    
+
 })
 
 // POST Pages
+
+module.exports = router;
