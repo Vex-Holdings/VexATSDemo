@@ -16,9 +16,21 @@ router.get('/dashboard', async (req,res) => {
         }
     })
 
-    let status = user.lastname
+    let name = user.firstname
     console.log(user)
-    res.send(`Reached dashboard page, status: ${status}`)
+    res.send(`Hi ${name}! You have reached the dashboard page.`)
+})
+
+router.get('/market', async (req,res) => {
+    let session = req.session
+    let id = session.user.userId
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let name = user.firstname
+    res.send(`Hi, ${name}, welcome to the market page`)
 })
 
 // POST Pages

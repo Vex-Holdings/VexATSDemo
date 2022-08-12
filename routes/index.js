@@ -48,9 +48,13 @@ router.post('/login', async (req,res) => {
                 if(req.session) {
                     req.session.user = {userId: user.id}
                     let session = req.session
-                    console.log(session)
-                    console.log(session.user.userId)
-                    res.redirect('/users/dashboard')
+                    if(user.accounttype == 'Personal') {
+                        res.redirect('/users/dashboard')
+                    } else if (user.accounttype == 'Corporate') {
+                        res.redirect('/users/dashboard')
+                    } else {
+                        res.redirect('/users/market')
+                    }
                 }
             } else {
                 res.render('login',{message: 'Incorrect username or password'})
