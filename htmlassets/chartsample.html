@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<title>LMSR Bid/Ask Chart</title>
+
+<main style="max-width: 960px; margin: auto;">
+  <h1>LMSR Bid/Ask Chart</h1>
+  <form>
+    <ul>
+      <li>
+        <label for="num-outcomes"># Outcomes:</label>
+        <input type="number" id="num-outcomes" value="2" min="2" step="1">
+      </li>
+      <li>
+        <label for="funding">Funding:</label>
+        <input type="number" id="funding" value="1000">
+      </li>
+      <li>
+        <label for="odds">Est. Odds for Outcome:</label>
+        <input type="range" id="odds" min="0.01" max=".99" step="0.01" value="0.5">
+        <output id="odds-display"></output>
+      </li>
+    </ul>
+  </form>
+  <canvas id="my-chart"></canvas>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<script>
+// Credit David Walsh (https://davidwalsh.name/javascript-debounce-function)
+
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+function debounce(func, wait, immediate) {
+  let timeout;
+
+  return function executedFunction() {
+    const args = arguments;
+      
+    const later = () => {
+      timeout = null;
+      if (!immediate) func.apply(this, args);
+    };
+
+    const callNow = immediate && !timeout;
+  
+    clearTimeout(timeout);
+
+    timeout = setTimeout(later, wait);
+  
+    if (callNow) func.apply(this, args);
+  };
+};
+
+const numOutcomesInput = document.querySelector('#num-outcomes')
+const fundingInput = document.querySelector('#funding')
+const oddsInput = document.querySelector('#odds')
+
+const buyData = new Array(100)
+const sellData = new Array(100)
+
+function refreshData() {
+  const numOutcomes = parseInt(numOutcomesInput.value)
+  const funding = parseFloat(fundingInput.value)
+  const odds = parseFloat(oddsInput.value)
+
+  const priceForAmount = (amount) =>
+    funding * Math.log(
+      (Math.pow(numOutcomes, amount / funding) - 1) * odds + 1
+    ) /
+    (amount * Math.log(numOutcomes))
+
+  for (let i = 0; i < buyData.length; i++) {
+    const y = i * funding / 10
+    if(i === 0) {
+      buyData[i] = { x: odds, y: 0 }
+      sellData[i] = { x: odds, y: 0 }
+    } else {
+      buyData[i] = { x: priceForAmount(-y), y }
+      sellData[i] = { x: priceForAmount(y), y }
+    }
+  }
+
+}
+refreshData()
+
+const ctx = document.getElementById('my-chart').getContext('2d');
+  console.log(buyData[2], sellData[2])
+const myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    datasets: [{
+      label: "MM's BID",
+      fill: false,
+      borderColor: 'rgb(132, 255, 99)',
+      data: buyData,
+    }, {
+      label: "MM's ASK",
+      fill: false,
+      borderColor: 'rgb(255, 99, 132)',
+      data: sellData,
+    }]
+  },
+  options: {
+    elements: {
+      line: {
+        tension: 0
+      }
+    },
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Average OT price',
+        },
+        type: 'linear',
+        ticks: {
+          min: 0,
+          max: 1,
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'OT Quantity',
+        },
+        type: 'linear',
+        ticks: {
+          min: 0,
+        }
+      }],
+    }
+  }
+});
+
+const oddsDisplay = document.querySelector('#odds-display')
+
+oddsDisplay.textContent = (oddsInput.value * 100).toFixed(0) + '%'
+
+const updateGraph = debounce(() => {
+  refreshData()
+  myChart.update()
+}, 200);
+
+numOutcomesInput.oninput = updateGraph
+fundingInput.oninput = updateGraph
+
+oddsInput.oninput = function() {
+  oddsDisplay.textContent = (oddsInput.value * 100).toFixed(0) + '%'
+  updateGraph()
+}
+</script>

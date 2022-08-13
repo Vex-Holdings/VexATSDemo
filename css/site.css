@@ -5,3 +5,7 @@
 #corporatebutton {
     display: none;
 }
+
+.chart {
+    width: 50%;
+}
