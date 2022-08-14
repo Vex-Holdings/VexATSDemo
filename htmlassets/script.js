@@ -16,7 +16,8 @@ function changeButtonText(value) {
     };
 }
 
-// const Chart = require('chart.js');
+// const Chart = require('chart.js'); 
+// for when we do it in Node.js
 
 const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {
@@ -59,35 +60,6 @@ const myChart = new Chart(ctx, {
     options:{}
 });
 
-/*
-let px01 = myChart.data.labels[0]
-let px02 = myChart.data.labels[1]
-let px03 = myChart.data.labels[2]
-let px04 = myChart.data.labels[3]
-let px05 = myChart.data.labels[4]
-let px06 = myChart.data.labels[5]
-let px07 = myChart.data.labels[6]
-let px08 = myChart.data.labels[7]
-let px09 = myChart.data.labels[8]
-let sh01 = myChart.data.datasets[0].data[0]
-let sh02 = myChart.data.datasets[0].data[1]
-let sh03 = myChart.data.datasets[0].data[2]
-let sh04 = myChart.data.datasets[0].data[3]
-let sh05 = myChart.data.datasets[0].data[4]
-let sh06 = myChart.data.datasets[0].data[5]
-let sh07 = myChart.data.datasets[0].data[6]
-let sh08 = myChart.data.datasets[0].data[7]
-let sh09 = myChart.data.datasets[0].data[8]
-let cl01 = myChart.data.datasets[0].backgroundColor[0]
-let cl02 = myChart.data.datasets[0].backgroundColor[1]
-let cl03 = myChart.data.datasets[0].backgroundColor[2]
-let cl04 = myChart.data.datasets[0].backgroundColor[3]
-let cl05 = myChart.data.datasets[0].backgroundColor[4]
-let cl06 = myChart.data.datasets[0].backgroundColor[5]
-let cl07 = myChart.data.datasets[0].backgroundColor[6]
-let cl08 = myChart.data.datasets[0].backgroundColor[7]
-let cl09 = myChart.data.datasets[0].backgroundColor[8]
-*/
 function placeBid(){
     let bidPrice = document.getElementById('bidprice').value;
     let bidShares = document.getElementById('bidshares').value;
