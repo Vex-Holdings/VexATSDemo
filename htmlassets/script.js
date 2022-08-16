@@ -104,6 +104,8 @@ function placeBid(){
         }
     }
     myChart.update();
+    limitbid();
+    limitoffer();
 }
 
 function placeOffer(){
@@ -144,6 +146,8 @@ function placeOffer(){
         } 
     }
     myChart.update();
+    limitbid();
+    limitoffer();
 }
 
 function bidlog(bidShares,bidPrice){
@@ -178,5 +182,31 @@ function soldlog(askShares,askPrice){
     tradelog.innerHTML += `<li class="redtext">${message}</li>`
 }
 
+function limitbid(){
+    let color = myChart.data.datasets[0].backgroundColor;
+    let price = myChart.data.labels;
+    let isRed = (element) => element == "red";
+    let i = color.findIndex(isRed);
+    if(i > -1) {
+        document.querySelector("#bidprice").setAttribute("value", price[i]);
+        document.querySelector("#bidprice").setAttribute("max", price[i]);
+        // console.log('Set max to ' + price[i]);
+    } else {
+        document.querySelector("#bidprice").setAttribute("max", 10.1);
+    }
+}
 
+function limitoffer(){
+    let color = myChart.data.datasets[0].backgroundColor;
+    let price = myChart.data.labels;
+    let isGreen = (element) => element == "green";
+    let i = color.findLastIndex(isGreen);
+    if(i > -1) {
+        document.querySelector("#askprice").setAttribute("value", price[i]);
+        document.querySelector("#askprice").setAttribute("min", price[i]);
+        // console.log('Set min to ' + price[i]);
+    } else {
+        document.querySelector("#askprice").setAttribute("min", price[0]);
+    }
+}
 
