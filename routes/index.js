@@ -87,6 +87,7 @@ router.post('/register', async (req,res) => {
     let accounttype = req.body.accounttype
     let username = req.body.username
     let password = req.body.password
+    let status = req.body.status
     
     let persistedUser = await models.User.findOne({
         where: {
@@ -108,7 +109,8 @@ router.post('/register', async (req,res) => {
                     prefphone: prefphone,
                     phonenumber: phonenumber,
                     email: email,
-                    accounttype: accounttype
+                    accounttype: accounttype,
+                    status: status
                 })
 
                 let savedUser = await user.save()
@@ -133,6 +135,7 @@ router.post('/register2', async (req,res) => {
     let accounttype = req.body.accounttype
     let username = req.body.username
     let password = req.body.password
+    let status = req.body.status
     
     let persistedUser = await models.User.findOne({
         where: {
@@ -154,7 +157,8 @@ router.post('/register2', async (req,res) => {
                     prefphone: prefphone,
                     phonenumber: phonenumber,
                     email: email,
-                    accounttype: accounttype
+                    accounttype: accounttype,
+                    status: status
                 })
 
                 let savedUser = await user.save()
