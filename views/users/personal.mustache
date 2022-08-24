@@ -30,5 +30,503 @@
         </div>
     </div>
     <hr>
-    {{/user}}
+    <form action="/users/personal" method="POST" name="register-action" id="register-action">
+        <input type="hidden" id="userid" name="userid" value="{{id}}">
+        {{/user}}
+        <h3>Primary Address</h3>
+        <div class="row">
+            <div class="col-8">
+                <input type="text" class="form-control" placeholder="Primary Address Line 1" id="addressline1" name="addressline1">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <input type="text" class="form-control" placeholder="Primary Address Line 2" id="addressline2" name="addressline2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <input type="text" class="form-control" placeholder="City/Town" id="addresscity" name="addresscity">
+            </div>
+            <div class="col-3">
+                <select class="form-select" aria-label="Default select" id="addressstate" name="addressstate">
+                {{> states}}
+                </select>
+            </div>
+            <div class="col-2">
+                <input type="number" class="form-control" id="addresszip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$" name="addresszip">
+            </div>
+        </div>
+        <p>This must be your current residential address. No PO Boxes or commercial addresses.</p>
+        <hr>
+        <h3>Personal Information</h3>
+        <div class="row">
+            <div class="col-6">
+                <p>Marital Status</p>
+                <div class="form-check form-check-inline">
+                    <label for="single" class="form-check-label">Single</label>
+                    <input type="radio" class="form-check-input" id="single" name="maritalstatus" value="single">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="married" class="form-check-label">Married</label>
+                    <input type="radio" class="form-check-input" id="married" name="maritalstatus" value="married">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="divorced" class="form-check-label">Divorced</label>
+                    <input type="radio" class="form-check-input" id="divorced" name="maritalstatus" value="divorced">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="widowed" class="form-check-label">Widowed</label>
+                    <input type="radio" class="form-check-input" id="widowed" name="maritalstatus" value="widowed">
+                </div>
+            </div>
+            <div class="col-3">
+                <p>Number of Dependents</p>
+                <select id="dependants" name="dependants" class="form-select">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <p>Employment Status</p>
+                <div class="form-check form-check-inline">
+                    <label for="employed" class="form-check-label">Employed</label>
+                    <input type="radio" class="form-check-input" id="employed" name="employmentstatus" value="employed">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="retired" class="form-check-label">Retired</label>
+                    <input type="radio" class="form-check-input" id="retired" name="employmentstatus" value="retired">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="unemployed" class="form-check-label">Unemployed</label>
+                    <input type="radio" class="form-check-input" id="unemployed" name="employmentstatus" value="unemployed">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="student" class="form-check-label">Student</label>
+                    <input type="radio" class="form-check-input" id="student" name="employmentstatus" value="student">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-4">
+                <input type="text" class="form-control" placeholder="Job Title" id="jobtitle" name="jobtitle">
+            </div>
+            <div class="col-4">
+                <input type="text" class="form-control" placeholder="Occupation" id="occupation" name="occupation">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <input type="text" class="form-control" placeholder="Employer Name" id="employername" name="employername">
+            </div>
+            <div class="col-4">
+                <input type="number" class="form-control" placeholder="Years with this Employer" id="employertime" name="employertime">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input type="text" class="form-control" placeholder="Business Address" id="employeraddress" name="employeraddress">
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" placeholder="Suite/Floor/Apt" id="employersuite" name="employersuite">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <input type="text" class="form-control" placeholder="City/Town" id="employercity" name="employercity">
+            </div>
+            <div class="col-3">
+                <select class="form-select" aria-label="Default select" id="employerstate" name="employerstate">
+                {{> states}}
+                </select>
+            </div>
+            <div class="col-2">
+                <input type="number" class="form-control" id="employerzip" name="employerzip" placeholder="Zip Code" pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <p>Date of Birth</p>
+                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth">
+            </div>
+            <div class="col-3">
+                <p>Country of Citizenship</p>
+                <select id="citizenship" name="citizenship" class="form-select">
+                {{> countries}}
+                </select>
+            </div>
+            <div class="col-4">
+                <p>Social Security Number (or ITIN)</p>
+                <div class="input-group">
+                    <select id="taxidtype" name="taxidtype" class="form-select">
+                        <option value="ssn">SSN</option>
+                        <option value="itin">ITIN</option>
+                    </select>
+                    <input type="text" class="form-control" id="taxidnumber" name="taxidnumber" placeholder="xxx-xx-xxxx" pattern="^\d{3}-\d{2}-\d{4}$">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <p>Identification Document</p>
+                <div class="form-check form-check-inline">
+                    <label for="driverslicense" class="form-check-label">Driver's License</label>
+                    <input type="radio" class="form-check-input" id="driverslicense" name="identitydocument" value="driverslicense">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="passport" class="form-check-label">Passport</label>
+                    <input type="radio" class="form-check-input" id="passport" name="identitydocument" value="passport">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="stateid" class="form-check-label">State ID</label>
+                    <input type="radio" class="form-check-input" id="stateid" name="identitydocument" value="stateid">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="othergovtid" class="form-check-label">Other Goverment-issued ID</label>
+                    <input type="radio" class="form-check-input" id="othergovtid" name="identitydocument" value="othergovtid">
+                </div>
+            </div>
+            <div class="col-4">
+                <p>State/Country of Issuance</p>
+                <input type="text" class="form-control" placeholder="Enter Here" id="identityissuer" name="identityissuer">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <p>ID Number</p>
+                <input type="text" class="form-control" placeholder="Enter here" id="identityidnumber" name="identityidnumber">
+            </div>
+            <div class="col-3">
+                <p>Issued Date</p>
+                <input type="date" class="form-control" id="identityissuedate" name="identityissuedate">
+            </div>
+            <div class="col-3">
+                <p>Expiration Date</p>
+                <input type="date" class="form-control" id="identityexpiredate" name="identityexpiredate">
+            </div>
+        </div>
+        <hr>
+        <h3>Account Information</h3>
+        <div class="row">
+            <div class="col-3">
+                <p>Account Type</p>
+                <div class="form-check">
+                    <label for="cash" class="form-check-label">Cash</label>
+                    <input type="radio" class="form-check-input" id="cash" name="accounttype" value="cash" checked>
+                </div>
+            </div>
+            <div class="col-3">
+                <p>Customer Type</p>
+                <div class="form-check">
+                    <label for="individual" class="form-check-label">Individual</label>
+                    <input type="radio" class="form-check-input" id="individual" name="customertype" value="individual" checked>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <p>Applicant</p>
+            </div>
+            <div class="col-6">
+                <p>Are you, your spouse, or any other immediate family members, including parents, in-laws, siblings and dependents:</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-check form-check-inline">
+                    <label for="associatedyes" class="form-check-label">Yes</label>
+                    <input type="radio" class="form-check-input" id="associatedyes" name="associated" value="associatedyes">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="associatedno" class="form-check-label">No</label>
+                    <input type="radio" class="form-check-input" id="associatedno" name="associated" value="associatedno">
+                </div>
+            </div>
+            <div class="col-6">
+                <p>Employed by or associated with the securities industry (for example, a sole proprietor, partner, officer, director, branch manager, registered representative or other associated person of a broker-dealer firm) or a financial services regulator?</p>
+            </div>
+        </div>
+        <div class="row" id="securitiesaffiliated">
+            <div class="col-3">
+            </div>
+            <div class="col-6">
+                <p>If yes, please specify entity below. If this entity requires its approval for you to establish this relationship, please provide a copy of the required authorization letter (with this Form).</p>
+                <div class="form-check">
+                    <label for="broker" class="form-check-label">Broker-Dealer or Municipal Securities Dealer</label>
+                    <input type="radio" class="form-check-input" id="broker" name="associatedtype" value="broker">
+                </div>
+                <div class="form-check">
+                    <label for="investmentadvisor" class="form-check-label">Investment Advisor</label>
+                    <input type="radio" class="form-check-input" id="investmentadvisor" name="associatedtype" value="investmentadvisor">
+                </div>
+                <div class="form-check">
+                    <label for="finrasro" class="form-check-label">FINRA or other Self-Regulatory Organization *</label>
+                    <input type="radio" class="form-check-input" id="finrasro" name="associatedtype" value="finrasro">
+                </div>
+                <div class="form-check">
+                    <label for="regulator" class="form-check-label">State or Federal Securities Regulator</label>
+                    <input type="radio" class="form-check-input" id="regulator" name="associatedtype" value="regulator">
+                </div>
+                <p>(*Including a national securities exchange, registered securities association, registered clearing agency or the Municipal Securities Rulemaking Board.)</p>
+                <input type="text" class="form-control" id="associatedorganization" name="associatedorganization" placeholder="Name of entity(ies)">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-check form-check-inline">
+                    <label for="pubcoyes" class="form-check-label">Yes</label>
+                    <input type="radio" class="form-check-input" id="pubcoyes" name="pubco" value="pubcoyes">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="pubcono" class="form-check-label">No</label>
+                    <input type="radio" class="form-check-input" id="pubcono" name="pubco" value="pubcono">
+                </div>
+            </div>
+            <div class="col-6">
+                <p>An officer, director or 10% (or more) shareholder in a publicly-owned company?</p>
+                <input type="text" class="form-control" id="pubconame" name="pubconame" placeholder="Name of company and symbol/ticker">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-check form-check-inline">
+                    <label for="pepyes" class="form-check-label">Yes</label>
+                    <input type="radio" class="form-check-input" id="pepyes" name="pep" value="pepyes">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="pepno" class="form-check-label">No</label>
+                    <input type="radio" class="form-check-input" id="pepno" name="pep" value="pepno">
+                </div>
+            </div>
+            <div class="col-6">
+                <p>A senior military, governmental or political official in a non-US country?</p>
+                <input type="text" class="form-control" id="pepcountry" name="pepcountry" placeholder="Name of Country">
+            </div>
+        </div>
+        <hr>
+        <h3>Investor Profile</h3>
+        <div class="row">
+            <div class="col-6">
+                <p>Investment Objective</p>
+                <div class="form-check form-check-inline">
+                    <label for="growth" class="form-check-label">Growth</label>
+                    <input type="radio" class="form-check-input" id="growth" name="investmentobjective" value="growth">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="income" class="form-check-label">Income</label>
+                    <input type="radio" class="form-check-input" id="income" name="investmentobjective" value="income">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="cappreserve" class="form-check-label">Capital Preservation</label>
+                    <input type="radio" class="form-check-input" id="cappreserve" name="investmentobjective" value="cappreserve">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="speculation" class="form-check-label">Speculation</label>
+                    <input type="radio" class="form-check-input" id="speculation" name="investmentobjective" value="speculation">
+                </div>
+            </div>
+            <div class="col-6">
+                <p>Investment Experience</p>
+                <div class="form-check form-check-inline">
+                    <label for="extensive" class="form-check-label">Extensive</label>
+                    <input type="radio" class="form-check-input" id="extensive" name="investmentexperience" value="extensive">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="good" class="form-check-label">Good</label>
+                    <input type="radio" class="form-check-input" id="good" name="investmentexperience" value="good">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="limited" class="form-check-label">Limited</label>
+                    <input type="radio" class="form-check-input" id="limited" name="investmentexperience" value="limited">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="none" class="form-check-label">None</label>
+                    <input type="radio" class="form-check-input" id="none" name="investmentexperience" value="none">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-8">
+                <p>If the global stock markets declines 10% in a month, what would you do?</p>
+                <div class="form-check form-check-inline">
+                    <label for="sellall" class="form-check-label">Sell all investments</label>
+                    <input type="radio" class="form-check-input" name="risktolerance" id="sellall" value="sellall">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="sellsome" class="form-check-label">Sell some of my investments</label>
+                    <input type="radio" class="form-check-input" name="risktolerance" id="sellsome" value="sellsome">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="holdbuy" class="form-check-label">Keep all and buy more</label>
+                    <input type="radio" class="form-check-input" name="risktolerance" id="holdbuy" value="holdbuy">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-8">
+                <p>How long to you plan to invest your money?</p>
+                <div class="form-check form-check-inline">
+                    <label for="short" class="form-check-label">Less than 4 years</label>
+                    <input type="radio" class="form-check-input" name="timehorizon" id="short" value="short">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="medium" class="form-check-label">Between 4 and 7 years</label>
+                    <input type="radio" class="form-check-input" name="timehorizon" id="medium" value="medium">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="long" class="form-check-label">Longer than 7 years</label>
+                    <input type="radio" class="form-check-input" name="timehorizon" id="long" value="long">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-8">
+                <p>How important is liquidity to you?</p>
+                <div class="form-check form-check-inline">
+                    <label for="notliquid" class="form-check-label">Not important</label>
+                    <input type="radio" class="form-check-input" name="liquidity" id="notliquid" value="notliquid">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="someliquid" class="form-check-label">Somewhat important</label>
+                    <input type="radio" class="form-check-input" name="liquidity" id="someliquid" value="someliquid">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="liquid" class="form-check-label">Very important</label>
+                    <input type="radio" class="form-check-input" name="liquidity" id="liquid" value="liquid">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <p>Annual Income (from all sources)</p>
+                <div class="form-check form-check-inline">
+                    <label for="25k" class="form-check-label">$25,000 and under</label>
+                    <input type="radio" class="form-check-input" id="25k" name="income" value="25000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="50k" class="form-check-label">$25,001 to $50,000</label>
+                    <input type="radio" class="form-check-input" id="50k" name="income" value="50000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="100k" class="form-check-label">$50,001 to $100,000</label>
+                    <input type="radio" class="form-check-input" id="100k" name="income" value="100000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="250k" class="form-check-label">$100,001 to $250,000</label>
+                    <input type="radio" class="form-check-input" id="250k" name="income" value="250000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="500k" class="form-check-label">$250,001 to $500,000</label>
+                    <input type="radio" class="form-check-input" id="500k" name="income" value="500000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="500kplus" class="form-check-label">Over $500,000</label>
+                    <input type="radio" class="form-check-input" id="500kplus" name="income" value="500000p">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <p>Net Worth (excluding primary residence)</p>
+                <div class="form-check form-check-inline">
+                    <label for="25k" class="form-check-label">$25,000 and under</label>
+                    <input type="radio" class="form-check-input" name="networth" id="25k" value="25000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="50k" class="form-check-label">$25,001 to $50,000</label>
+                    <input type="radio" class="form-check-input" id="50k" name="networth" value="50000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="200k" class="form-check-label">$50,001 to $200,000</label>
+                    <input type="radio" class="form-check-input" id="200k" name="networth" value="200000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="500k" class="form-check-label">$200,001 to $500,000</label>
+                    <input type="radio" class="form-check-input" id="500k" name="networth" value="500000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="1m" class="form-check-label">$500,001 to $1,000,000</label>
+                    <input type="radio" class="form-check-input" id="1m" name="networth" value="1000000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="3m" class="form-check-label">$1,000,001 to $3,000,000</label>
+                    <input type="radio" class="form-check-input" id="3m" name="networth" value="3000000">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label for="3mplus" class="form-check-label">Over $3,000,000</label>
+                    <input type="radio" class="form-check-input" id="3mplus" name="networth" value="3000000p">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h3>Tax Certification</h3>
+        <p>Please check the box that applies, sign and date below.</p>
+        <div class="row">
+            <div class="col-2">
+                <p>Primary Applicant</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <div class="form-check">
+                    <input type="radio" name="taxstatus" id="w9" value="w9">
+                </div>
+            </div>
+            <div class="col-8">
+                <p><strong>U.S. Person:</strong> Under penalty of perjury, I certify that: (1) I am a U.S. citizen, U.S. resident alien or other U.S. person, and the Social Security Number or Taxpayer Identification Number provided in this Form is correct (or I am waiting for a number to be issued to me); and (2) I am not subject to backup withholding because: (a) I am exempt from backup withholding; or (b) I have not been notified by the Internal Revenue Service (IRS) that I am subject to backup withholding as a result of a failure to report all interest or dividends; or (c) the IRS has notified me that I am no longer subject to backup withholding.  
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <div class="form-check">
+                    <input type="radio" name="taxstatus" id="w9a" value="w9a">
+                </div>
+            </div>
+            <div class="col-8">
+                <p><strong>Certification Instructions:</strong> You must check this box if you cannot certify to item (2) above, meaning that you have been notified by the IRS that you are currently subject to backup withholding because you have failed to report all interest and dividends on your tax return.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <div class="form-check">
+                    <input type="radio" name="taxstatus" id="w8" value="w8">
+                </div>
+            </div>
+            <div class="col-8">
+                <p><strong>Non-Resident Alien:</strong> I certify that I am not a U.S. citizen, U.S. resident alien, or other U.S. person for U.S. tax purposes, and I am submitting the applicable Form W-8 with this form to certify my foreign status and, if applicable, claim tax treaty benefits.
+                </p>
+            </div>
+        </div>
+        <hr>
+    <p>Note: The information collected in this form will be used exclusively for the purposes of registering, logging into and accessing an account at Vex Securities. In order to use the ATS to trade CUTEs, you will need to have a separate account at Flux Registry LLC in order to initiate and settle trades. By opening an account at Vex Securities, you agree that information may be shared with Flux Registry for the purpose of initiating trades and settlement of those trades. You will be asked to confirm your agreement with a check box when placing orders each time.</p>
+    <p>Other important information is contained in our Legal Disclaimer and Privacy Policies documents.</p>
+    <hr>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
 {{> footer}}   
