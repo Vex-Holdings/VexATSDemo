@@ -61,10 +61,10 @@ router.post('/login', async (req,res) => {
                 if(req.session) {
                     req.session.user = {userId: user.id}
                     let session = req.session
-                    if(user.accounttype == 'Personal') {
-                        res.redirect('/users/dashboard')
-                    } else if (user.accounttype == 'Corporate') {
-                        res.redirect('/users/dashboard')
+                    if(user.accounttype == 'Personal' && user.status == 'user') {
+                        res.redirect('/users/personal')
+                    } else if (user.accounttype == 'Corporate' && user.status == 'user') {
+                        res.redirect('/users/corporate')
                     } else {
                         res.redirect('/users/market')
                     }

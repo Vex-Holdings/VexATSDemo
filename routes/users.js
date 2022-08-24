@@ -48,8 +48,7 @@ router.get('/personal', async (req,res) => {
             id: id
         }
     })
-    let name = user.firstname + " " + user.lastname
-    res.send(`Hi, ${name}, this is where we will put the new account form`)
+    res.render('users/personal',{user: user})
 })
 
 // POST Pages

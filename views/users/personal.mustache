@@ -1,0 +1,34 @@
+{{> header}}
+    <title>Personal New Account Form</title>
+</head>
+<body>
+    <div class="container">
+    {{> menu}}
+    <h2>ATS Demo - B/D New Account Form (Individual)</h2>
+    <hr>
+    {{#user}}
+    <h3>User Details</h3>
+    <div class="row">
+        <div class="col-1">
+            Name:
+        </div>
+        <div class="col-3">
+            {{firstname}} {{lastname}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1">
+            {{prefphone}}:
+        </div>
+        <div class="col-3">
+            {{phonenumber}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            {{email}}
+        </div>
+    </div>
+    <hr>
+    {{/user}}
+{{> footer}}   
