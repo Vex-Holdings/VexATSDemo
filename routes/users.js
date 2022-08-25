@@ -80,7 +80,7 @@ router.post('/personal', async (req,res) => {
     let taxidnumber = req.body.taxidnumber
     let identitydocument = req.body.identitydocument
     let identityissuer = req.body.identityissuer
-    let identityidnumber = req.body.identityidnumber
+    let identitynumber = req.body.identitynumber
     let identityissuedate = req.body.identityissuedate
     let identityexpiredate = req.body.identityexpiredate
     let accounttype = req.body.accounttype
@@ -127,7 +127,7 @@ router.post('/personal', async (req,res) => {
         taxidnumber: taxidnumber,
         identitydocument: identitydocument,
         identityissuer: identityissuer,
-        identityidnumber: identityidnumber,
+        identitynumber: identitynumber,
         identityissuedate: identityissuedate,
         identityexpiredate: identityexpiredate,
         accounttype: accounttype,
@@ -157,7 +157,7 @@ router.post('/personal', async (req,res) => {
             id: userid
         }
     })
-    
+
     if(savedPersonal != null) {
         res.redirect('/users/dashboard')
     } else {
