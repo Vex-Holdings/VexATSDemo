@@ -30,7 +30,7 @@
         </div>
     </div>
     <hr>
-    <form action="/users/personal" method="POST" name="register-action" id="register-action">
+    <form action="/users/personal" method="POST">
         <input type="hidden" id="userid" name="userid" value="{{id}}">
         {{/user}}
         <h3>Primary Address</h3>
@@ -528,5 +528,9 @@
     <hr>
     <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    
+    {{#message}}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    {{/message}}
 {{> footer}}   

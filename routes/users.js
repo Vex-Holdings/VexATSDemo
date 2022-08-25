@@ -148,7 +148,8 @@ router.post('/personal', async (req,res) => {
         networth: networth,
         taxstatus: taxstatus
     })
-    let persistedPersonal = await personal.save()
+    let savedPersonal = await personal.save()
+   
     const submitted = await models.User.update({
         status: status
     },{
@@ -156,7 +157,8 @@ router.post('/personal', async (req,res) => {
             id: userid
         }
     })
-    if(persistedPersonal != null) {
+    
+    if(savedPersonal != null) {
         res.redirect('/users/dashboard')
     } else {
         res.render('users/personal',{message: 'Unable to submit new account form'})
