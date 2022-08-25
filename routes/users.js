@@ -22,8 +22,10 @@ router.get('/dashboard', async (req,res) => {
     // console.log(user)
     if(status == 'user') {
         res.send(`Hi ${name}! The next step is to fill out the ${accounttype} <a href="/users/personal">new account form</a>.`)
+    } else if(status == 'submitted') {
+        res.send(`Hi ${name}! Your form has been submitted. You will receive notification of approval soon.`)
     } else {
-        res.send(`Hi ${name}! You have reached the dashboard page. You are ready for the order or <a href="/users/market">market page</a>`)
+        res.send(`Hi ${name}! You are ready for the order or <a href="/users/market">market page</a>`)
     }
     
 })
