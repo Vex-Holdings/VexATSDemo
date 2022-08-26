@@ -5,6 +5,16 @@ const models = require('../models')
 
 // GET Pages
 
+router.get('/controlpanel', async (req,res) => {
+    let users = await models.User.findAll({
+        where: {
+            status: 'submitted'
+        }
+    })
+    res.render('users/controlpanel', {users: users})
+})
+
+
 router.get('/dashboard', async (req,res) => {
     
     let session = req.session
