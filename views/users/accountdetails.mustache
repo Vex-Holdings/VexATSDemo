@@ -65,5 +65,16 @@
             <tr><td>Tax Status</td><td>{{taxstatus}}</td></tr>
             {{/detail}}
         </table>
+        <form action="/users/accountdetails" method="POST">
+            <div class="form-check form-check-inline">
+                <label for="approved" class="form-check-label">Approved</label>
+                <input type="radio" class="form-check-input" id="approved" name="status" value="approved">
+            </div>
+            <div class="form-check form-check-inline">
+                <label for="pending" class="form-check-label">Pending</label>
+                <input type="radio" class="form-check-input" id="pending" name="status" value="pending">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 {{> footer}}

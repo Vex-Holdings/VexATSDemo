@@ -8,7 +8,7 @@ const models = require('../models')
 router.get('/controlpanel', async (req,res) => {
     let users = await models.User.findAll({
         where: {
-            status: 'submitted'
+            status: 'submitted' || 'pending'
         }
     })
     res.render('users/controlpanel', {users: users})
@@ -34,8 +34,12 @@ router.get('/dashboard', async (req,res) => {
         res.send(`Hi ${name}! The next step is to fill out the ${accounttype} <a href="/users/personal">new account form</a>.`)
     } else if(status == 'submitted') {
         res.send(`Hi ${name}! Your form has been submitted. You will receive notification of approval soon.`)
+    } else if(status == 'pending') {
+        res.send(`Hi ${name}, your application requires additional information. We will contact you shortly.`)
+    } else if(status == 'approved') {
+        res.send(`Hi ${name}! You are approved and this will send you to the order page`)
     } else {
-        res.send(`Hi ${name}! You are ready for the order or <a href="/users/market">market page</a>`)
+        res.send(`Hi ${name}! You are ready for the <a href="/users/market">market page</a>`)
     }
     
 })
@@ -187,6 +191,23 @@ router.post('/personal', async (req,res) => {
         res.redirect('/users/dashboard')
     } else {
         res.render('users/personal',{message: 'Unable to submit new account form'})
+    }
+})
+
+router.post('/accountdetails/:userId', async (req,res) => {
+    let id = req.params.userId
+    let status = req.body.status
+    const submitted = await models.User.update({
+        status: status
+    },{
+        where: {
+            id: id
+        }
+    })
+    if(submitted !=null) {
+        res.redirect('/users/controlpanel',{message: 'Account status updated.'})
+    } else {
+        res.redirect('/users/controlpanel', {message: 'Something went wrong with user status update.'})
     }
 })
 
