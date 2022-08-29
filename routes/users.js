@@ -63,6 +63,21 @@ router.get('/personal', async (req,res) => {
     res.render('users/personal',{user: user})
 })
 
+router.get('/accountdetails/:userId', async (req,res) => {
+    let id = req.params.userId
+    let contact = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let detail = await models.Personal.findOne({
+        where: {
+            userid: id
+        }
+    })
+    res.render('users/accountdetails',{contact: contact, detail: detail})
+})
+
 // POST Pages
 
 router.post('/personal', async (req,res) => {
