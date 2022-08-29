@@ -1,10 +1,12 @@
 const express = require('express');
+const favicon = require('serve-favicon');
 const app = express();
 const mustacheExpress = require('mustache-express');
 const bodyParser = require('body-parser');
 const pgp = require('pg-promise')();
 const session = require('express-session');
 const path = require('path');
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 const checkAuthorization = require('./middlewares/authorization');
 
 const userRoutes = require('./routes/users');
@@ -37,6 +39,8 @@ app.use((req,res,next) => {
     res.locals.authenticated = req.session.user == null ? false : true
     next()
 });
+
+
 
 // if the "const" is removed, db becomes available to users.js
 db = pgp(CONNECTION_STRING);
