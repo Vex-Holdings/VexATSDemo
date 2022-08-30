@@ -65,7 +65,7 @@
             <tr><td>Tax Status</td><td>{{taxstatus}}</td></tr>
             {{/detail}}
         </table>
-        <form action="/users/accountdetails" method="POST">
+        <form action="/users/accountdetails/{{contact.id}}" method="POST">
             <div class="form-check form-check-inline">
                 <label for="approved" class="form-check-label">Approved</label>
                 <input type="radio" class="form-check-input" id="approved" name="status" value="approved">

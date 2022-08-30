@@ -8,7 +8,7 @@ const models = require('../models')
 router.get('/controlpanel', async (req,res) => {
     let users = await models.User.findAll({
         where: {
-            status: 'submitted' || 'pending'
+            status: ['submitted', 'pending']
         }
     })
     res.render('users/controlpanel', {users: users})
@@ -202,9 +202,7 @@ router.post('/accountdetails/:userId', async (req,res) => {
         }
     })
     if(submitted !=null) {
-        res.redirect('/users/controlpanel',{message: 'Account status updated.'})
-    } else {
-        res.redirect('/users/controlpanel', {message: 'Something went wrong with user status update.'})
+        res.redirect('/users/controlpanel')
     }
 })
 
