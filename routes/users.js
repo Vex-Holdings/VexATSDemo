@@ -25,11 +25,9 @@ router.get('/dashboard', async (req,res) => {
             id: id
         }
     })
-
     let name = user.firstname
     let status = user.status
     let accounttype = user.accounttype
-    // console.log(user)
     if(status == 'user') {
         res.send(`Hi ${name}! The next step is to fill out the ${accounttype} <a href="/users/personal">new account form</a>.`)
     } else if(status == 'submitted') {
@@ -41,7 +39,6 @@ router.get('/dashboard', async (req,res) => {
     } else {
         res.send(`Hi ${name}! You are ready for the <a href="/users/market">market page</a>`)
     }
-    
 })
 
 router.get('/market', async (req,res) => {
