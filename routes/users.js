@@ -1,9 +1,14 @@
 const express = require('express')
 const router = express.Router()
+// const chart = require('../middlewares/chart')
 
 const models = require('../models')
 
 // GET Pages
+
+router.get('/chart', (req,res) => {
+    res.render('users/chart')
+})
 
 router.get('/controlpanel', async (req,res) => {
     let users = await models.User.findAll({
