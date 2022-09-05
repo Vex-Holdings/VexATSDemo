@@ -67,6 +67,8 @@ router.post('/login', async (req,res) => {
                         res.redirect('/users/corporate')
                     } else if (user.accounttype == 'Staff' && user.status == 'principal') {
                         res.redirect('/users/controlpanel')
+                    } else if (user.accounttype == 'Regulator') {
+                        res.redirect('/users/regulator')
                     } else {
                         res.redirect('/users/dashboard')
                     }

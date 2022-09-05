@@ -5,6 +5,19 @@ const router = express.Router()
 const models = require('../models')
 
 // GET Pages
+
+router.get('/regulator', async (req,res) => {
+    let session = req.session
+    let id = session.user.userId
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let name = user.firstname + " " + user.lastname
+    res.render('users/regulator', {name: name})
+})
+
 router.get('/mshf-holding/:id', async (req,res) => {
     let mshfid = req.params.id
     let holding = await models.Mshf.findByPk(mshfid)
