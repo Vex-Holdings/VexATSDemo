@@ -1,0 +1,30 @@
+{{> header}}
+    <title>Master Securities Holder File</title>
+</head>
+<body>
+    <div class="container">
+        {{> menu}}
+        <h2>ATS Demo - MSHF Record</h2>
+        <hr>
+        <h4>Cert No: {{response.id}}</h4>
+        <h4>Holder: {{user.firstname}} {{user.lastname}}</h4>
+        <h4>Stock: {{stock.name}}</h4>
+        <form action="/users/mshf-edit/:{{response.id}}" method="POST">
+            <div class="form-group">
+                <label class="form-label" for="holding">Holding</label>
+                <input type="number" name="holding" class="form-control" value="{{response.holding}}" id="holding" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="status">Status</label>
+                <input type="text" name="status" class="form-control" value={{response.status}} id="status" />
+            </div>
+            <input type="hidden" name="id" value="{{response.id}}" />
+        <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        {{#message}}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+        {{/message}}
+    </div>
+{{> footer}}   

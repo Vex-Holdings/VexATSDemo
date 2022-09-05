@@ -1,0 +1,26 @@
+{{> header}}
+    <title>Stock Register</title>
+</head>
+<body>
+    <div class="container">
+        {{> menu}}
+        <h2>ATS Demo - Stock Add Control Panel</h2>
+        <hr>
+        <form action="/users/stock-add" method="POST">
+            <div class="form-group">
+                <label class="form-label" for="name">Name</label>
+                <input type="text" name="name" class="form-control" id="name" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="status">Status</label>
+                <input type="text" name="status" class="form-control" id="status" />
+            </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        {{#message}}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+        {{/message}}
+    </div>
+{{> footer}}   

@@ -5,6 +5,41 @@ const router = express.Router()
 const models = require('../models')
 
 // GET Pages
+router.get('/mshf-holding/:id', async (req,res) => {
+    let mshfid = req.params.id
+    let holding = await models.Mshf.findByPk(mshfid)
+    let response = holding.dataValues
+    let user = await models.User.findByPk(response.userid)
+    let stock = await models.Stock.findByPk(response.stockid)
+    res.render('users/mshf-holding', {response: response, user: user, stock: stock})
+})
+
+router.get('/stock-add',(req,res) => {
+    res.render('users/stock-add')
+})
+
+router.get('/mshf-add', async (req,res) => {
+    let session = req.session
+    let id = session.user.userId
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let name = user.firstname
+    let accounttype = user.accounttype
+    let status = user.status
+    if(accounttype == 'Staff' && status == 'principal') {
+        res.render('users/mshf-add', {name: name})
+    } else {
+        res.send(`Sorry ${name}, you are not authorized for this page.`)
+    }
+})
+
+router.get('/mshf-edit', async (req,res) => {
+    let holders = await models.Mshf.findAll()
+    res.render('users/mshf-edit', {holders: holders})
+})
 
 router.get('/chart', (req,res) => {
     res.render('users/chart')
@@ -85,6 +120,42 @@ router.get('/accountdetails/:userId', async (req,res) => {
 })
 
 // POST Pages
+
+router.post('/stock-add', async (req,res) => {
+    let name = req.body.name
+    let status = req.body.status
+
+    let newstock = models.Stock.build({
+        name: name,
+        status: status
+    })
+    let persistedNewStock = await newstock.save()
+    if(persistedNewStock != null) {
+        res.redirect('/users/mshf-add')
+    } else {
+        res.render('users/stock-add',{message: 'Unable to add stock'})
+    }
+})
+
+router.post('/mshf-add', async (req,res) => {
+    let userid = req.body.userid
+    let stockid = req.body.stockid
+    let holding = req.body.holding
+    let status = req.body.status
+
+    let entry = models.Mshf.build({
+        userid: userid,
+        stockid: stockid,
+        holding: holding,
+        status: status
+    })
+    let persistedEntry = await entry.save()
+    if(persistedEntry != null) {
+        res.redirect('/users/mshf-edit')
+    } else {
+        res.render('users/mshf-add',{message: 'Unable to add holding'})
+    }
+})
 
 router.post('/personal', async (req,res) => {
     let userid = req.body.userid
