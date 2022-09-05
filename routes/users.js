@@ -38,6 +38,7 @@ router.get('/mshf-add', async (req,res) => {
 
 router.get('/mshf-edit', async (req,res) => {
     let holders = await models.Mshf.findAll()
+    // let users = await models.findAll()
     res.render('users/mshf-edit', {holders: holders})
 })
 
@@ -120,6 +121,22 @@ router.get('/accountdetails/:userId', async (req,res) => {
 })
 
 // POST Pages
+
+router.post('/mshf-holding/:id', async (req,res) => {
+    let mshfid = req.body.id
+    let holding = req.body.holding
+    let status = req.body.status
+
+    let result = await models.Mshf.update({
+        holding: holding,
+        status: status
+    },{
+        where: {
+            id: mshfid
+        }
+    })
+    res.redirect('/users/mshf-edit')
+})
 
 router.post('/stock-add', async (req,res) => {
     let name = req.body.name
