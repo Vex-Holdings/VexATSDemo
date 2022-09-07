@@ -17,3 +17,7 @@
 .greentext {
     color: green;
 }
+
+th, td {
+    padding: 5px;
+}

@@ -84,6 +84,29 @@ router.get('/dashboard', async (req,res) => {
             userid: id
         }
     })
+    let orders = await models.Order.findAll({
+        where: {
+            userid: id
+        }
+    })
+    let bids = await models.Order.findAll({
+        where: {
+            stockid: 1,
+            type: 'buy'
+        },
+        order: [
+            ['price', 'DESC'],
+        ]
+    })
+    let asks = await models.Order.findAll({
+        where: {
+            stockid: 1,
+            type: 'sell'
+        },
+        order: [
+            ['price', 'ASC'],
+        ]
+    })
     let name = user.firstname + " " + user.lastname
     let status = user.status
     let accounttype = user.accounttype
@@ -94,7 +117,7 @@ router.get('/dashboard', async (req,res) => {
     } else if(status == 'pending') {
         res.send(`Hi ${name}, your application requires additional information. We will contact you shortly.`)
     } else if(status == 'approved') {
-        res.render('users/dashboard',{holdings: holdings})
+        res.render('users/dashboard',{holdings: holdings, orders: orders, bids: bids, asks: asks})
     } else {
         res.send(`Hi ${name}! You are ready for the <a href="/users/market">market page</a>`)
     }
