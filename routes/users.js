@@ -79,7 +79,12 @@ router.get('/dashboard', async (req,res) => {
             id: id
         }
     })
-    let name = user.firstname
+    let holdings = await models.Mshf.findAll({
+        where: {
+            userid: id
+        }
+    })
+    let name = user.firstname + " " + user.lastname
     let status = user.status
     let accounttype = user.accounttype
     if(status == 'user') {
@@ -89,7 +94,7 @@ router.get('/dashboard', async (req,res) => {
     } else if(status == 'pending') {
         res.send(`Hi ${name}, your application requires additional information. We will contact you shortly.`)
     } else if(status == 'approved') {
-        res.send(`Hi ${name}! You are approved and this will send you to the order page`)
+        res.render('users/dashboard',{holdings: holdings})
     } else {
         res.send(`Hi ${name}! You are ready for the <a href="/users/market">market page</a>`)
     }

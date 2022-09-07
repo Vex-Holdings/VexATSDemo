@@ -1,0 +1,30 @@
+{{> header}}
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        {{> menu}}
+        <h2>ATS Demo - Dashboard</h2>
+        <hr>
+        <h3>Markets</h3>
+        <p>This will come last</p>
+        <h3>Orders</h3>
+        <p>Grab all orders by userid and display them</p>
+        <h3>Holdings</h3>
+        <p>Grab all certificates from MSHF by userid and display them</p>
+        {{#holdings}}
+            <ul>
+                <div class="row">
+                    <div class="col-1">{{stockid}}</div>
+                    <div class="col-1">{{holding}}</div>
+                    <div class="col-1">{{status}}</div>
+                </div>
+            </ul>
+        {{/holdings}}
+        {{#message}}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    {{/message}}
+    </div>
+{{> footer}}
