@@ -1,0 +1,17 @@
+{{> header}}
+    <title>Orders</title>
+</head>
+<body>
+    <div class="container">
+        {{> menu}}
+        <h2>ATS Demo - Order Page</h2>
+        <hr>
+        <p>Hi {{name}}, give us a minute. <br />
+        This will become a form to add to the Orders Table.</p>
+        {{#message}}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+        {{/message}}
+    </div>
+{{> footer}}

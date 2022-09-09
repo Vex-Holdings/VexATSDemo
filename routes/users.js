@@ -6,6 +6,18 @@ const models = require('../models')
 
 // GET Pages
 
+router.get('/orders', async (req,res) => {
+    let session = req.session
+    let id = session.user.userId
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let name = user.firstname + " " + user.lastname
+    res.render('users/orders', {name: name})
+})
+
 router.get('/regulator', async (req,res) => {
     let session = req.session
     let id = session.user.userId
@@ -50,9 +62,9 @@ router.get('/mshf-add', async (req,res) => {
 })
 
 router.get('/mshf-edit', async (req,res) => {
+    let users = await models.User.findAll()
     let holders = await models.Mshf.findAll()
-    // let users = await models.findAll()
-    res.render('users/mshf-edit', {holders: holders})
+    res.render('users/mshf-edit', {holders: holders, users: users})
 })
 
 router.get('/chart', (req,res) => {
