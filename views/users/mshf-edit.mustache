@@ -6,27 +6,17 @@
         {{> principalmenu}}
         <h2>ATS Demo - MSHF Control Panel</h2>
         <hr>
-        <div class="list-group">
-            <ul>
-                {{#holders}}
-                <div class="row">
-                    <div class="col-1">
-                        {{userid}}
-                    </div>
-                    <div class="col-1">
-                        {{stockid}}
-                    </div>
-                    <div class="col-2">
-                        {{holding}}
-                    </div>
-                    <div class="col-2">
-                        {{status}}
-                    </div>
-                </div>
-                <input type="hidden" name="mshfid" value={{id}} />
-                <a href="/users/mshf-holding/{{id}}"><button class="btn btn-info">Edit</button></a>
-                {{/holders}}
-            </ul>
-        </div>
+        <table>
+            <tr><th>Customer</th><th>Stock</th><th>Amount</th><th>Status</th><th></th></tr>
+            {{#holders}}
+            <tr>
+                <td>{{userid}}</td>
+                <td>{{stockid}}</td>
+                <td>{{holding}}</td>
+                <td>{{status}}</td>
+                <td><a href="/users/mshf-holding/{{id}}"><button class="btn btn-info">Edit</button></a></td>
+            </tr>
+        {{/holders}}
+        </table>
     </div>
 {{> footer}}   
