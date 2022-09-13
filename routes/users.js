@@ -1,11 +1,71 @@
 const express = require('express')
 const { sequelize, Sequelize } = require('../models')
 const router = express.Router()
+const {CanvasRenderService} = require('chartjs-node-canvas')
 // const chart = require('../middlewares/chart')
 
 const models = require('../models')
 
 // GET Pages
+
+router.get('/chart', async (req,res) => {
+    const width = 1000;
+    const height = 1000;
+    const chartCallback = (ChartJS) => {
+        console.log('chart built')
+    };
+    const canvasRenderService = new CanvasRenderService(width, height, chartCallback);
+    const createImage = async () => {
+        const configuration = {
+            type: 'bar',
+        data: {
+            labels: [10.00,
+                10.01,
+                10.02,
+                10.03,
+                10.04,
+                10.05,
+                10.06,
+                10.07,
+                10.08,
+                10.09,
+                10.10
+            ],
+            datasets: [{
+                label: 'Shares',
+                data: [0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                backgroundColor: ['gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray'
+            ]
+            }]
+        },
+        options:{}
+        }
+        const dataUrl = await canvasRenderService.renderToDataUrl(configuration);
+        return dataUrl;
+    }
+    res.render('users/chart', {mychart: createImage})
+})
 
 router.get('/orders', async (req,res) => {
     let session = req.session
@@ -65,10 +125,6 @@ router.get('/mshf-add', async (req,res) => {
 router.get('/mshf-edit', async (req,res) => {
     const results = await sequelize.query('SELECT u.firstname, u.lastname, m.holding, m.status, s.name FROM "Mshfs" m JOIN "Users" u ON m.userid = u.id JOIN "Stocks" s ON m.stockid = s.id', {type: Sequelize.QueryTypes.SELECT})
     res.render('users/mshf-edit', {holders: results})
-})
-
-router.get('/chart', (req,res) => {
-    res.render('users/chart')
 })
 
 router.get('/controlpanel', async (req,res) => {
