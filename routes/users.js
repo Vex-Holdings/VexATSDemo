@@ -1,7 +1,7 @@
 const express = require('express')
 const { sequelize, Sequelize } = require('../models')
 const router = express.Router()
-const {CanvasRenderService} = require('chartjs-node-canvas')
+// const {CanvasRenderService} = require('chartjs-node-canvas')
 // const chart = require('../middlewares/chart')
 
 const models = require('../models')
@@ -9,62 +9,8 @@ const models = require('../models')
 // GET Pages
 
 router.get('/chart', async (req,res) => {
-    const width = 1000;
-    const height = 1000;
-    const chartCallback = (ChartJS) => {
-        console.log('chart built')
-    };
-    const canvasRenderService = new CanvasRenderService(width, height, chartCallback);
-    const createImage = async () => {
-        const configuration = {
-            type: 'bar',
-        data: {
-            labels: [10.00,
-                10.01,
-                10.02,
-                10.03,
-                10.04,
-                10.05,
-                10.06,
-                10.07,
-                10.08,
-                10.09,
-                10.10
-            ],
-            datasets: [{
-                label: 'Shares',
-                data: [0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                backgroundColor: ['gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray'
-            ]
-            }]
-        },
-        options:{}
-        }
-        const dataUrl = await canvasRenderService.renderToDataUrl(configuration);
-        return dataUrl;
-    }
-    res.render('users/chart', {mychart: createImage})
+    let chartfill = [0,0,0,0,0,0,0,0,0,0,0]
+    res.render('users/chart', {chartfill: chartfill})
 })
 
 router.get('/orders', async (req,res) => {
