@@ -182,7 +182,7 @@ router.get('/accountdetails/:userId', async (req,res) => {
 
 // POST Pages
 
-router.post('/codbuy', async (req,res) => {
+router.post('/buycod', async (req,res) => {
     let session = req.session
     let id = session.user.userId
     let stockid = req.body.stock
@@ -196,7 +196,7 @@ router.post('/codbuy', async (req,res) => {
     })
     let response = await models.Stock.findByPk(stockid)
     let stock = response.dataValues
-    res.render('users/codbuy', {id: id, stock: stock, shares: shares, price: price, amount: amount, user: user})
+    res.render('users/buycod',{id: id, stock: stock, shares: shares, price: price, amount: amount, user: user})
 })
 
 router.post('/mshf-holding/:id', async (req,res) => {
