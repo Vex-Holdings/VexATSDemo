@@ -1,0 +1,27 @@
+{{> header}}
+    <title>COD Buy</title>
+</head>
+<body>
+    <div class="container">
+        {{> menu}}
+        <h2>ATS Demo - Order Funding and Approval</h2>
+        <hr>
+        <h3>Order Details</h3>
+        <table>
+            <tr><th>Buy/Sell</th><th>Stock Name</th><th>Shares</th><th>Limit</th></tr>
+            <tr><td>BUY</td><td>{{stock.name}}</td><td>{{shares}}</td><td>{{price}}</td></tr>
+        </table>
+        <h3>Funding/Settlement</h3>
+        <p>Per the Subscriber Agreement I, {{user.firstname}} {{user.lastname}}, agree to fund a Consideration on Demand Order at Flux Registry in my account in the amount of ${{amount}}.</p>
+        {{#message}}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+        {{/message}}
+    </div>
+{{> footer}}
+<!--
+        <tr></tr>
+        <th></th>
+        <td></td>
+        -->

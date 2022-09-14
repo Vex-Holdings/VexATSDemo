@@ -21,8 +21,13 @@ router.get('/orders', async (req,res) => {
             id: id
         }
     })
+    let stocks = await models.Stock.findAll({
+        where: {
+            status: "active"
+        }
+    })
     let name = user.firstname + " " + user.lastname
-    res.render('users/orders', {name: name})
+    res.render('users/orders', {name: name, stocks: stocks})
 })
 
 router.get('/regulator', async (req,res) => {
@@ -176,6 +181,23 @@ router.get('/accountdetails/:userId', async (req,res) => {
 })
 
 // POST Pages
+
+router.post('/codbuy', async (req,res) => {
+    let session = req.session
+    let id = session.user.userId
+    let stockid = req.body.stock
+    let shares = req.body.shares
+    let price = req.body.price
+    let amount = shares * price * 1.01
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let response = await models.Stock.findByPk(stockid)
+    let stock = response.dataValues
+    res.render('users/codbuy', {id: id, stock: stock, shares: shares, price: price, amount: amount, user: user})
+})
 
 router.post('/mshf-holding/:id', async (req,res) => {
     let mshfid = req.body.id

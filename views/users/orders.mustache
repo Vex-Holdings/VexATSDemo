@@ -8,6 +8,53 @@
         <hr>
         <p>Hi {{name}}, give us a minute. <br />
         This will become a form to add to the Orders Table.</p>
+        <h3>Buy Order</h3>
+        <form action="/users/buycod" method="POST">
+            <table>
+                <tr><th>Stock</th><th>Shares</th><th>Price</th><th></th></tr>
+                <tr>
+                    <td>
+                         <select id="stock" name="stock" class="form-select">
+                        {{#stocks}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/stocks}}
+                    </td>
+                     <td>
+                        <input type="number" id="shares" name="shares" class="form-control" placeholder="Shares">
+                     </td>
+                     <td>
+                        <input type="number" id="price" name="price" class="form-control" placeholder="Price">
+                     </td>
+                     <td>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                     </td>
+                </tr>
+            </table>
+        </form>
+        <hr>
+        <h3>Sell Order</h3>
+        <form action="/users/sellcod" method="POST">
+            <table>
+                <tr><th>Stock</th><th>Shares</th><th>Price</th><th></th></tr>
+                <tr>
+                    <td>
+                         <select id="stock" name="stock" class="form-select">
+                        {{#stocks}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/stocks}}
+                    </td>
+                     <td>
+                        <input type="number" id="shares" name="shares" class="form-control" placeholder="Shares">
+                     </td>
+                     <td>
+                        <input type="number" id="price" name="price" class="form-control" placeholder="Price">
+                     </td>
+                     <td>
+                        <button type="submit" class="btn btn-danger">Submit</button>
+                     </td>
+                </tr>
+            </table>
+        </form>
         {{#message}}
             <div class="alert alert-danger" role="alert">
                 {{message}}
