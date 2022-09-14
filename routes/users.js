@@ -182,13 +182,31 @@ router.get('/accountdetails/:userId', async (req,res) => {
 
 // POST Pages
 
+router.post('/place-buy-order', async (req,res) => {
+    let session = req.session
+    let id = req.body.userId
+    let stockid = req.body.stockid
+    let type = req.body.type
+    let size = req.body.size
+    let price = req.body.price
+    let amount = req.body.amount
+    let status = req.body.status
+    let sellorders = await models.Stock.findAll({
+        where: {
+            stockid: stockid,
+            type: "sell"
+        }
+    })
+    console.log(sellorders)
+})
+
 router.post('/buycod', async (req,res) => {
     let session = req.session
     let id = session.user.userId
     let stockid = req.body.stock
     let shares = req.body.shares
     let price = req.body.price
-    let amount = shares * price * 1.01
+    let amount = (shares * price * 1.01).toFixed(2)
     let user = await models.User.findOne({
         where: {
             id: id
