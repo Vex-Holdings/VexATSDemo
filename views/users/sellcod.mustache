@@ -13,20 +13,19 @@
         </table>
         <h3>Funding/Settlement</h3>
         <p>Per the Subscriber Agreement I, {{user.firstname}} {{user.lastname}}, agree to fund a Consideration on Demand Order at Flux Registry in my account with the Certificate selected below:</p>
-        <table>
-            <tr><th>Select</th><th>Stock</th><th>Holding</th></tr>
-        {{#}}
-            <tr><td></td><td></td><td></td></tr>
-        {{/}}
-        </table>
-        <form action="/users/place-buy-order" method="POST">
+        <form action="/users/place-sell-order" method="POST">
+            <table>
+                <tr><th>Certificate</th><th>Holding</th><th>Status</th></tr>
+            {{#mshf}}
+                <tr><td><input type="checkbox" class="form-check-input" name="mshfid" value="{{id}}"></td><td>{{holding}}</td><td>{{status}}</td></tr>
+            {{/mshf}}
+            </table>
             <input type="hidden" name="stockid" value="{{stock.id}}" />
-            <input type="hidden" name="type" value="buy" />
+            <input type="hidden" name="type" value="sell" />
             <input type="hidden" name="size" value="{{shares}}" />
             <input type="hidden" name="price" value="{{price}}" />
-            <input type="hidden" name="amount" value="{{amount}}" />
             <input type="hidden" name="status" value="funded" />
-            <button type="submit" class="btn btn-success">Place Buy Order and Fund</button>
+            <button type="submit" class="btn btn-danger">Place Sell Order and Fund</button>
         </form>
         {{#message}}
             <div class="alert alert-danger" role="alert">

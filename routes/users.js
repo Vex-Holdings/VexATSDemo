@@ -187,6 +187,38 @@ router.get('/accountdetails/:userId', async (req,res) => {
 
 // POST Pages
 
+router.post('/place-sell-order', async (req,res) => {
+    let session = req.session
+    let id = session.user.userId
+    let stockid = req.body.stockid
+    let type = req.body.type
+    let size = req.body.size
+    let price = req.body.price
+    let mshfid = req.body.mshfid
+    let status = req.body.status
+    
+    let newSellOrder = await models.Order.build({
+        userid: id,
+        stockid: stockid,
+        type: type,
+        size: size,
+        price: price,
+        mshfid: mshfid
+    })
+    let newCodSell = await models.Codsell.build({
+        mshfid: mshfid,
+        amount: size,
+        status: status
+    })
+    let persistedSellOrder = await newSellOrder.save()
+    let persistedCodSell = await newCodSell.save()
+    if(persistedSellOrder != null && persistedCodSell != null) {
+        res.redirect('/users/dashboard')
+    } else {
+        res.render('user/sellcod',{message: 'We had a problem.'} )
+    }
+})
+
 router.post('/place-buy-order', async (req,res) => {
     let session = req.session
     let id = session.user.userId
@@ -196,14 +228,7 @@ router.post('/place-buy-order', async (req,res) => {
     let price = req.body.price
     let amount = req.body.amount
     let status = req.body.status
-    /*
-    let sellorders = await models.Stock.findAll({
-        where: {
-            stockid: stockid,
-            type: "sell"
-        }
-    })
-    */
+    
     let newBuyOrder = await models.Order.build({
         userid: id,
         stockid: stockid,
@@ -226,13 +251,11 @@ router.post('/place-buy-order', async (req,res) => {
 })
 
 router.post('/sellcod', async (req,res) => {
-    /*
     let session = req.session
     let id = session.user.userId
     let stockid = req.body.stock
     let shares = req.body.shares
     let price = req.body.price
-    let amount = (shares * price * 1.01).toFixed(2)
     let user = await models.User.findOne({
         where: {
             id: id
@@ -240,8 +263,15 @@ router.post('/sellcod', async (req,res) => {
     })
     let response = await models.Stock.findByPk(stockid)
     let stock = response.dataValues
-    */
-    res.render('users/sellcod',{id: id, stock: stock, shares: shares, price: price, amount: amount, user: user})
+    let mshf = await models.Mshf.findAll({
+        where: {
+            userid: id,
+            stockid: stockid,
+            status: 'unrestricted'
+        }
+    })
+    
+    res.render('users/sellcod',{id: id, stock: stock, shares: shares, price: price, user: user, mshf: mshf})
 })
 
 router.post('/buycod', async (req,res) => {
