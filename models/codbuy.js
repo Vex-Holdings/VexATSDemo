@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Codbuy.init({
     userid: DataTypes.INTEGER,
-    amount: DataTypes.DOUBLE
+    amount: DataTypes.DOUBLE,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Codbuy',

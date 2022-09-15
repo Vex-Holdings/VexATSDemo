@@ -7,7 +7,24 @@
         <h2>ATS Demo - Dashboard</h2>
         <hr>
         <h3>Markets</h3>
-        <p>This will come last</p>
+        <table>
+            <tr><th class="redtext">Offers</th><th>Size</th><th>Price</th></tr>
+        {{#asks}}
+            <tr><td></td><td>{{size}}</td><td>{{price}}</td></tr>
+        {{/asks}}
+        </table>
+        <table>
+            <tr><th class="greentext">Bids</th><th>Size</th><th>Price</th></tr>
+        {{#bids}}
+            <tr><td></td><td>{{size}}</td><td>{{price}}</td></tr>
+        {{/bids}}
+        </table>
+        <table>
+            <tr><th>Trades</th><th>Size</th><th>Price</th></tr>
+        {{#trades}}
+            <tr><td></td><td>{{size}}</td><td>{{price}}</td></tr>
+        {{/trades}}
+        </table>
         <!--
         <tr></tr>
         <th></th>

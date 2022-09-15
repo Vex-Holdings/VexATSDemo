@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Codsell.init({
     mshfid: DataTypes.INTEGER,
-    amount: DataTypes.INTEGER
+    amount: DataTypes.INTEGER,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Codsell',

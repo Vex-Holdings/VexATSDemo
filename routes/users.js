@@ -126,6 +126,11 @@ router.get('/dashboard', async (req,res) => {
             ['price', 'ASC'],
         ]
     })
+    let trades = await models.Match.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    })
     let name = user.firstname + " " + user.lastname
     let status = user.status
     let accounttype = user.accounttype
@@ -136,7 +141,7 @@ router.get('/dashboard', async (req,res) => {
     } else if(status == 'pending') {
         res.send(`Hi ${name}, your application requires additional information. We will contact you shortly.`)
     } else if(status == 'approved') {
-        res.render('users/dashboard',{holdings: holdings, orders: orders, bids: bids, asks: asks})
+        res.render('users/dashboard',{holdings: holdings, orders: orders, bids: bids, asks: asks, trades: trades})
     } else {
         res.send(`Hi ${name}! You are ready for the <a href="/users/market">market page</a>`)
     }
@@ -184,20 +189,40 @@ router.get('/accountdetails/:userId', async (req,res) => {
 
 router.post('/place-buy-order', async (req,res) => {
     let session = req.session
-    let id = req.body.userId
+    let id = session.user.userId
     let stockid = req.body.stockid
     let type = req.body.type
     let size = req.body.size
     let price = req.body.price
     let amount = req.body.amount
     let status = req.body.status
+    /*
     let sellorders = await models.Stock.findAll({
         where: {
             stockid: stockid,
             type: "sell"
         }
     })
-    console.log(sellorders)
+    */
+    let newBuyOrder = await models.Order.build({
+        userid: id,
+        stockid: stockid,
+        type: type,
+        size: size,
+        price: price,
+    })
+    let newCodBuy = await models.Codbuy.build({
+        userid: id,
+        amount: amount,
+        status: status
+    })
+    let persistedBuyOrder = await newBuyOrder.save()
+    let persistedCodBuy = await newCodBuy.save()
+    if(persistedBuyOrder != null && persistedCodBuy != null) {
+        res.redirect('/users/dashboard')
+    } else {
+        res.render('user/buycod',{message: 'We had a problem.'} )
+    }
 })
 
 router.post('/buycod', async (req,res) => {
