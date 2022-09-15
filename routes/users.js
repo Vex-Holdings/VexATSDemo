@@ -225,6 +225,25 @@ router.post('/place-buy-order', async (req,res) => {
     }
 })
 
+router.post('/sellcod', async (req,res) => {
+    /*
+    let session = req.session
+    let id = session.user.userId
+    let stockid = req.body.stock
+    let shares = req.body.shares
+    let price = req.body.price
+    let amount = (shares * price * 1.01).toFixed(2)
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let response = await models.Stock.findByPk(stockid)
+    let stock = response.dataValues
+    */
+    res.render('users/sellcod',{id: id, stock: stock, shares: shares, price: price, amount: amount, user: user})
+})
+
 router.post('/buycod', async (req,res) => {
     let session = req.session
     let id = session.user.userId
