@@ -6,14 +6,12 @@
         {{> menu}}
         <h2>ATS Demo - Dashboard</h2>
         <hr>
-        <h3>Markets</h3>
+        <h3>Market - ABC SaaS Inc</h3>
         <table>
             <tr><th class="redtext">Offers</th><th>Size</th><th>Price</th></tr>
         {{#asks}}
             <tr><td></td><td>{{size}}</td><td>{{price}}</td></tr>
         {{/asks}}
-        </table>
-        <table>
             <tr><th class="greentext">Bids</th><th>Size</th><th>Price</th></tr>
         {{#bids}}
             <tr><td></td><td>{{size}}</td><td>{{price}}</td></tr>
@@ -22,7 +20,7 @@
         <table>
             <tr><th>Trades</th><th>Size</th><th>Price</th></tr>
         {{#trades}}
-            <tr><td></td><td>{{size}}</td><td>{{price}}</td></tr>
+            <tr><td>{{id}}</td><td>{{size}}</td><td>{{price}}</td></tr>
         {{/trades}}
         </table>
         <!--
@@ -34,7 +32,7 @@
         <table>
             <tr><th>Stock</th><th>Type</th><th>Size</th><th>Price</th></tr>
         {{#orders}}
-            <tr><td>{{stockid}}</td><td>{{type}}</td><td>{{size}}</td><td>${{price}}</td></tr>
+            <tr><td>{{name}}</td><td>{{type}}</td><td>{{size}}</td><td>${{price}}</td></tr>
         {{/orders}}
         </table>
         <a href="/users/orders"><button class="btn btn-info">Go to Order Page</button></a>
@@ -42,7 +40,7 @@
         <table>
             <tr><th>Stock</th><th>Holding</th><th>Status</th></tr>
         {{#holdings}}
-            <tr><td>{{stockid}}</td><td>{{holding}}</td><td>{{status}}</td></tr>
+            <tr><td>{{name}}</td><td>{{holding}}</td><td>{{status}}</td></tr>
         {{/holdings}}
         </table>
         {{#message}}
