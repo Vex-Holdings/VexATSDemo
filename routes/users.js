@@ -84,14 +84,18 @@ router.get('/controlpanel', async (req,res) => {
             status: ['submitted', 'pending']
         }
     })
-    res.render('users/controlpanel', {users: users})
+    let matches = await models.Match.findAll()
+    let orders = await sequelize.query('SELECT o.id, u.firstname, u.lastname, s.name, o.type, o.size, o.price, o.mshfid FROM "Orders" o JOIN "Users" u ON o.userid = u.id JOIN "Stocks" s ON o.stockid = s.id', {type: Sequelize.QueryTypes.SELECT})
+    let codlogs = await models.Codlog.findAll()
+    let codbuys = await sequelize.query('SELECT c.id, u.firstname, u.lastname, c.amount, c.status FROM "Codbuys" c JOIN "Users" u ON c.userid = u.id', {type: Sequelize.QueryTypes.SELECT})
+    let codsells = await models.Codsell.findAll()
+    res.render('users/controlpanel', {users: users, matches: matches, orders: orders, codlogs: codlogs, codbuys: codbuys, codsells: codsells})
 })
 
 
 router.get('/dashboard', async (req,res) => {
     
     let session = req.session
-        
     let id = session.user.userId
     let user = await models.User.findOne({
         where: {
@@ -100,7 +104,6 @@ router.get('/dashboard', async (req,res) => {
     })
     
     let holdings = await sequelize.query('SELECT m.holding, m.status, s.name FROM "Mshfs" m JOIN "Stocks" s ON m.stockid = s.id WHERE m.userid = ' + id, {type: Sequelize.QueryTypes.SELECT})
-    
     let orders = await sequelize.query('SELECT o.type, o.size, o.price, s.name FROM "Orders" o JOIN "Stocks" s ON o.stockid = s.id WHERE o.userid = ' + id, {type: Sequelize.QueryTypes.SELECT})
     
     let bids = await models.Order.findAll({

@@ -33,6 +33,76 @@
                 {{/users}}        
             </ul>
         </div>
+        <h3>Trade Matches</h3>
+        <table>
+            <tr><th>Index</th><th>Buy Order</th><th>Sell Order</th><th>Shares</th><th>Price</th><th>Status</th></tr>
+            {{#matches}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{buyid}}</td>
+            <td>{{sellid}}</td>
+            <td>{{size}}</td>
+            <td>{{price}}</td>
+            <td>{{status}}</td>
+            </tr>
+            {{/matches}}
+        </table>
+        <hr>
+        <h3>Orders</h3>
+        <table>
+            <tr><th>Index</th><th>User</th><th>Stock</th><th>Buy/Sell</th><th>Shares</th><th>Price</th><th>MSHF Cert</th></tr>
+            {{#orders}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{firstname}} {{lastname}}</td>
+            <td>{{name}}</td>
+            <td>{{type}}</td>
+            <td>{{size}}</td>
+            <td>{{price}}</td>
+            <td>{{mshfid}}</td>
+            </tr>
+            {{/orders}}
+        </table>
+        <hr>
+        <h3>TA Ops - COD Log</h3>
+        <table>
+            <tr><th>Index</th><th>COD Sell</th><th>COD Buy</th><th>Shares</th><th>Amount</th></tr>
+            {{#codlogs}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{sellid}}</td>
+            <td>{{buyid}}</td>
+            <td>{{shares}}</td>
+            <td>{{dollars}}</td>
+            </tr>
+            {{/codlogs}}
+        </table>
+        <hr>
+        <h3>TA Ops - COD Buys</h3>
+        <table>
+            <tr><th>Index</th><th>User</th><th>Amount</th><th>Status</th></tr>
+            {{#codbuys}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{firstname}} {{lastname}}</td>
+            <td>{{amount}}</td>
+            <td>{{status}}</td>
+            </tr>
+            {{/codbuys}}
+        </table>
+        <hr>
+        <h3>TA Ops - COD Sells</h3>
+        <table>
+            <tr><th>Index</th><th>MSHF Cert</th><th>Shares</th><th>Status</th></tr>
+            {{#codsells}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{mshfid}}</td>
+            <td>{{amount}}</td>
+            <td>{{status}}</td>
+            </tr>
+            {{/codsells}}
+        </table>
         {{#message}}
         <div class="alert alert-danger" role="alert">
             {{message}}
@@ -40,3 +110,8 @@
     {{/message}}
     </div>
 {{> footer}}
+<!--
+        <tr></tr>
+        <th></th>
+        <td></td>
+        -->
