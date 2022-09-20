@@ -198,7 +198,11 @@ router.post('/place-sell-order', async (req,res) => {
     let bestBid = await sequelize.query('SELECT MAX(price) as best_bid, size, id, userid FROM "Orders" WHERE type = "buy"', {type: Sequelize.QueryTypes.SELECT})
 
     if(price < bestBid[0]) {
+        // don't want to cross the market
         res.render('user/sellcod',{message: `Your offer price of $${price} is lower than the best bid of $${bestBid} which would cross the market.`})
+    } else if(price == bestBid[0] && id == bestBid[3]) {
+        // dont want to trade with ourselves
+        res.render('user/sellcod',{message: `Your offer price of $${price} would match with a bid you placed earlier, creating false volume.`})
     } else if(price == bestBid[0] && size > bestBid[1]) {
         // find out how much remains so that we can place a limit order for the balance at the end
         let remainingSize = size - bestBid[1]
@@ -409,6 +413,13 @@ router.post('/place-buy-order', async (req,res) => {
     let amount = req.body.amount
     let status = req.body.status
     
+    let bestAsk = await sequelize.query('SELECT MIN(price) as best_ask, size, id, userid, mshfid FROM "Orders" WHERE type = "sell"', {type: Sequelize.QueryTypes.SELECT})
+
+    if(price > bestAsk[0]) {
+        // don't want to cross the market
+        res.render('user/sellcod',{message: `Your bid price of $${price} is higher than the best offer of $${bestAsk} which would cross the market.`})
+    } 
+
     let newBuyOrder = await models.Order.build({
         userid: id,
         stockid: stockid,
