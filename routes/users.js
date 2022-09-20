@@ -195,23 +195,205 @@ router.post('/place-sell-order', async (req,res) => {
     let mshfid = req.body.mshfid
     let status = req.body.status
     
-    let newSellOrder = await models.Order.build({
-        userid: id,
-        stockid: stockid,
-        type: type,
-        size: size,
-        price: price,
-        mshfid: mshfid
-    })
-    let newCodSell = await models.Codsell.build({
-        mshfid: mshfid,
-        amount: size,
-        status: status
-    })
-    let persistedSellOrder = await newSellOrder.save()
-    let persistedCodSell = await newCodSell.save()
-    if(persistedSellOrder != null && persistedCodSell != null) {
-        res.redirect('/users/dashboard')
+    let bestBid = await sequelize.query('SELECT MAX(price) as best_bid, size, id, userid FROM "Orders" WHERE type = "buy"', {type: Sequelize.QueryTypes.SELECT})
+
+    if(price < bestBid[0]) {
+        res.render('user/sellcod',{message: `Your offer price of $${price} is lower than the best bid of $${bestBid} which would cross the market.`})
+    } else if(price == bestBid[0] && size > bestBid[1]) {
+        // find out how much remains so that we can place a limit order for the balance at the end
+        let remainingSize = size - bestBid[1]
+        // Start by creating the order so we can use the sellid to match the trade
+        let newSellOrder = await models.Order.build({
+            userid: id,
+            stockid: stockid,
+            type: type,
+            size: size,
+            price: price,
+            mshfid: mshfid
+        })
+        let newCodSell = await models.Codsell.build({
+            mshfid: mshfid,
+            amount: size,
+            status: status
+        })
+        let startingSellOrder = await newSellOrder.save()
+        let startingCodSell = await newCodSell.save()
+        if(startingSellOrder != null && startingCodSell != null) {
+            // Create a match of the newly created order and the bestBid
+            let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let buyid = bestBid[2]
+            let newMatch = await models.Match.build({
+                buyid: buyid,
+                sellid: sellid,
+                size: bestBid[1],
+                price: price,
+                status: 'matched'
+            })
+            let persistedMatch = await newMatch.save()
+            // change the status of the bestBid
+            let spendBuy = models.Order.update({
+                type: 'buy-filled'
+            },{
+                where: {
+                    id: buyid
+                }
+            })
+            let persistedSpendBuy = spendBuy.save()
+            // change the status of the startingSellOrder
+            let spendSell = models.Order.update({
+                type: 'sell-partial'
+            },{
+                where: {
+                    id: sellid
+                }
+            })
+            let persistedSpendSell = spendSell.save()
+            // create new sell order with unsold portion
+            let remainingSellOrder = await models.Order.build({
+                userid: id,
+                stockid: stockid,
+                type: type,
+                size: remainingSize,
+                price: price,
+                mshfid: mshfid //mshfid will update with TA ops
+            })
+            let persistedRemainingSellOrder = await remainingSellOrder.save()
+            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null && persistedRemainingSellOrder != null) {
+                res.redirect('/users/dashboard')
+            }
+        }
+    } else if(price == bestBid[0] && size < bestBid[1]) {
+        // find out how much remains so that we can update the buy order for the balance at the end
+        let remainingSize = bestBid[1] - size
+        // Start by creating the order so we can use the sellid to match the trade
+        let newSellOrder = await models.Order.build({
+            userid: id,
+            stockid: stockid,
+            type: type,
+            size: size,
+            price: price,
+            mshfid: mshfid
+        })
+        let newCodSell = await models.Codsell.build({
+            mshfid: mshfid,
+            amount: size,
+            status: status
+        })
+        let startingSellOrder = await newSellOrder.save()
+        let startingCodSell = await newCodSell.save()
+        if(startingSellOrder != null && startingCodSell != null) {
+            // Create a match of the newly created order and the bestBid
+            let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let buyid = bestBid[2]
+            let newMatch = await models.Match.build({
+                buyid: buyid,
+                sellid: sellid,
+                size: size,
+                price: price,
+                status: 'matched'
+            })
+            let persistedMatch = await newMatch.save()
+            // change the status of the bestBid
+            let spendBuy = models.Order.update({
+                type: 'buy-partial'
+            },{
+                where: {
+                    id: buyid
+                }
+            })
+            let persistedSpendBuy = spendBuy.save()
+            // change the status of the startingSellOrder
+            let spendSell = models.Order.update({
+                type: 'sell-filled'
+            },{
+                where: {
+                    id: sellid
+                }
+            })
+            let persistedSpendSell = spendSell.save()
+            // create new buy order with unbought portion
+            let remainingBuyOrder = await models.Order.build({
+                userid: bestBid[3],
+                stockid: stockid,
+                type: 'buy',
+                size: remainingSize,
+                price: price
+            })
+            let persistedRemainingBuyOrder = await remainingBuyOrder.save()
+            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null && persistedRemainingBuyOrder != null) {
+                res.redirect('/users/dashboard')
+            }
+        }
+    } else if(price == bestBid[0] && size == bestBid[1]) {
+        // Start by creating the order so we can use the sellid to match the trade
+        let newSellOrder = await models.Order.build({
+            userid: id,
+            stockid: stockid,
+            type: type,
+            size: size,
+            price: price,
+            mshfid: mshfid
+        })
+        let newCodSell = await models.Codsell.build({
+            mshfid: mshfid,
+            amount: size,
+            status: status
+        })
+        let startingSellOrder = await newSellOrder.save()
+        let startingCodSell = await newCodSell.save()
+        if(startingSellOrder != null && startingCodSell != null) {
+            // Create a match of the newly created order and the bestBid
+            let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let buyid = bestBid[2]
+            let newMatch = await models.Match.build({
+                buyid: buyid,
+                sellid: sellid,
+                size: size,
+                price: price,
+                status: 'matched'
+            })
+            let persistedMatch = await newMatch.save()
+            // change the status of the bestBid
+            let spendBuy = models.Order.update({
+                type: 'buy-filled'
+            },{
+                where: {
+                    id: buyid
+                }
+            })
+            let persistedSpendBuy = spendBuy.save()
+            // change the status of the startingSellOrder
+            let spendSell = models.Order.update({
+                type: 'sell-filled'
+            },{
+                where: {
+                    id: sellid
+                }
+            })
+            let persistedSpendSell = spendSell.save()
+            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null) {
+                res.redirect('/users/dashboard')
+            }
+        }
+    } else if(price > bestBid[0]) {
+        let newSellOrder = await models.Order.build({
+            userid: id,
+            stockid: stockid,
+            type: type,
+            size: size,
+            price: price,
+            mshfid: mshfid
+        })
+        let newCodSell = await models.Codsell.build({
+            mshfid: mshfid,
+            amount: size,
+            status: status
+        })
+        let persistedSellOrder = await newSellOrder.save()
+        let persistedCodSell = await newCodSell.save()
+        if(persistedSellOrder != null && persistedCodSell != null) {
+            res.redirect('/users/dashboard')
+        }
     } else {
         res.render('user/sellcod',{message: 'We had a problem.'} )
     }
