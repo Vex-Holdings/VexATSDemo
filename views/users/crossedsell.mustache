@@ -1,0 +1,15 @@
+{{> header}}
+    <title>Error: Crossed Markets</title>
+</head>
+<body>
+    <div class="container">
+        {{> menu}}
+        <h2>ATS Demo - Crossed Markets Error Message</h2>
+        <p>
+            Unfortunately, an offer of ${{price}} is lower than the best bid of ${{bidPrice}} which would "cross the markets".
+        </p>
+        <p>
+            <a href="/users/dashboard"><button class="btn btn-success">Return to Dashboard</button></a>
+        </p>
+    </div>
+{{> footer}}

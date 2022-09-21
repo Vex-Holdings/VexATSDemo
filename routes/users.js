@@ -195,17 +195,21 @@ router.post('/place-sell-order', async (req,res) => {
     let mshfid = req.body.mshfid
     let status = req.body.status
     
-    let bestBid = await sequelize.query('SELECT MAX(price) as best_bid, size, id, userid FROM "Orders" WHERE type = "buy"', {type: Sequelize.QueryTypes.SELECT})
+    let bestBid = await sequelize.query('SELECT * FROM "Orders" WHERE type=\'buy\' ORDER BY price DESC LIMIT 1' , {type: Sequelize.QueryTypes.SELECT})
+    let bidId = bestBid[0]["id"]
+    let bidUserId = bestBid[0]["userid"]
+    let bidSize = bestBid[0]["size"]
+    let bidPrice = bestBid[0]["price"]
 
-    if(price < bestBid[0]) {
+    if(price < bidPrice) {
         // don't want to cross the market
-        res.render('user/sellcod',{message: `Your offer price of $${price} is lower than the best bid of $${bestBid} which would cross the market.`})
-    } else if(price == bestBid[0] && id == bestBid[3]) {
+        res.render('user/crossedsell',{price: price, bidPrice: bidPrice})
+    } else if(price == bidPrice && id == bidUserId) {
         // dont want to trade with ourselves
-        res.render('user/sellcod',{message: `Your offer price of $${price} would match with a bid you placed earlier, creating false volume.`})
-    } else if(price == bestBid[0] && size > bestBid[1]) {
+        res.render('user/sellpaint',{price: price})
+    } else if(price == bidPrice && size > bidSize) {
         // find out how much remains so that we can place a limit order for the balance at the end
-        let remainingSize = size - bestBid[1]
+        let remainingSize = size - bidSize
         // Start by creating the order so we can use the sellid to match the trade
         let newSellOrder = await models.Order.build({
             userid: id,
@@ -225,11 +229,11 @@ router.post('/place-sell-order', async (req,res) => {
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
             let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
-            let buyid = bestBid[2]
+            let buyid = bidId
             let newMatch = await models.Match.build({
                 buyid: buyid,
                 sellid: sellid,
-                size: bestBid[1],
+                size: bidSize,
                 price: price,
                 status: 'matched'
             })
@@ -266,9 +270,9 @@ router.post('/place-sell-order', async (req,res) => {
                 res.redirect('/users/dashboard')
             }
         }
-    } else if(price == bestBid[0] && size < bestBid[1]) {
+    } else if(price == bidPrice && size < bidSize) {
         // find out how much remains so that we can update the buy order for the balance at the end
-        let remainingSize = bestBid[1] - size
+        let remainingSize = bidSize - size
         // Start by creating the order so we can use the sellid to match the trade
         let newSellOrder = await models.Order.build({
             userid: id,
@@ -288,7 +292,7 @@ router.post('/place-sell-order', async (req,res) => {
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
             let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
-            let buyid = bestBid[2]
+            let buyid = bidId
             let newMatch = await models.Match.build({
                 buyid: buyid,
                 sellid: sellid,
@@ -317,7 +321,7 @@ router.post('/place-sell-order', async (req,res) => {
             let persistedSpendSell = spendSell.save()
             // create new buy order with unbought portion
             let remainingBuyOrder = await models.Order.build({
-                userid: bestBid[3],
+                userid: bidUserId,
                 stockid: stockid,
                 type: 'buy',
                 size: remainingSize,
@@ -328,7 +332,7 @@ router.post('/place-sell-order', async (req,res) => {
                 res.redirect('/users/dashboard')
             }
         }
-    } else if(price == bestBid[0] && size == bestBid[1]) {
+    } else if(price == bidPrice && size == bidSize) {
         // Start by creating the order so we can use the sellid to match the trade
         let newSellOrder = await models.Order.build({
             userid: id,
@@ -348,7 +352,7 @@ router.post('/place-sell-order', async (req,res) => {
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
             let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
-            let buyid = bestBid[2]
+            let buyid = bidId
             let newMatch = await models.Match.build({
                 buyid: buyid,
                 sellid: sellid,
@@ -379,7 +383,7 @@ router.post('/place-sell-order', async (req,res) => {
                 res.redirect('/users/dashboard')
             }
         }
-    } else if(price > bestBid[0]) {
+    } else if(price > bidPrice) {
         let newSellOrder = await models.Order.build({
             userid: id,
             stockid: stockid,
@@ -399,7 +403,7 @@ router.post('/place-sell-order', async (req,res) => {
             res.redirect('/users/dashboard')
         }
     } else {
-        res.render('user/sellcod',{message: 'We had a problem.'} )
+        res.render('user/buycod',{message: 'We had a problem.'} )
     }
 })
 
@@ -412,18 +416,23 @@ router.post('/place-buy-order', async (req,res) => {
     let price = req.body.price
     let amount = req.body.amount
     let status = req.body.status
+    // find out the best ask (ie. the lowest offer in the Order Book)
+    let bestAsk = await sequelize.query('SELECT * FROM "Orders" WHERE type=\'sell\' ORDER BY price ASC LIMIT 1' , {type: Sequelize.QueryTypes.SELECT})
+    let askId = bestAsk[0]["id"]
+    let askUserId = bestAsk[0]["userid"]
+    let askSize = bestAsk[0]["size"]
+    let askPrice = bestAsk[0]["price"]
+    let askMshfid = bestAsk[0]["mshfid"]
     
-    let bestAsk = await sequelize.query('SELECT MIN(price) as best_ask, size, id, userid, mshfid FROM "Orders" WHERE type = "sell"', {type: Sequelize.QueryTypes.SELECT})
-
-    if(price > bestAsk[0]) {
+    if(price > askPrice) {
         // don't want to cross the market
-        res.render('user/sellcod',{message: `Your bid price of $${price} is higher than the best offer of $${bestAsk} which would cross the market.`})
-    } else if(price == bestAsk[0] && id == bestAsk[3]) {
+        res.render('users/crossedbuy',{price: price, askPrice: askPrice})
+    } else if(price == askPrice && id == askUserId) {
         // dont want to trade with ourselves
-        res.render('user/sellcod',{message: `Your bid price of $${price} would match with an offer you placed earlier, creating false volume.`})
-    } else if(price == bestAsk[0] && size > bestAsk[1]) {
+        res.render('users/buypaint',{price: price})
+    } else if(price == askPrice && size > askSize) {
         // find out how much remains so that we can place a limit order for the balance at the end
-        let remainingSize = size - bestAsk[1]
+        let remainingSize = size - askSize
         // Start by creating the order so we can use the buyid to match the trade
         let newBuyOrder = await models.Order.build({
             userid: id,
@@ -442,11 +451,11 @@ router.post('/place-buy-order', async (req,res) => {
         if(startingBuyOrder != null && startingCodBuy != null) {
             // Create a match of the newly created order and the bestBid
             let buyid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
-            let sellid = bestBid[2]
+            let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
                 sellid: sellid,
-                size: bestAsk[1],
+                size: askSize,
                 price: price,
                 status: 'matched'
             })
@@ -482,9 +491,9 @@ router.post('/place-buy-order', async (req,res) => {
                 res.redirect('/users/dashboard')
             }
         }
-    } else if(price == bestAsk[0] && size < bestAsk[1]) {
+    } else if(price == askPrice && size < askSize) {
         // find out how much remains so that we can update the buy order for the balance at the end
-        let remainingSize = bestAsk[1] - size
+        let remainingSize = askSize - size
         // Start by creating the order so we can use the sellid to match the trade
         let newBuyOrder = await models.Order.build({
             userid: id,
@@ -503,7 +512,7 @@ router.post('/place-buy-order', async (req,res) => {
         if(startingBuyOrder != null && startingCodBuy != null) {
             // Create a match of the newly created order and the bestAsk
             let buyid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
-            let sellid = bestAsk[2]
+            let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
                 sellid: sellid,
@@ -532,19 +541,19 @@ router.post('/place-buy-order', async (req,res) => {
             let persistedSpendSell = spendSell.save()
             // create new sell order with unbought portion
             let remainingSellOrder = await models.Order.build({
-                userid: bestAsk[3],
+                userid: askUserId,
                 stockid: stockid,
                 type: 'sell',
                 size: remainingSize,
                 price: price,
-                mshfid: bestAsk[4]
+                mshfid: askMshfid
             })
             let persistedRemainingSellOrder = await remainingSellOrder.save()
             if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null && persistedRemainingSellOrder != null) {
                 res.redirect('/users/dashboard')
             }
         }
-    } else if(price == bestAsk[0] && size == bestAsk[1]) {
+    } else if(price == askPrice && size == askSize) {
         // Start by creating the order so we can use the buyid to match the trade
         let newBuyOrder = await models.Order.build({
             userid: id,
@@ -563,7 +572,7 @@ router.post('/place-buy-order', async (req,res) => {
         if(startingBuyOrder != null && startingCodBuy != null) {
             // Create a match of the newly created order and the bestAsk
             let buyid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
-            let sellid = bestAsk[2]
+            let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
                 sellid: sellid,
@@ -594,7 +603,7 @@ router.post('/place-buy-order', async (req,res) => {
                 res.redirect('/users/dashboard')
             }
         }
-    } else if(price > bestAsk[0]) {
+    } else if(price < askPrice) {
         let newBuyOrder = await models.Order.build({
             userid: id,
             stockid: stockid,
@@ -613,7 +622,7 @@ router.post('/place-buy-order', async (req,res) => {
             res.redirect('/users/dashboard')
         }
     } else {
-        res.render('user/buycod',{message: 'We had a problem.'} )
+        res.render('users/buycod',{message: 'We had a problem.'} )
     }
 })
 
