@@ -30,9 +30,17 @@
         -->
         <h3>Orders</h3>
         <table>
-            <tr><th>Stock</th><th>Type</th><th>Size</th><th>Price</th></tr>
+            <tr><th>Stock</th><th>Type</th><th>Size</th><th>Price</th><th>Cancel</th></tr>
         {{#orders}}
-            <tr><td>{{name}}</td><td>{{type}}</td><td>{{size}}</td><td>${{price}}</td></tr>
+            <tr><td>{{name}}</td><td>{{type}}</td><td>{{size}}</td><td>${{price}}</td>
+            <td>
+                <form action="/users/delete-order" method="POST">
+                    <input type="hidden" name="orderId" value="{{id}}" />
+                    <input type="hidden" name="orderType" value="{{type}}" />
+                    <button type="submit" class="btn btn-danger">Cancel</button>
+                </form>
+            </td>
+            </tr>
         {{/orders}}
         </table>
         <a href="/users/orders"><button class="btn btn-info">Go to Order Page</button></a>

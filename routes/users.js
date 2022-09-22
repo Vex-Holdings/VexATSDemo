@@ -111,7 +111,7 @@ router.get('/dashboard', async (req,res) => {
     })
     
     let holdings = await sequelize.query('SELECT m.holding, m.status, s.name FROM "Mshfs" m JOIN "Stocks" s ON m.stockid = s.id WHERE m.userid = ' + id, {type: Sequelize.QueryTypes.SELECT})
-    let orders = await sequelize.query('SELECT o.type, o.size, o.price, s.name FROM "Orders" o JOIN "Stocks" s ON o.stockid = s.id WHERE o.userid = ' + id, {type: Sequelize.QueryTypes.SELECT})
+    let orders = await sequelize.query('SELECT o.id, o.type, o.size, o.price, s.name FROM "Orders" o JOIN "Stocks" s ON o.stockid = s.id WHERE o.userid = ' + id + 'AND (o.type = \'buy\' OR o.type = \'sell\')', {type: Sequelize.QueryTypes.SELECT})
     
     let bids = await models.Order.findAll({
         where: {
@@ -192,6 +192,20 @@ router.get('/accountdetails/:userId', async (req,res) => {
 
 // POST Pages
 
+router.post('/delete-order',async (req,res) => {
+    let orderId = parseInt(req.body.orderId)
+    let orderType = req.body.orderType
+    let result = await models.Order.update({
+        type: orderType + '- user cancelled'
+    },{
+        where: {
+            id: orderId
+        }
+    })
+    // Need to add a models.Mshf.update to change the status of the certificate attached to the sell order back to "unrestricted" as soon as I change the place sell order to ensure that it is changed to "COD Initiated"
+    res.redirect('/users/dashboard')
+})
+
 router.post('/place-sell-order', async (req,res) => {
     let session = req.session
     let id = session.user.userId
@@ -229,7 +243,7 @@ router.post('/place-sell-order', async (req,res) => {
         let newCodSell = await models.Codsell.build({
             mshfid: mshfid,
             amount: size,
-            status: status
+            status: status // will need to change this to "COD Initiated"
         })
         let startingSellOrder = await newSellOrder.save()
         let startingCodSell = await newCodSell.save()
