@@ -194,7 +194,7 @@ router.post('/place-sell-order', async (req,res) => {
     let price = req.body.price
     let mshfid = req.body.mshfid
     let status = req.body.status
-    
+    // find out the best bid (ie. the highest bid in the Order Book)
     let bestBid = await sequelize.query('SELECT * FROM "Orders" WHERE type=\'buy\' ORDER BY price DESC LIMIT 1' , {type: Sequelize.QueryTypes.SELECT})
     let bidId = bestBid[0]["id"]
     let bidUserId = bestBid[0]["userid"]
