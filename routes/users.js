@@ -8,6 +8,13 @@ const models = require('../models')
 
 // GET Pages
 
+router.get('/testdbquery', async (req,res) => {
+    let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+    let sellid = result[0]["id"]
+    console.log(sellid)
+    res.render('users/testdbquery', {sellid: sellid})
+})
+
 router.get('/chart', async (req,res) => {
     let chartfill = [0,0,0,0,0,0,0,0,0,0,0]
     res.render('users/chart', {chartfill: chartfill})
@@ -228,7 +235,8 @@ router.post('/place-sell-order', async (req,res) => {
         let startingCodSell = await newCodSell.save()
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
-            let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+            let sellid = result[0]["id"]
             let buyid = bidId
             let newMatch = await models.Match.build({
                 buyid: buyid,
@@ -291,7 +299,8 @@ router.post('/place-sell-order', async (req,res) => {
         let startingCodSell = await newCodSell.save()
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
-            let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+            let sellid = result[0]["id"]
             let buyid = bidId
             let newMatch = await models.Match.build({
                 buyid: buyid,
@@ -351,7 +360,8 @@ router.post('/place-sell-order', async (req,res) => {
         let startingCodSell = await newCodSell.save()
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
-            let sellid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+            let sellid = result[0]["id"]
             let buyid = bidId
             let newMatch = await models.Match.build({
                 buyid: buyid,
@@ -450,7 +460,8 @@ router.post('/place-buy-order', async (req,res) => {
         let startingCodBuy = await newCodBuy.save()
         if(startingBuyOrder != null && startingCodBuy != null) {
             // Create a match of the newly created order and the bestBid
-            let buyid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+            let buyid = result[0]["id"]
             let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
@@ -511,7 +522,8 @@ router.post('/place-buy-order', async (req,res) => {
         let startingCodBuy = await newCodBuy.save()
         if(startingBuyOrder != null && startingCodBuy != null) {
             // Create a match of the newly created order and the bestAsk
-            let buyid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+            let buyid = result[0]["id"]
             let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
@@ -571,7 +583,8 @@ router.post('/place-buy-order', async (req,res) => {
         let startingCodBuy = await newCodBuy.save()
         if(startingBuyOrder != null && startingCodBuy != null) {
             // Create a match of the newly created order and the bestAsk
-            let buyid = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1')
+            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+            let buyid = result[0]["id"]
             let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
