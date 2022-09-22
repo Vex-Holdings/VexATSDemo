@@ -121,7 +121,7 @@ router.get('/dashboard', async (req,res) => {
             type: 'sell'
         },
         order: [
-            ['price', 'ASC'],
+            ['price', 'DESC'],
         ]
     })
     let trades = await models.Match.findAll({
