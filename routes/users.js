@@ -8,6 +8,11 @@ const models = require('../models')
 
 // GET Pages
 
+router.get('/ta-clear', async (req,res) => {
+
+    res.render('users/ta-clear')
+})
+
 router.get('/testdbquery', async (req,res) => {
     let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
     let sellid = result[0]["id"]
