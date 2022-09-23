@@ -268,7 +268,7 @@ router.post('/place-sell-order', async (req,res) => {
                     id: buyid
                 }
             })
-            let persistedSpendBuy = spendBuy.save()
+            // let persistedSpendBuy = spendBuy.save()
             // change the status of the startingSellOrder
             let spendSell = models.Order.update({
                 type: 'sell-partial'
@@ -277,7 +277,7 @@ router.post('/place-sell-order', async (req,res) => {
                     id: sellid
                 }
             })
-            let persistedSpendSell = spendSell.save()
+            // let persistedSpendSell = spendSell.save()
             // create new sell order with unsold portion
             let remainingSellOrder = await models.Order.build({
                 userid: id,
@@ -288,7 +288,7 @@ router.post('/place-sell-order', async (req,res) => {
                 mshfid: mshfid //mshfid will update with TA ops
             })
             let persistedRemainingSellOrder = await remainingSellOrder.save()
-            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null && persistedRemainingSellOrder != null) {
+            if(persistedMatch != null && spendBuy != null && spendSell != null && persistedRemainingSellOrder != null) {
                 res.redirect('/users/dashboard')
             }
         }
@@ -332,7 +332,7 @@ router.post('/place-sell-order', async (req,res) => {
                     id: buyid
                 }
             })
-            let persistedSpendBuy = spendBuy.save()
+            // let persistedSpendBuy = spendBuy.save()
             // change the status of the startingSellOrder
             let spendSell = models.Order.update({
                 type: 'sell-filled'
@@ -341,7 +341,7 @@ router.post('/place-sell-order', async (req,res) => {
                     id: sellid
                 }
             })
-            let persistedSpendSell = spendSell.save()
+            // let persistedSpendSell = spendSell.save()
             // create new buy order with unbought portion
             let remainingBuyOrder = await models.Order.build({
                 userid: bidUserId,
@@ -351,7 +351,7 @@ router.post('/place-sell-order', async (req,res) => {
                 price: price
             })
             let persistedRemainingBuyOrder = await remainingBuyOrder.save()
-            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null && persistedRemainingBuyOrder != null) {
+            if(persistedMatch != null && spendBuy != null && spendSell != null && persistedRemainingBuyOrder != null) {
                 res.redirect('/users/dashboard')
             }
         }
@@ -393,7 +393,7 @@ router.post('/place-sell-order', async (req,res) => {
                     id: buyid
                 }
             })
-            let persistedSpendBuy = spendBuy.save()
+            // let persistedSpendBuy = spendBuy.save()
             // change the status of the startingSellOrder
             let spendSell = models.Order.update({
                 type: 'sell-filled'
@@ -402,8 +402,8 @@ router.post('/place-sell-order', async (req,res) => {
                     id: sellid
                 }
             })
-            let persistedSpendSell = spendSell.save()
-            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null) {
+            // let persistedSpendSell = spendSell.save()
+            if(persistedMatch != null && spendBuy != null && spendSell != null) {
                 res.redirect('/users/dashboard')
             }
         }
@@ -493,7 +493,7 @@ router.post('/place-buy-order', async (req,res) => {
                     id: sellid
                 }
             })
-            let persistedSpendSell = spendSell.save()
+            // let persistedSpendSell = spendSell.save()
             // change the status of the startingBuyOrder
             let spendBuy = models.Order.update({
                 type: 'buy-partial'
@@ -502,7 +502,7 @@ router.post('/place-buy-order', async (req,res) => {
                     id: buyid
                 }
             })
-            let persistedSpendBuy = spendBuy.save()
+            // let persistedSpendBuy = spendBuy.save()
             // create new buy order for the left over bid
             let remainingBuyOrder = await models.Order.build({
                 userid: id,
@@ -512,7 +512,7 @@ router.post('/place-buy-order', async (req,res) => {
                 price: price
             })
             let persistedRemainingBuyOrder = await remainingBuyOrder.save()
-            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null && persistedRemainingBuyOrder != null) {
+            if(persistedMatch != null && spendBuy != null && spendSell != null && persistedRemainingBuyOrder != null) {
                 res.redirect('/users/dashboard')
             }
         }
@@ -555,7 +555,7 @@ router.post('/place-buy-order', async (req,res) => {
                     id: buyid
                 }
             })
-            let persistedSpendBuy = spendBuy.save()
+            // let persistedSpendBuy = spendBuy.save()
             // change the status of the bestAsk
             let spendSell = models.Order.update({
                 type: 'sell-partial'
@@ -564,7 +564,7 @@ router.post('/place-buy-order', async (req,res) => {
                     id: sellid
                 }
             })
-            let persistedSpendSell = spendSell.save()
+            // let persistedSpendSell = spendSell.save()
             // create new sell order with unbought portion
             let remainingSellOrder = await models.Order.build({
                 userid: askUserId,
@@ -575,7 +575,7 @@ router.post('/place-buy-order', async (req,res) => {
                 mshfid: askMshfid
             })
             let persistedRemainingSellOrder = await remainingSellOrder.save()
-            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null && persistedRemainingSellOrder != null) {
+            if(persistedMatch != null && spendBuy != null && spendSell != null && persistedRemainingSellOrder != null) {
                 res.redirect('/users/dashboard')
             }
         }
@@ -616,7 +616,7 @@ router.post('/place-buy-order', async (req,res) => {
                     id: buyid
                 }
             })
-            let persistedSpendBuy = spendBuy.save()
+            // let persistedSpendBuy = spendBuy.save()
             // change the status of the startingSellOrder
             let spendSell = models.Order.update({
                 type: 'sell-filled'
@@ -625,8 +625,8 @@ router.post('/place-buy-order', async (req,res) => {
                     id: sellid
                 }
             })
-            let persistedSpendSell = spendSell.save()
-            if(persistedMatch != null && persistedSpendBuy != null && persistedSpendSell != null) {
+            // let persistedSpendSell = spendSell.save()
+            if(persistedMatch != null && spendBuy != null && spendSell != null) {
                 res.redirect('/users/dashboard')
             }
         }
