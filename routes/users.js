@@ -14,10 +14,25 @@ router.get('/ta-clear', async (req,res) => {
 })
 
 router.get('/testdbquery', async (req,res) => {
-    let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
-    let sellid = result[0]["id"]
-    console.log(sellid)
-    res.render('users/testdbquery', {sellid: sellid})
+    const matchedOrders = await sequelize.query('SELECT * FROM "Matches" WHERE status=\'matched\'', {type: Sequelize.QueryTypes.SELECT})
+    const matchId = matchedOrders[0]["id"]
+    const matchBuyId = matchedOrders[0]["buyid"]
+    const matchSellId = matchedOrders[0]["sellid"]
+    const matchSize = matchedOrders[0]["size"]
+    const matchPrice = matchedOrders[0]["price"]
+    const matchStatus = matchedOrders[0]["status"]
+    const buyOrder = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
+    const sellOrder = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + matchSellId, {type: Sequelize.QueryTypes.SELECT})
+
+    console.log('id: ' + matchId)
+    console.log('buyid: ' + matchBuyId)
+    console.log('sellid: ' + matchSellId)
+    console.log('size: ' + matchSize)
+    console.log('price: $' + matchPrice)
+    console.log('status: ' + matchStatus)
+    console.log(buyOrder)
+    console.log(sellOrder)
+    // res.render('users/testdbquery', {})
 })
 
 router.get('/chart', async (req,res) => {
@@ -472,7 +487,7 @@ router.post('/place-buy-order', async (req,res) => {
         })
         let newCodBuy = await models.Codbuy.build({
             userid: id,
-            amount: size,
+            amount: amount,
             status: status
         })
         let startingBuyOrder = await newBuyOrder.save()
@@ -534,7 +549,7 @@ router.post('/place-buy-order', async (req,res) => {
         })
         let newCodBuy = await models.Codbuy.build({
             userid: id,
-            amount: size,
+            amount: amount,
             status: status
         })
         let startingBuyOrder = await newBuyOrder.save()
@@ -595,7 +610,7 @@ router.post('/place-buy-order', async (req,res) => {
         })
         let newCodBuy = await models.Codbuy.build({
             userid: id,
-            amount: size,
+            amount: amount,
             status: status
         })
         let startingBuyOrder = await newBuyOrder.save()
@@ -688,7 +703,7 @@ router.post('/buycod', async (req,res) => {
     let stockid = req.body.stock
     let shares = req.body.shares
     let price = req.body.price
-    let amount = (shares * price * 1.01).toFixed(2)
+    let amount = (shares * price * 1.005).toFixed(2)
     let user = await models.User.findOne({
         where: {
             id: id
