@@ -65,7 +65,15 @@
             <li>Record changes in COD Clear Table</li>
         </ol>
         <form action="/users/ta-clear" method="POST">
-            
+            <input type="hidden" name="codbuyid" value="{{codBuyId}}" />
+            <input type="hidden" name="codsellid" value="{{codSellId}}" />
+            <input type="hidden" name="size" value="{{matchSize}}" />
+            <input type="hidden" name="amount" value="{{codBuyAmount}}" />
+            <input type="hidden" name="debitid" value="{{sellOrderMshfId}}" />
+            <input type="hidden" name="buyerfee" value="{{buyEnough}}" />
+            <input type="hidden" name="sellerfee" value="{{sellerFees}}" />
+            <input type="hidden" name="proceeds" value="{{proceedsToSeller}}" />
+            <input type="hidden" name="changecertamount" value="{{newMshfHolding}}" />
         <button type="submit" class="btn btn-primary">Execute Clear</button>
         </form>
         {{#message}}
