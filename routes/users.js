@@ -267,6 +267,11 @@ router.get('/accountdetails/:userId', async (req,res) => {
 
 // POST Pages
 
+router.post('/ta-clear', async (req,res) => {
+
+    res.redirect('/users/controlpanel')
+})
+
 router.post('/delete-order',async (req,res) => {
     let orderId = parseInt(req.body.orderId)
     let orderType = req.body.orderType
