@@ -24,6 +24,8 @@ router.get('/ta-clear', async (req,res) => {
     const codBuy = await sequelize.query('SELECT * FROM "Codbuys" WHERE orderlink = ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
     const codBuyAmount = codBuy[0]["amount"]
     const codSell = await sequelize.query('SELECT * FROM "Codsells" WHERE mshfid = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
+    const bstatus = codBuy[0]["status"]
+    const sstatus = codSell[0]["status"]
     const codSellId = codSell[0]["id"]
     const codSellAmount = codSell[0]["amount"]
     const mshfidDetails = await sequelize.query('SELECT * FROM "Mshfs" WHERE id = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
@@ -35,7 +37,7 @@ router.get('/ta-clear', async (req,res) => {
     const sellerFees = parseFloat(matchConsideration - proceedsToSeller).toFixed(2)
     const totalFees = parseFloat(buyEnough) + parseFloat(sellerFees)
 
-    res.render('users/ta-clear')
+    res.render('users/ta-clear', {matchedOrders: matchedOrders, codBuy: codBuy, codSell: codSell, mshfidDetails: mshfidDetails, buyEnough: buyEnough, sellerFees: sellerFees, proceedsToSeller: proceedsToSeller, newMshfHolding: newMshfHolding, bstatus: bstatus, sstatus: sstatus, codBuyAmount: codBuyAmount, sellOrderUserId: sellOrderUserId, sellOrderMshfId: sellOrderMshfId, mshfidHolding: mshfidHolding, buyOrderUserId: buyOrderUserId, matchSize: matchSize})
 })
 
 router.get('/testdbquery', async (req,res) => {

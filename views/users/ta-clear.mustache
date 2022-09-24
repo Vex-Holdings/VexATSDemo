@@ -6,16 +6,67 @@
         {{> principalmenu}}
         <h2>ATS Demo - TA COD Clearing Control Panel</h2>
         <hr>
-        <form action="/users/stock-add" method="POST">
-            <div class="form-group">
-                <label class="form-label" for="name">Name</label>
-                <input type="text" name="name" class="form-control" id="name" />
-            </div>
-            <div class="form-group">
-                <label class="form-label" for="status">Status</label>
-                <input type="text" name="status" class="form-control" id="status" />
-            </div>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <h3>Match Report from Vex ATS</h3>
+        <!--
+        <table></table>
+        <tr></tr>
+        <th></th>
+        <td></td>
+        -->
+        <table>
+        <tr><th>Match ID</th><th>Buy Order #</th><th>Sell Order #</th><th>Size</th><th>Price</th><th>Status</th></tr>
+        {{#matchedOrders}}
+        <tr><td>{{id}}</td><td>{{buyid}}</td><td>{{sellid}}</td><td>{{size}}</td><td>{{price}}</td><td>{{status}}</td></tr>
+        {{/matchedOrders}}
+        </table>
+        <hr>
+        <h3>COD Buy Contract Record</h3>
+        <table>
+        <tr><th>COD Buy ID</th><th>Customer ID</th><th>Amount</th><th>Status</th><th>OrderLink</th></tr>
+        {{#codBuy}}
+        <tr><td>{{id}}</td><td>{{userid}}</td><td>{{amount}}</td><td>{{status}}</td><td>{{orderlink}}</td></tr>
+        {{/codBuy}}
+        </table>
+        <hr>
+        <h3>COD Sell Contract Record</h3>
+        <table>
+        <tr><th>COD Sell ID</th><th>Certificate ID</th><th>Shares</th><th>Status</th></tr>
+        {{#codSell}}
+        <tr><td>{{id}}</td><td>{{mshfid}}</td><td>{{amount}}</td><td>{{status}}</td></tr>
+        {{/codSell}}
+        </table>
+        <h3>Relevant Certificate Record</h3>
+        <table>
+        <tr><th>Certificate ID</th><th>Customer ID</th><th>Stock ID</th><th>Holding</th><th>Status</th></tr>
+        {{#mshfidDetails}}
+        <tr><td>{{id}}</td><td>{{userid}}</td><td>{{stockid}}</td><td>{{holding}}</td><td>{{status}}</td></tr>
+        {{/mshfidDetails}}
+        </table>
+        <hr>
+        <h3>TA Clearing Steps</h3>
+        <ol>
+            <li>Change COD Buy Contract Record Status from "{{bstatus}}" to "spent"</li>
+            <li>Change COD Sell Contract Record Status from "{{sstatus}}" to "spent"</li>
+            <li>Release funds of ${{codBuyAmount}} to: 
+                <ul>
+                    <li>Buy side fee: ${{buyEnough}}</li>
+                    <li>Sell side fee: ${{sellerFees}}</li>
+                    <li>Credit Customer id: {{sellOrderUserId}} amount: ${{proceedsToSeller}}</li>
+                </ul>
+            </li>
+            <li>Update Certificates:
+                <ul>
+                    <li>Debit Certificate #{{sellOrderMshfId}} representing {{mshfidHolding}} shares</li>
+                    <li>Credit New Certificate to Customer id: {{sellOrderUserId}} representing {{newMshfHolding}} shares</li>
+                    <li>Credit New Certificate to Customer id: {{buyOrderUserId}} representing {{matchSize}} shares</li>
+                </ul>
+            </li>
+            <li>Update COD Logs Table</li>
+            <li>Record changes in COD Clear Table</li>
+        </ol>
+        <form action="/users/ta-clear" method="POST">
+            
+        <button type="submit" class="btn btn-primary">Execute Clear</button>
         </form>
         {{#message}}
             <div class="alert alert-danger" role="alert">
