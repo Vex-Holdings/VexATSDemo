@@ -9,6 +9,31 @@ const models = require('../models')
 // GET Pages
 
 router.get('/ta-clear', async (req,res) => {
+    const matchedOrders = await sequelize.query('SELECT * FROM "Matches" WHERE status=\'matched\'', {type: Sequelize.QueryTypes.SELECT})
+    const matchId = matchedOrders[0]["id"]
+    const matchBuyId = matchedOrders[0]["buyid"]
+    const matchSellId = matchedOrders[0]["sellid"]
+    const matchSize = matchedOrders[0]["size"]
+    const matchPrice = matchedOrders[0]["price"]
+    const matchStatus = matchedOrders[0]["status"]
+    const buyOrder = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
+    const sellOrder = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + matchSellId, {type: Sequelize.QueryTypes.SELECT})
+    const buyOrderUserId = buyOrder[0]["userid"]
+    const sellOrderUserId = sellOrder[0]["userid"]
+    const sellOrderMshfId = sellOrder[0]["mshfid"]
+    const codBuy = await sequelize.query('SELECT * FROM "Codbuys" WHERE orderlink = ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
+    const codBuyAmount = codBuy[0]["amount"]
+    const codSell = await sequelize.query('SELECT * FROM "Codsells" WHERE mshfid = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
+    const codSellId = codSell[0]["id"]
+    const codSellAmount = codSell[0]["amount"]
+    const mshfidDetails = await sequelize.query('SELECT * FROM "Mshfs" WHERE id = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
+    const mshfidHolding = mshfidDetails[0]["holding"]
+    const matchConsideration = matchSize * matchPrice
+    const buyEnough = parseFloat(codBuyAmount - matchConsideration).toFixed(2)
+    const newMshfHolding = mshfidHolding - matchSize
+    const proceedsToSeller = parseFloat(matchConsideration * 0.995).toFixed(2)
+    const sellerFees = parseFloat(matchConsideration - proceedsToSeller).toFixed(2)
+    const totalFees = parseFloat(buyEnough) + parseFloat(sellerFees)
 
     res.render('users/ta-clear')
 })
@@ -23,16 +48,44 @@ router.get('/testdbquery', async (req,res) => {
     const matchStatus = matchedOrders[0]["status"]
     const buyOrder = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
     const sellOrder = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + matchSellId, {type: Sequelize.QueryTypes.SELECT})
-
+    const buyOrderUserId = buyOrder[0]["userid"]
+    const sellOrderUserId = sellOrder[0]["userid"]
+    const sellOrderMshfId = sellOrder[0]["mshfid"]
+    const codBuy = await sequelize.query('SELECT * FROM "Codbuys" WHERE orderlink = ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
+    const codBuyAmount = codBuy[0]["amount"]
+    const codSell = await sequelize.query('SELECT * FROM "Codsells" WHERE mshfid = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
+    const codSellId = codSell[0]["id"]
+    const codSellAmount = codSell[0]["amount"]
+    const mshfidDetails = await sequelize.query('SELECT * FROM "Mshfs" WHERE id = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
+    const mshfidHolding = mshfidDetails[0]["holding"]
+    const matchConsideration = matchSize * matchPrice
+    const buyEnough = parseFloat(codBuyAmount - matchConsideration).toFixed(2)
+    const newMshfHolding = mshfidHolding - matchSize
+    const proceedsToSeller = parseFloat(matchConsideration * 0.995).toFixed(2)
+    const sellerFees = parseFloat(matchConsideration - proceedsToSeller).toFixed(2)
+    const totalFees = parseFloat(buyEnough) + parseFloat(sellerFees)
+    
     console.log('id: ' + matchId)
     console.log('buyid: ' + matchBuyId)
     console.log('sellid: ' + matchSellId)
     console.log('size: ' + matchSize)
     console.log('price: $' + matchPrice)
     console.log('status: ' + matchStatus)
-    console.log(buyOrder)
-    console.log(sellOrder)
-    // res.render('users/testdbquery', {})
+    console.log('buyer user id: ' + buyOrderUserId)
+    console.log('seller user id: ' + sellOrderUserId)
+    console.log('seller mshfid: ' + sellOrderMshfId)
+    console.log('codBuyAmount: ' + codBuyAmount)
+    console.log('codSellId: ' + codSellId)
+    console.log('codSellAmount: ' + codSellAmount)
+    console.log('mshfidHolding: ' + mshfidHolding)
+    console.log('matchConsideration: ' + matchConsideration)
+    console.log('buyEnough: ' + buyEnough)
+    console.log('newMshfHolding: ' + newMshfHolding)
+    console.log('proceedsToSeller: ' + proceedsToSeller)
+    console.log('sellerFees: ' + sellerFees)
+    console.log('totalFees: ' + totalFees)
+    
+    res.redirect('/users/controlpanel')
 })
 
 router.get('/chart', async (req,res) => {
@@ -215,13 +268,39 @@ router.get('/accountdetails/:userId', async (req,res) => {
 router.post('/delete-order',async (req,res) => {
     let orderId = parseInt(req.body.orderId)
     let orderType = req.body.orderType
-    let result = await models.Order.update({
+    await models.Order.update({
         type: orderType + '- user cancelled'
     },{
         where: {
             id: orderId
         }
     })
+    if(orderType == 'buy') {
+        await models.Codbuy.update({
+            status: 'refund - user cancelled'
+        },{
+            where: {
+                orderlink: orderId
+            }
+        })
+    } else if (orderType == 'sell') {
+        const mshfresult = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + orderId , {type: Sequelize.QueryTypes.SELECT})
+        const mshfid = mshfresult[0]["mshfid"]
+        await models.Codsell.update({
+            status: 'refund - user cancelled'
+        },{
+            where: {
+                mshfid: mshfid
+            }
+        })
+        await models.Mshf.update({
+            status: 'unrestricted'
+        },{
+            where: {
+                id: mshfid
+            }
+        })
+    }
     // Need to add a models.Mshf.update to change the status of the certificate attached to the sell order back to "unrestricted" as soon as I change the place sell order to ensure that it is changed to "COD Initiated"
     res.redirect('/users/dashboard')
 })
@@ -235,6 +314,7 @@ router.post('/place-sell-order', async (req,res) => {
     let price = req.body.price
     let mshfid = req.body.mshfid
     let status = req.body.status
+    let mshfstatus = req.body.mshfstatus
     // find out the best bid (ie. the highest bid in the Order Book)
     let bestBid = await sequelize.query('SELECT * FROM "Orders" WHERE type=\'buy\' ORDER BY price DESC LIMIT 1' , {type: Sequelize.QueryTypes.SELECT})
     let bidId = bestBid[0]["id"]
@@ -263,10 +343,17 @@ router.post('/place-sell-order', async (req,res) => {
         let newCodSell = await models.Codsell.build({
             mshfid: mshfid,
             amount: size,
-            status: status // will need to change this to "COD Initiated"
+            status: status
         })
         let startingSellOrder = await newSellOrder.save()
         let startingCodSell = await newCodSell.save()
+        await models.Mshf.update({
+            status: mshfstatus
+        },{
+            where: {
+                id: mshfid
+            }
+        })
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
             let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
@@ -331,6 +418,13 @@ router.post('/place-sell-order', async (req,res) => {
         })
         let startingSellOrder = await newSellOrder.save()
         let startingCodSell = await newCodSell.save()
+        await models.Mshf.update({
+            status: mshfstatus
+        },{
+            where: {
+                id: mshfid
+            }
+        })
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
             let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
@@ -392,6 +486,13 @@ router.post('/place-sell-order', async (req,res) => {
         })
         let startingSellOrder = await newSellOrder.save()
         let startingCodSell = await newCodSell.save()
+        await models.Mshf.update({
+            status: mshfstatus
+        },{
+            where: {
+                id: mshfid
+            }
+        })
         if(startingSellOrder != null && startingCodSell != null) {
             // Create a match of the newly created order and the bestBid
             let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
@@ -443,6 +544,13 @@ router.post('/place-sell-order', async (req,res) => {
         })
         let persistedSellOrder = await newSellOrder.save()
         let persistedCodSell = await newCodSell.save()
+        await models.Mshf.update({
+            status: mshfstatus
+        },{
+            where: {
+                id: mshfid
+            }
+        })
         if(persistedSellOrder != null && persistedCodSell != null) {
             res.redirect('/users/dashboard')
         }
@@ -492,10 +600,22 @@ router.post('/place-buy-order', async (req,res) => {
         })
         let startingBuyOrder = await newBuyOrder.save()
         let startingCodBuy = await newCodBuy.save()
+        // get the id of the new order and update it to orderlink in the Codbuys table
+        let codLast = await sequelize.query('SELECT id FROM "Codbuys" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+        let codid = codLast[0]["id"]
+        let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+        let buyid = result[0]["id"]
+
+        await models.Codbuy.update({
+            orderlink: buyid
+        },{
+            where: {
+                id: codid
+            }
+        })
         if(startingBuyOrder != null && startingCodBuy != null) {
-            // Create a match of the newly created order and the bestBid
-            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
-            let buyid = result[0]["id"]
+            // Create a match of the newly created order and the bestAsk
+        
             let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
@@ -554,10 +674,22 @@ router.post('/place-buy-order', async (req,res) => {
         })
         let startingBuyOrder = await newBuyOrder.save()
         let startingCodBuy = await newCodBuy.save()
+        // get the id of the new order and update it to orderlink in the Codbuys table
+        let codLast = await sequelize.query('SELECT id FROM "Codbuys" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+        let codid = codLast[0]["id"]
+        let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+        let buyid = result[0]["id"]
+
+        await models.Codbuy.update({
+            orderlink: buyid
+        },{
+            where: {
+                id: codid
+            }
+        })
         if(startingBuyOrder != null && startingCodBuy != null) {
             // Create a match of the newly created order and the bestAsk
-            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
-            let buyid = result[0]["id"]
+        
             let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
@@ -615,10 +747,22 @@ router.post('/place-buy-order', async (req,res) => {
         })
         let startingBuyOrder = await newBuyOrder.save()
         let startingCodBuy = await newCodBuy.save()
+        // get the id of the new order and update it to orderlink in the Codbuys table
+        let codLast = await sequelize.query('SELECT id FROM "Codbuys" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+        let codid = codLast[0]["id"]
+        let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+        let buyid = result[0]["id"]
+
+        await models.Codbuy.update({
+            orderlink: buyid
+        },{
+            where: {
+                id: codid
+            }
+        })
         if(startingBuyOrder != null && startingCodBuy != null) {
             // Create a match of the newly created order and the bestAsk
-            let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
-            let buyid = result[0]["id"]
+    
             let sellid = askId
             let newMatch = await models.Match.build({
                 buyid: buyid,
@@ -665,6 +809,21 @@ router.post('/place-buy-order', async (req,res) => {
         })
         let persistedBuyOrder = await newBuyOrder.save()
         let persistedCodBuy = await newCodBuy.save()
+        // get the id of the new order and update it to orderlink in the Codbuys table
+        let codLast = await sequelize.query('SELECT id FROM "Codbuys" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+        let codid = codLast[0]["id"]
+        let result = await sequelize.query('SELECT id FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+        let buyid = result[0]["id"]
+
+        await models.Codbuy.update({
+            orderlink: buyid
+        },{
+            where: {
+                id: codid
+            }
+        })
+        // console.log(codid)
+        // console.log(buyid)
         if(persistedBuyOrder != null && persistedCodBuy != null) {
             res.redirect('/users/dashboard')
         }

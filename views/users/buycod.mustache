@@ -12,7 +12,7 @@
             <tr><td><span class="greentext bold">BUY</span></td><td>{{stock.name}}</td><td>{{shares}}</td><td>{{price}}</td></tr>
         </table>
         <h3>Funding/Settlement</h3>
-        <p>Per the Subscriber Agreement I, {{user.firstname}} {{user.lastname}}, agree to fund a Consideration on Demand Order at Flux Registry in my account in the amount of <span class="greentext bold">${{amount}}</span> which represents the limit price consideration plus a 1% total fee.</p>
+        <p>Per the Subscriber Agreement I, {{user.firstname}} {{user.lastname}}, agree to fund a Consideration on Demand Order at Flux Registry in my account in the amount of <span class="greentext bold">${{amount}}</span> which represents the limit price consideration plus a 0.5% total fee.</p>
         <form action="/users/place-buy-order" method="POST">
             <input type="hidden" name="stockid" value="{{stock.id}}" />
             <input type="hidden" name="type" value="buy" />
