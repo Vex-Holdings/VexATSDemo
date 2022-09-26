@@ -38,7 +38,7 @@ router.get('/ta-clear', async (req,res) => {
     const sellerFees = parseFloat(matchConsideration - proceedsToSeller).toFixed(2)
     const totalFees = parseFloat(buyEnough) + parseFloat(sellerFees)
 
-    res.render('users/ta-clear', {matchedOrders: matchedOrders, codBuy: codBuy, codSell: codSell, mshfidDetails: mshfidDetails, buyEnough: buyEnough, sellerFees: sellerFees, proceedsToSeller: proceedsToSeller, newMshfHolding: newMshfHolding, bstatus: bstatus, sstatus: sstatus, codBuyAmount: codBuyAmount, sellOrderUserId: sellOrderUserId, sellOrderMshfId: sellOrderMshfId, mshfidHolding: mshfidHolding, buyOrderUserId: buyOrderUserId, matchSize: matchSize, codBuyId: codBuyId, codSellId: codSellId})
+    res.render('users/ta-clear', {matchedOrders: matchedOrders, codBuy: codBuy, codSell: codSell, mshfidDetails: mshfidDetails, buyEnough: buyEnough, sellerFees: sellerFees, proceedsToSeller: proceedsToSeller, newMshfHolding: newMshfHolding, bstatus: bstatus, sstatus: sstatus, codBuyAmount: codBuyAmount, sellOrderUserId: sellOrderUserId, sellOrderMshfId: sellOrderMshfId, mshfidHolding: mshfidHolding, buyOrderUserId: buyOrderUserId, matchSize: matchSize, codBuyId: codBuyId, codSellId: codSellId, matchId: matchId})
 })
 
 router.get('/testdbquery', async (req,res) => {
@@ -269,7 +269,120 @@ router.get('/accountdetails/:userId', async (req,res) => {
 // POST Pages
 
 router.post('/ta-clear', async (req,res) => {
+    // collect posted information and put into variables
+    const codbuyid = parseInt(req.params.codbuyid)
+    const codsellid = parseInt(req.params.codsellid)
+    const size = parseInt(req.params.size)
+    const amount = parseFloat(req.params.amount).toFixed(2)
+    const debitid = parseInt(req.params.debitid)
+    const buyeruserid = parseInt(req.params.buyeruserid)
+    const changeuserid = parseInt(req.params.changeuserid)
+    const buyerfee = parseFloat(req.params.buyerfee).toFixed(2)
+    const sellerfee = parseFloat(req.params.sellerfee).toFixed(2)
+    const proceeds = parseFloat(req.params.proceeds).toFixed(2)
+    const changecertamount = parseInt(req.params.changecertamount)
+    const matchreportid = parseInt(req.params.matchreportid)
 
+    // Codsells get sellid, update status to "spent"
+
+    await models.Codsell.update({
+        status: 'spent'
+    },{
+        where: {
+            id: codsellid
+        }
+    })
+
+    // Codbuys get buyid, update status to "spent"
+
+    await models.Codbuy.update({
+        status: 'spent'
+    },{
+        where: {
+            id: codbuyid
+        }
+    })
+
+    // Codlogs create new entry (models.Codlog.build) using sellid, buyid, size, amount from post
+
+    let newCodLog = await models.Codlog.build({
+        sellid: codsellid,
+        buyid: codbuyid,
+        shares: size,
+        dollars: amount
+    })
+
+    await newCodLog.save()
+
+    // Debit selling certificate, Credit buyer certificate, Credit seller change certificate
+    // get debitid, update status to "debited"
+
+    await models.Mshf.update({
+        status: 'debited'
+    },{
+        where: {
+            id: debitid
+        }
+    })
+
+    // Build (model.Mshf.build) a new entry userid: buyuserid, stockid: 1, holding: size, status: 'unrestricted'
+
+    let newBuyCert = await models.Mshf.build({
+        userid: buyeruserid,
+        stockid: 1,
+        holding: size,
+        status: 'unrestricted'
+
+    })
+
+    await newBuyCert.save()
+
+    // Get the primary key just created (as creditid for Taclears in a moment)
+
+    const buyCertid = await sequelize.query('SELECT * FROM "Mshfs" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+    const creditid = buyCertid[0]["id"]
+
+    // Build (model.Mshf.build) a new entry userid: changeuserid, stockid: 1, holding: changecertamount, status: 'unrestricted'
+
+    let newChangeCert = await models.Mshf.build({
+        userid: changeuserid,
+        stockid: 1,
+        holding: changecertamount,
+        status: 'unrestricted'
+
+    })
+
+    await newChangeCert.save()
+
+    // Get the primary key just created (as changeid for Taclears in a moment)
+
+    const changeCertid = await sequelize.query('SELECT * FROM "Mshfs" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+    const changeid = changeCertid[0]["id"]
+
+    // Build (model.Taclear.build) a new entry debitid: debitid, creditid: creditid, changeid: changedid, total: amount, buyfee: buyerfee, sellfee: sellerfee, proceeds: proceeds, status: 'reported'
+
+    let taClearEntry = await models.Taclear.build({
+        debitid: debitid,
+        creditid: creditid,
+        changeid: changeid,
+        total: amount,
+        buyfee: buyerfee,
+        sellfee: sellerfee,
+        proceeds: proceeds,
+        status: 'reported'
+    })
+
+    await taClearEntry.save()
+
+    // Matches get matchreportid, update status to "cleared"
+
+    await models.Match.update({
+        status: 'cleared'
+    },{
+        where: {
+            id: matchreportid
+        }
+    })
     res.redirect('/users/controlpanel')
 })
 
@@ -376,7 +489,7 @@ router.post('/place-sell-order', async (req,res) => {
             })
             let persistedMatch = await newMatch.save()
             // change the status of the bestBid
-            let spendBuy = models.Order.update({
+            let spendBuy = await models.Order.update({
                 type: 'buy-filled'
             },{
                 where: {
@@ -385,7 +498,7 @@ router.post('/place-sell-order', async (req,res) => {
             })
             // let persistedSpendBuy = spendBuy.save()
             // change the status of the startingSellOrder
-            let spendSell = models.Order.update({
+            let spendSell = await models.Order.update({
                 type: 'sell-partial'
             },{
                 where: {
@@ -447,7 +560,7 @@ router.post('/place-sell-order', async (req,res) => {
             })
             let persistedMatch = await newMatch.save()
             // change the status of the bestBid
-            let spendBuy = models.Order.update({
+            let spendBuy = await models.Order.update({
                 type: 'buy-partial'
             },{
                 where: {
@@ -456,7 +569,7 @@ router.post('/place-sell-order', async (req,res) => {
             })
             // let persistedSpendBuy = spendBuy.save()
             // change the status of the startingSellOrder
-            let spendSell = models.Order.update({
+            let spendSell = await models.Order.update({
                 type: 'sell-filled'
             },{
                 where: {
@@ -524,7 +637,7 @@ router.post('/place-sell-order', async (req,res) => {
             })
             // let persistedSpendBuy = spendBuy.save()
             // change the status of the startingSellOrder
-            let spendSell = models.Order.update({
+            let spendSell = await models.Order.update({
                 type: 'sell-filled'
             },{
                 where: {
@@ -634,7 +747,7 @@ router.post('/place-buy-order', async (req,res) => {
             })
             let persistedMatch = await newMatch.save()
             // change the status of the bestAsk
-            let spendSell = models.Order.update({
+            let spendSell = await models.Order.update({
                 type: 'sell-filled'
             },{
                 where: {
@@ -643,7 +756,7 @@ router.post('/place-buy-order', async (req,res) => {
             })
             // let persistedSpendSell = spendSell.save()
             // change the status of the startingBuyOrder
-            let spendBuy = models.Order.update({
+            let spendBuy = await models.Order.update({
                 type: 'buy-partial'
             },{
                 where: {
@@ -717,7 +830,7 @@ router.post('/place-buy-order', async (req,res) => {
             })
             // let persistedSpendBuy = spendBuy.save()
             // change the status of the bestAsk
-            let spendSell = models.Order.update({
+            let spendSell = await models.Order.update({
                 type: 'sell-partial'
             },{
                 where: {
@@ -790,7 +903,7 @@ router.post('/place-buy-order', async (req,res) => {
             })
             // let persistedSpendBuy = spendBuy.save()
             // change the status of the startingSellOrder
-            let spendSell = models.Order.update({
+            let spendSell = await models.Order.update({
                 type: 'sell-filled'
             },{
                 where: {
