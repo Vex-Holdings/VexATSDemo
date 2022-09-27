@@ -57,6 +57,9 @@ router.get('/testdbquery', async (req,res) => {
     const codBuy = await sequelize.query('SELECT * FROM "Codbuys" WHERE orderlink = ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
     const codBuyAmount = codBuy[0]["amount"]
     const codSell = await sequelize.query('SELECT * FROM "Codsells" WHERE mshfid = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
+    const bstatus = codBuy[0]["status"]
+    const sstatus = codSell[0]["status"]
+    const codBuyId = codBuy[0]["id"]
     const codSellId = codSell[0]["id"]
     const codSellAmount = codSell[0]["amount"]
     const mshfidDetails = await sequelize.query('SELECT * FROM "Mshfs" WHERE id = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
@@ -68,25 +71,18 @@ router.get('/testdbquery', async (req,res) => {
     const sellerFees = parseFloat(matchConsideration - proceedsToSeller).toFixed(2)
     const totalFees = parseFloat(buyEnough) + parseFloat(sellerFees)
     
-    console.log('id: ' + matchId)
-    console.log('buyid: ' + matchBuyId)
-    console.log('sellid: ' + matchSellId)
+    console.log('codbuyid:' + codBuyId)
+    console.log('codsellid: ' + codSellId)
     console.log('size: ' + matchSize)
-    console.log('price: $' + matchPrice)
-    console.log('status: ' + matchStatus)
-    console.log('buyer user id: ' + buyOrderUserId)
-    console.log('seller user id: ' + sellOrderUserId)
-    console.log('seller mshfid: ' + sellOrderMshfId)
-    console.log('codBuyAmount: ' + codBuyAmount)
-    console.log('codSellId: ' + codSellId)
-    console.log('codSellAmount: ' + codSellAmount)
-    console.log('mshfidHolding: ' + mshfidHolding)
-    console.log('matchConsideration: ' + matchConsideration)
-    console.log('buyEnough: ' + buyEnough)
-    console.log('newMshfHolding: ' + newMshfHolding)
-    console.log('proceedsToSeller: ' + proceedsToSeller)
-    console.log('sellerFees: ' + sellerFees)
-    console.log('totalFees: ' + totalFees)
+    console.log('amount: ' + codBuyAmount)
+    console.log('debitid: ' + sellOrderMshfId)
+    console.log('buyeruserid: ' + buyOrderUserId)
+    console.log('changeuserid: ' + sellOrderUserId)
+    console.log('buyerfee: ' + buyEnough)
+    console.log('sellerfee: ' + sellerFees)
+    console.log('proceeds: ' + proceedsToSeller)
+    console.log('changecertamount: ' + newMshfHolding)
+    console.log('matchreportid: ' + matchId)
     
     res.redirect('/users/controlpanel')
 })
@@ -270,18 +266,19 @@ router.get('/accountdetails/:userId', async (req,res) => {
 
 router.post('/ta-clear', async (req,res) => {
     // collect posted information and put into variables
-    const codbuyid = parseInt(req.params.codbuyid)
-    const codsellid = parseInt(req.params.codsellid)
-    const size = parseInt(req.params.size)
-    const amount = parseFloat(req.params.amount).toFixed(2)
-    const debitid = parseInt(req.params.debitid)
-    const buyeruserid = parseInt(req.params.buyeruserid)
-    const changeuserid = parseInt(req.params.changeuserid)
-    const buyerfee = parseFloat(req.params.buyerfee).toFixed(2)
-    const sellerfee = parseFloat(req.params.sellerfee).toFixed(2)
-    const proceeds = parseFloat(req.params.proceeds).toFixed(2)
-    const changecertamount = parseInt(req.params.changecertamount)
-    const matchreportid = parseInt(req.params.matchreportid)
+   
+    const codbuyid = req.body.codbuyid
+    const codsellid = req.body.codsellid
+    const size = req.body.size
+    const amount = req.body.amount
+    const debitid = req.body.debitid
+    const buyeruserid = req.body.buyeruserid
+    const changeuserid = req.body.changeuserid
+    const buyerfee = req.body.buyerfee
+    const sellerfee = req.body.sellerfee
+    const proceeds = req.body.proceeds
+    const changecertamount = req.body.changecertamount
+    const matchreportid = req.body.matchreportid
 
     // Codsells get sellid, update status to "spent"
 
@@ -383,6 +380,7 @@ router.post('/ta-clear', async (req,res) => {
             id: matchreportid
         }
     })
+
     res.redirect('/users/controlpanel')
 })
 

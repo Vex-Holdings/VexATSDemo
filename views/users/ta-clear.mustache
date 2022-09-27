@@ -64,19 +64,20 @@
             <li>Update COD Logs Table</li>
             <li>Record changes in COD Clear Table</li>
         </ol>
+        <h3>Variables to execute clearing steps</h3>
         <form action="/users/ta-clear" method="POST">
-            <input type="hidden" name="codbuyid" value="{{codBuyId}}" />
-            <input type="hidden" name="codsellid" value="{{codSellId}}" />
-            <input type="hidden" name="size" value="{{matchSize}}" />
-            <input type="hidden" name="amount" value="{{codBuyAmount}}" />
-            <input type="hidden" name="debitid" value="{{sellOrderMshfId}}" />
-            <input type="hidden" name="buyeruserid" value="{{buyOrderUserId}}" />
-            <input type="hidden" name="changeuserid" value="{{sellOrderUserId}}" />
-            <input type="hidden" name="buyerfee" value="{{buyEnough}}" />
-            <input type="hidden" name="sellerfee" value="{{sellerFees}}" />
-            <input type="hidden" name="proceeds" value="{{proceedsToSeller}}" />
-            <input type="hidden" name="changecertamount" value="{{newMshfHolding}}" />
-            <input type="hidden" name="matchreportid" value="{{matchId}}" />
+            <input type="number" name="codbuyid" value="{{codBuyId}}" />
+            <input type="number" name="codsellid" value="{{codSellId}}" />
+            <input type="number" name="size" value="{{matchSize}}" />
+            <input type="number" name="amount" value="{{codBuyAmount}}" />
+            <input type="number" name="debitid" value="{{sellOrderMshfId}}" />
+            <input type="number" name="buyeruserid" value="{{buyOrderUserId}}" />
+            <input type="number" name="changeuserid" value="{{sellOrderUserId}}" />
+            <input type="number" name="buyerfee" value="{{buyEnough}}" />
+            <input type="number" name="sellerfee" value="{{sellerFees}}" />
+            <input type="number" name="proceeds" value="{{proceedsToSeller}}" />
+            <input type="number" name="changecertamount" value="{{newMshfHolding}}" />
+            <input type="number" name="matchreportid" value="{{matchId}}" />
         <button type="submit" class="btn btn-primary">Execute Clear</button>
         </form>
         {{#message}}
