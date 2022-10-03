@@ -42,47 +42,12 @@ router.get('/ta-clear', async (req,res) => {
 })
 
 router.get('/testdbquery', async (req,res) => {
-    const matchedOrders = await sequelize.query('SELECT * FROM "Matches" WHERE status=\'matched\'', {type: Sequelize.QueryTypes.SELECT})
-    const matchId = matchedOrders[0]["id"]
-    const matchBuyId = matchedOrders[0]["buyid"]
-    const matchSellId = matchedOrders[0]["sellid"]
-    const matchSize = matchedOrders[0]["size"]
-    const matchPrice = matchedOrders[0]["price"]
-    const matchStatus = matchedOrders[0]["status"]
-    const buyOrder = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
-    const sellOrder = await sequelize.query('SELECT * FROM "Orders" WHERE id= ' + matchSellId, {type: Sequelize.QueryTypes.SELECT})
-    const buyOrderUserId = buyOrder[0]["userid"]
-    const sellOrderUserId = sellOrder[0]["userid"]
-    const sellOrderMshfId = sellOrder[0]["mshfid"]
-    const codBuy = await sequelize.query('SELECT * FROM "Codbuys" WHERE orderlink = ' + matchBuyId, {type: Sequelize.QueryTypes.SELECT})
-    const codBuyAmount = codBuy[0]["amount"]
-    const codSell = await sequelize.query('SELECT * FROM "Codsells" WHERE mshfid = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
-    const bstatus = codBuy[0]["status"]
-    const sstatus = codSell[0]["status"]
-    const codBuyId = codBuy[0]["id"]
-    const codSellId = codSell[0]["id"]
-    const codSellAmount = codSell[0]["amount"]
-    const mshfidDetails = await sequelize.query('SELECT * FROM "Mshfs" WHERE id = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
-    const mshfidHolding = mshfidDetails[0]["holding"]
-    const matchConsideration = matchSize * matchPrice
-    const buyEnough = parseFloat(codBuyAmount - matchConsideration).toFixed(2)
-    const newMshfHolding = mshfidHolding - matchSize
-    const proceedsToSeller = parseFloat(matchConsideration * 0.995).toFixed(2)
-    const sellerFees = parseFloat(matchConsideration - proceedsToSeller).toFixed(2)
-    const totalFees = parseFloat(buyEnough) + parseFloat(sellerFees)
-    
-    console.log('codbuyid:' + codBuyId)
-    console.log('codsellid: ' + codSellId)
-    console.log('size: ' + matchSize)
-    console.log('amount: ' + codBuyAmount)
-    console.log('debitid: ' + sellOrderMshfId)
-    console.log('buyeruserid: ' + buyOrderUserId)
-    console.log('changeuserid: ' + sellOrderUserId)
-    console.log('buyerfee: ' + buyEnough)
-    console.log('sellerfee: ' + sellerFees)
-    console.log('proceeds: ' + proceedsToSeller)
-    console.log('changecertamount: ' + newMshfHolding)
-    console.log('matchreportid: ' + matchId)
+    const fixDb = await models.Codsell.build({
+        mshfid: 14,
+        amount: 900,
+        status: 'funded'
+    })
+    await fixDb.save()
     
     res.redirect('/users/controlpanel')
 })
@@ -346,23 +311,40 @@ router.post('/ta-clear', async (req,res) => {
             userid: changeuserid,
             stockid: 1,
             holding: changecertamount,
-            status: 'unrestricted'
-
+            status: 'cod'
         })
         await newChangeCert.save()
+
     }
 
     // Get the primary key just created (as changeid for Taclears in a moment)
 
     const changeCertid = await sequelize.query('SELECT * FROM "Mshfs" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
     const changeid = changeCertid[0]["id"]
-    /* 
-    await models.Codsell.update({
+    
+    const codSellResults = await sequelize.query('SELECT * FROM "Codsells" WHERE id = '+ codsellid, {type: Sequelize.QueryTypes.SELECT})
+    const codSellSize = codSellResults[0]["amount"]
+    const newCodSellSize = codSellSize - size
+    if(newCodSellSize > 0) {
+        await models.Codsell.build({
+            mshfid: changeid,
+            amount: newCodSellSize,
+            status: 'funded'
+        })
+    }
+
+    // update Orders page with new MSHF ID
+
+    const orderUpdateMshfId = await sequelize.query('SELECT * FROM "Orders" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
+    const orderIdChange = orderUpdateMshfId[0]["id"]
+    await models.Order.update({
+        mshfid: changeid
+    },{
         where: {
-            id
+            id: orderIdChange
         }
     })
-    */
+    
 
     // Build (model.Taclear.build) a new entry debitid: debitid, creditid: creditid, changeid: changedid, total: amount, buyfee: buyerfee, sellfee: sellerfee, proceeds: proceeds, status: 'reported'
 
