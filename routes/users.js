@@ -164,7 +164,7 @@ router.get('/controlpanel', async (req,res) => {
         }
     })
     let matches = await models.Match.findAll()
-    let orders = await sequelize.query('SELECT o.id, u.firstname, u.lastname, s.name, o.type, o.size, o.price, o.mshfid FROM "Orders" o JOIN "Users" u ON o.userid = u.id JOIN "Stocks" s ON o.stockid = s.id', {type: Sequelize.QueryTypes.SELECT})
+    let orders = await sequelize.query('SELECT o.id, u.firstname, u.lastname, s.name, o.type, o.size, o.price, o.mshfid FROM "Orders" o JOIN "Users" u ON o.userid = u.id JOIN "Stocks" s ON o.stockid = s.id WHERE o.type = \'buy\' OR o.type = \'sell\'', {type: Sequelize.QueryTypes.SELECT})
     let codlogs = await models.Codlog.findAll()
     let codbuys = await sequelize.query('SELECT c.id, u.firstname, u.lastname, c.amount, c.status FROM "Codbuys" c JOIN "Users" u ON c.userid = u.id', {type: Sequelize.QueryTypes.SELECT})
     let codsells = await models.Codsell.findAll()
@@ -341,20 +341,28 @@ router.post('/ta-clear', async (req,res) => {
 
     // Build (model.Mshf.build) a new entry userid: changeuserid, stockid: 1, holding: changecertamount, status: 'unrestricted'
 
-    let newChangeCert = await models.Mshf.build({
-        userid: changeuserid,
-        stockid: 1,
-        holding: changecertamount,
-        status: 'unrestricted'
+    if(changecertamount > 0) {
+            let newChangeCert = await models.Mshf.build({
+            userid: changeuserid,
+            stockid: 1,
+            holding: changecertamount,
+            status: 'unrestricted'
 
-    })
-
-    await newChangeCert.save()
+        })
+        await newChangeCert.save()
+    }
 
     // Get the primary key just created (as changeid for Taclears in a moment)
 
     const changeCertid = await sequelize.query('SELECT * FROM "Mshfs" ORDER BY ID DESC LIMIT 1', {type: Sequelize.QueryTypes.SELECT})
     const changeid = changeCertid[0]["id"]
+    /* 
+    await models.Codsell.update({
+        where: {
+            id
+        }
+    })
+    */
 
     // Build (model.Taclear.build) a new entry debitid: debitid, creditid: creditid, changeid: changedid, total: amount, buyfee: buyerfee, sellfee: sellerfee, proceeds: proceeds, status: 'reported'
 
