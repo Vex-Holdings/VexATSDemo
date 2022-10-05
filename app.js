@@ -9,7 +9,7 @@ const path = require('path');
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 const checkAuthorization = require('./middlewares/authorization');
 const chart = require('chart.js')
-
+const getAllUsers = require('./middlewares/getallusers')
 const userRoutes = require('./routes/users');
 const indexRoutes = require('./routes/index');
 
@@ -50,6 +50,7 @@ db = pgp(CONNECTION_STRING);
 // set up a middleware for routes
 app.use('/',indexRoutes);
 app.use('/users',checkAuthorization,userRoutes);
+app.use('/users',getAllUsers,userRoutes);
 
 app.listen(PORT,() => {
     console.log(`Server has started on ${PORT}`)

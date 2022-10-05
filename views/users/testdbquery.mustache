@@ -3,11 +3,33 @@
 </head>
 <body>
     <div class="container">
-        {{> prinicipalmenu}}
+        {{> principalmenu}}
         <h2>ATS Demo - Testing DB query</h2>
-        <p>
-            The id for the sellid on a trade is: {{sellid}}
-        </p>
+        <div class="list-group">
+            <ul>
+                {{#users}}
+                <div class="row">
+                <div class="col-4 bold">{{firstname}} {{lastname}}</div>
+                </div>
+                <div class="row">
+                <div class="col-2">{{prefphone}}</div>
+                <div class="col-2">{{phonenumber}}</div>
+                </div>
+                <div class="row">
+                <div class="col-4">{{email}}</div>
+                </div>
+                <div class="row">
+                <div class="col-2">Account Type:</div>
+                <div class="col-2">{{accounttype}}</div>
+                </div>
+                <div class="row">
+                <div class="col-2">Status:</div>
+                <div class="col-2">{{status}}</div>
+                </div>
+                <a href="/users/accountdetails/{{id}}"><button class="btn btn-info">Review Account</button></a>
+                <hr>
+                {{/users}}        
+            </ul>
         <p>
             <a href="/users/controlpanel"><button class="btn btn-success">Return to Control Panel</button></a>
         </p>

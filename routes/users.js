@@ -3,7 +3,7 @@ const { sequelize, Sequelize } = require('../models')
 const router = express.Router()
 // const {CanvasRenderService} = require('chartjs-node-canvas')
 // const chart = require('../middlewares/chart')
-
+const getAllUsers = require('../middlewares/getallusers')
 const models = require('../models')
 
 // GET Pages
@@ -41,15 +41,11 @@ router.get('/ta-clear', async (req,res) => {
     res.render('users/ta-clear', {matchedOrders: matchedOrders, codBuy: codBuy, codSell: codSell, mshfidDetails: mshfidDetails, buyEnough: buyEnough, sellerFees: sellerFees, proceedsToSeller: proceedsToSeller, newMshfHolding: newMshfHolding, bstatus: bstatus, sstatus: sstatus, codBuyAmount: codBuyAmount, sellOrderUserId: sellOrderUserId, sellOrderMshfId: sellOrderMshfId, mshfidHolding: mshfidHolding, buyOrderUserId: buyOrderUserId, matchSize: matchSize, codBuyId: codBuyId, codSellId: codSellId, matchId: matchId})
 })
 
-router.get('/testdbquery', async (req,res) => {
-    const fixDb = await models.Codsell.build({
-        mshfid: 14,
-        amount: 900,
-        status: 'funded'
-    })
-    await fixDb.save()
-    
-    res.redirect('/users/controlpanel')
+router.get('/testdbquery', (req,res) => {
+    // Didn't work for some reason
+    allusers = getAllUsers
+    console.log(allusers)
+    res.render('users/testdbquery', {users: allusers})
 })
 
 router.get('/chart', async (req,res) => {
