@@ -9,43 +9,56 @@
         <h1>TA Portal</h1>
         <p>This will be a "control panel" to access the various elements of the TA program.
         </p>
+        <hr>
         <h2>User types</h2>
         <div class=row>
             <div class=col>
-                Flux Registry<br>Managers and employees of the Transfer Agent
+                <strong>Flux Registry</strong>
+                <br>Managers and employees of the Transfer Agent
             </div>
             <div class=col>
-                Issuers<br>Representative(s) of the Issuing company: authorization to make changes to the Control Book, ability to view MSHF in two modes (with Personally Identifiable Information and without PII)
+                <strong>Issuers</strong>
+                <br>Representative(s) of the Issuing company: authorization to make changes to the Control Book, ability to view MSHF in two modes (with Personally Identifiable Information and without PII)
             </div>
             <div class=col>
-                Account Holders<br>Holders of CUTE certificates. Ability to see current certificates across all MSHF. Ability to see all previous transactions and cancelled certificates. Ability to initiate Consideration on Demand instructions. Ability to see all order, queries and responses in one place.
+                <strong>Account Holders</strong>
+                <br>Holders of CUTE certificates. Ability to see current certificates across all MSHF. Ability to see all previous transactions and cancelled certificates. Ability to initiate Consideration on Demand instructions. Ability to see all order, queries and responses in one place.
             </div>
             <div class=col>
-                SEC & Audit<br>Representatives of the SEC plus company auditors (Armanino) who are authorized to audit the system. Read only access.
+                <strong>SEC & Audit</strong>
+                <br>Representatives of the SEC plus company auditors (Armanino) who are authorized to audit the system. Read only access.
             </div>
         </div>
+        <hr>
         <h2>Database Tables</h2>
         <div class=row>
             <div class=col>
-                Control Book<br>One control book per issuer/issue. The control book authorizes the number of certificates. While changes can be proposed by either Flux managers or the Issuing company, changes only go into effect on the Issuer's confirmation.
+                <strong>Control Book</strong>
+                <br>One control book per issuer/issue. The control book authorizes the number of certificates. While changes can be proposed by either Flux managers or the Issuing company, changes only go into effect on the Issuer's confirmation.
             </div>
             <div class=col>
-                Master Security Holders File<br>One MSHF per issuer/issue. The MSHF is contains the registered certificates. Registered certificates are held in the name of the Account Holder.
+                <strong>Master Security Holders File</strong>
+                <br>One MSHF per issuer/issue. The MSHF is contains the registered certificates. Registered certificates are held in the name of the Account Holder.
             </div>
             <div class=col>
-                TA Account Holders<br>This contains the name and pertinant details of each account holder who is eligible to be recorded as the holder of a registered certificate in the MSHF.
+                <strong>TA Account Holders</strong>
+                <br>This contains the name and pertinant details of each account holder who is eligible to be recorded as the holder of a registered certificate in the MSHF.
             </div>
             <div class=col>
-                Cash Certificates<br>Flux Registry will run a Control Book and a MSHF for Cash Certificates. Cash certificates will be created upon deposit of cash for COD transactions. Certificates will be debited upon withdrawal of cash by the registered holder of the cash certificate. Cash certificates are for COD transactions, not separately tradeable or transferrable except for special circumstances (ie. to estate).
+                <strong>Cash Certificates</strong>
+                <br>Flux Registry will run a Control Book and a MSHF for Cash Certificates. Cash certificates will be created upon deposit of cash for COD transactions. Certificates will be debited upon withdrawal of cash by the registered holder of the cash certificate. Cash certificates are for COD transactions, not separately tradeable or transferrable except for special circumstances (ie. to estate).
             </div>
             <div class=col>
-                Queries<br>All queries and responses will be contained in this database along with timestamps to show when they were received and responded to.
+                <strong>Queries</strong>
+                <br>All queries and responses will be contained in this database along with timestamps to show when they were received and responded to.
             </div>
             <div class=col>
-                Consideration on Demand Transfers<br>Account holders will have the right to propose COD transfers of certificates. All proposals, completions and incompletions will be recorded here.
+                <strong>Consideration on Demand Transfers</strong>
+                <br>Account holders will have the right to propose COD transfers of certificates. All proposals, completions and incompletions will be recorded here.
             </div>
             <div class=col>
-                Audit Log<br>Write once, read many log of every query, response and certificate transaction. All changes to the overall database along with the identity of the participant responsible for the change shall be located here for audit purposes.
+                <strong>Audit Log</strong>
+                <br>Write once, read many log of every query, response and certificate transaction. All changes to the overall database along with the identity of the participant responsible for the change shall be located here for audit purposes.
             </div>
         </div>
     </div>
