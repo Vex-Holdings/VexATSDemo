@@ -114,7 +114,7 @@ router.get('/mshf-add', async (req,res) => {
 })
 
 router.get('/mshf-edit', async (req,res) => {
-    const results = await sequelize.query('SELECT u.firstname, u.lastname, m.holding, m.status, s.name FROM "Mshfs" m JOIN "Users" u ON m.userid = u.id JOIN "Stocks" s ON m.stockid = s.id', {type: Sequelize.QueryTypes.SELECT})
+    const results = await sequelize.query('SELECT u.firstname, u.lastname, m.id, m.holding, m.status, s.name FROM "Mshfs" m JOIN "Users" u ON m.userid = u.id JOIN "Stocks" s ON m.stockid = s.id', {type: Sequelize.QueryTypes.SELECT})
     res.render('users/mshf-edit', {holders: results})
 })
 
