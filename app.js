@@ -8,7 +8,7 @@ const session = require('express-session');
 const path = require('path');
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 const checkAuthorization = require('./middlewares/authorization');
-const chart = require('chart.js')
+const Chart = require('chart.js')
 const getAllUsers = require('./middlewares/getallusers')
 const userRoutes = require('./routes/users');
 const indexRoutes = require('./routes/index');

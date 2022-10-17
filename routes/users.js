@@ -5,6 +5,7 @@ const router = express.Router()
 // const chart = require('../middlewares/chart')
 const getAllUsers = require('../middlewares/getallusers')
 const models = require('../models')
+const Chart = require('chart.js')
 
 // GET Pages
 
@@ -42,10 +43,52 @@ router.get('/ta-clear', async (req,res) => {
 })
 
 router.get('/testdbquery', (req,res) => {
-    // Didn't work for some reason
-    allusers = getAllUsers
-    console.log(allusers)
-    res.render('users/testdbquery', {users: allusers})
+    const myChart = new Chart({
+        type: 'bar',
+        data: {
+            labels: [10.00,
+                10.01,
+                10.02,
+                10.03,
+                10.04,
+                10.05,
+                10.06,
+                10.07,
+                10.08,
+                10.09,
+                10.10
+            ],
+            datasets: [{
+                label: 'Shares',
+                data: [0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                backgroundColor: ['gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray'
+            ]
+            }]
+        },
+        options:{}
+    });
+    res.render('users/testdbquery', {mychart: myChart})
 })
 
 router.get('/chart', async (req,res) => {
