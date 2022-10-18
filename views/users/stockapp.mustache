@@ -1,0 +1,28 @@
+{{> header}}
+    <title>Stockapp</title>
+</head>
+<body>
+    <div class="container">
+        {{> principalmenu}}
+        <h2>Stock App - {{body.companyName}}({{body.symbol}})</h2>
+        {{#body}}
+        <table>
+        <tr></tr>
+        <td></td>
+        <tr><td>Symbol:</td><td>{{symbol}}</td></tr>
+        <tr><td>Company Name:</td><td>{{companyName}}</td></tr>
+        <tr><td>Exchange:</td><td>{{primaryExchange}}</td></tr>
+        <tr><td>Last Price:</td><td>{{latestPrice}}</td></tr>
+        <tr><td>Previous Close:</td><td>{{previousClose}}</td></tr>
+        <tr><td>Change:</td><td>{{change}}</td></tr>
+        <tr><td>YTD Change:</td><td>{{ytdChange}}</td></tr>
+        <tr><td>52 Week High:</td><td>{{week52High}}</td></tr>
+        <tr><td>52 Week Low:</td><td>{{week52Low}}</td></tr>
+        <tr><td>Market Cap:</td><td>{{marketCap}}</td></tr>
+        </table>
+        {{/body}}
+        <p>
+            <a href="/users/controlpanel"><button class="btn btn-success">Return to Control Panel</button></a>
+        </p>
+    </div>
+{{> footer}}

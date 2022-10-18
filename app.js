@@ -12,9 +12,31 @@ const Chart = require('chart.js')
 const getAllUsers = require('./middlewares/getallusers')
 const userRoutes = require('./routes/users');
 const indexRoutes = require('./routes/index');
+const request = require('request')
 
 const PORT = 3000;
 const CONNECTION_STRING = "postgres://localhost:5432/atsdemodb";
+
+
+// create call_api function
+
+function call_api() {
+    request('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_bec7f490df724db984b38b543237b37a', { json: true }, (err, res, body) => {
+    if(err) {return console.log(err)}
+    if (res.statusCode === 200) {
+        return body
+    }
+})
+}
+
+/* API Key for IEX site: pk_bec7f490df724db984b38b543237b37a
+request('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_bec7f490df724db984b38b543237b37a', { json: true }, (err, res, body) => {
+    if(err) {return console.log(err)}
+    if (res.statusCode === 200) {
+        console.log(body)
+    }
+})
+*/
 
 const VIEWS_PATH = path.join(__dirname,'/views');
 

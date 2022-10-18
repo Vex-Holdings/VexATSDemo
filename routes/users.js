@@ -6,6 +6,18 @@ const router = express.Router()
 const getAllUsers = require('../middlewares/getallusers')
 const models = require('../models')
 const Chart = require('chart.js')
+const request = require('request')
+
+// create call_api function
+
+function call_api(finishedAPI) {
+    request('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_bec7f490df724db984b38b543237b37a', { json: true }, (err, res, body) => {
+    if(err) {return console.log(err)}
+    if (res.statusCode === 200) {
+        finishedAPI(body)
+    }
+})
+}
 
 // GET Pages
 
@@ -40,6 +52,12 @@ router.get('/ta-clear', async (req,res) => {
     const totalFees = parseFloat(buyEnough) + parseFloat(sellerFees)
 
     res.render('users/ta-clear', {matchedOrders: matchedOrders, codBuy: codBuy, codSell: codSell, mshfidDetails: mshfidDetails, buyEnough: buyEnough, sellerFees: sellerFees, proceedsToSeller: proceedsToSeller, newMshfHolding: newMshfHolding, bstatus: bstatus, sstatus: sstatus, codBuyAmount: codBuyAmount, sellOrderUserId: sellOrderUserId, sellOrderMshfId: sellOrderMshfId, mshfidHolding: mshfidHolding, buyOrderUserId: buyOrderUserId, matchSize: matchSize, codBuyId: codBuyId, codSellId: codSellId, matchId: matchId})
+})
+
+router.get('/stockapp', (req,res) => {
+    call_api(function(doneAPI){
+    res.render('users/stockapp', {body: doneAPI})
+    })
 })
 
 router.get('/testdbquery', (req,res) => {
