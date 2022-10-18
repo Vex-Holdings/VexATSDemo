@@ -1,6 +1,7 @@
 const express = require('express')
 const { sequelize, Sequelize } = require('../models')
 const router = express.Router()
+
 // const {CanvasRenderService} = require('chartjs-node-canvas')
 // const chart = require('../middlewares/chart')
 const getAllUsers = require('../middlewares/getallusers')
@@ -10,8 +11,8 @@ const request = require('request')
 
 // create call_api function
 
-function call_api(finishedAPI) {
-    request('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_bec7f490df724db984b38b543237b37a', { json: true }, (err, res, body) => {
+function call_api(finishedAPI, ticker) { 
+    request('https://cloud.iexapis.com/stable/stock/' + ticker + '/quote?token=pk_bec7f490df724db984b38b543237b37a', { json: true }, (err, res, body) => {
     if(err) {return console.log(err)}
     if (res.statusCode === 200) {
         finishedAPI(body)
@@ -54,10 +55,8 @@ router.get('/ta-clear', async (req,res) => {
     res.render('users/ta-clear', {matchedOrders: matchedOrders, codBuy: codBuy, codSell: codSell, mshfidDetails: mshfidDetails, buyEnough: buyEnough, sellerFees: sellerFees, proceedsToSeller: proceedsToSeller, newMshfHolding: newMshfHolding, bstatus: bstatus, sstatus: sstatus, codBuyAmount: codBuyAmount, sellOrderUserId: sellOrderUserId, sellOrderMshfId: sellOrderMshfId, mshfidHolding: mshfidHolding, buyOrderUserId: buyOrderUserId, matchSize: matchSize, codBuyId: codBuyId, codSellId: codSellId, matchId: matchId})
 })
 
-router.get('/stockapp', (req,res) => {
-    call_api(function(doneAPI){
-    res.render('users/stockapp', {body: doneAPI})
-    })
+router.get('/searchstock', (req,res) => {
+    res.render('users/searchstock')
 })
 
 router.get('/testdbquery', (req,res) => {
@@ -285,6 +284,14 @@ router.get('/accountdetails/:userId', async (req,res) => {
 })
 
 // POST Pages
+
+// we want to create call_api(function, req.body.stock_ticker), so we find the end of the function(doneAPI) and add a comma
+router.post('/stockapp', async (req,res) => {
+    // const ticker = req.body.stock_ticker
+    call_api(function(doneAPI){
+        res.render('users/stockapp', {body: doneAPI})
+        }, req.body.stock_ticker)
+    })
 
 router.post('/ta-clear', async (req,res) => {
     // collect posted information and put into variables
