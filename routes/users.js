@@ -138,8 +138,31 @@ router.get('/regulator', async (req,res) => {
             id: id
         }
     })
+    let bids = await models.Order.findAll({
+        where: {
+            stockid: 1,
+            type: 'buy'
+        },
+        order: [
+            ['price', 'DESC'],
+        ]
+    })
+    let asks = await models.Order.findAll({
+        where: {
+            stockid: 1,
+            type: 'sell'
+        },
+        order: [
+            ['price', 'DESC'],
+        ]
+    })
+    let trades = await models.Match.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    })
     let name = user.firstname + " " + user.lastname
-    res.render('users/regulator', {name: name})
+    res.render('users/regulator', {name: name, bids: bids, asks: asks, trades: trades})
 })
 
 router.get('/mshf-holding/:id', async (req,res) => {

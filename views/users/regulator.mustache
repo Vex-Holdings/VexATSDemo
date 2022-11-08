@@ -6,7 +6,28 @@
         {{> menu}}
         <h2>ATS Demo - Regulator Panel</h2>
         <hr>
-        <p>Hi {{name}}, give us a minute. <br />
-        Planning to put a bunch of prepopulated queries here.</p>
+        <p>Hi {{name}}, here is a sample of the prepopulated queries we can put here.</p>
+        <h3>Market - ABC SaaS Inc</h3>
+        <table>
+            <tr><th class="redtext">Offers</th><th>Size</th><th>Price</th><th>Subscriber</th><th>Timestamp</th></tr>
+        {{#asks}}
+            <tr><td></td><td>{{size}}</td><td>{{price}}</td><td>{{userid}}</td><td>{{updatedAt}}</td></tr>
+        {{/asks}}
+            <tr><th class="greentext">Bids</th><th>Size</th><th>Price</th><th>Subscriber</th><th>Timestamp</th></tr>
+        {{#bids}}
+            <tr><td></td><td>{{size}}</td><td>{{price}}</td><td>{{userid}}</td><td>{{updatedAt}}</td></tr>
+        {{/bids}}
+        </table>
+        <table>
+            <tr><th>Trades</th><th>Size</th><th>Price</th><th>Buy Order</th><th>Sell Order</th><th>Status</th><th>Timestamp</th></tr>
+        {{#trades}}
+            <tr><td>{{id}}</td><td>{{size}}</td><td>{{price}}</td><td>{{buyid}}</td><td>{{sellid}}</td><td>{{status}}</td><td>{{updatedAt}}</td></tr>
+        {{/trades}}
+        </table>
+        <!--
+        <tr></tr>
+        <th></th>
+        <td></td>
+        -->
     </div>
 {{> footer}}   
