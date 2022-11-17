@@ -226,7 +226,7 @@ router.get('/dashboard', async (req,res) => {
         }
     })
     
-    let holdings = await sequelize.query('SELECT m.holding, m.status, s.name FROM "Mshfs" m JOIN "Stocks" s ON m.stockid = s.id WHERE m.userid = ' + id, {type: Sequelize.QueryTypes.SELECT})
+    let holdings = await sequelize.query('SELECT m.holding, m.status, s.name FROM "Mshfs" m JOIN "Stocks" s ON m.stockid = s.id WHERE m.userid = ' + id + 'AND m.status = \'unrestricted\'', {type: Sequelize.QueryTypes.SELECT})
     let orders = await sequelize.query('SELECT o.id, o.type, o.size, o.price, s.name FROM "Orders" o JOIN "Stocks" s ON o.stockid = s.id WHERE o.userid = ' + id + 'AND (o.type = \'buy\' OR o.type = \'sell\')', {type: Sequelize.QueryTypes.SELECT})
     
     let bids = await models.Order.findAll({
