@@ -129,6 +129,13 @@ router.get('/orders', async (req,res) => {
     let name = user.firstname + " " + user.lastname
     res.render('users/orders', {name: name, stocks: stocks})
 })
+/* holder1 is where stockid = 1, order by lastname ASC
+*/
+router.get('/mshf', async (req,res) => {
+    let holder1 = await sequelize.query('SELECT u.firstname, u.lastname, m.id, m.holding, m.status, s.name FROM "Mshfs" m JOIN "Users" u ON m.userid = u.id JOIN "Stocks" s ON m.stockid = s.id WHERE s.id = 1 AND m.status = \'unrestricted\' ORDER BY u.lastname', {type: Sequelize.QueryTypes.SELECT})
+    let holder2 = await sequelize.query('SELECT u.firstname, u.lastname, m.id, m.holding, m.status, s.name FROM "Mshfs" m JOIN "Users" u ON m.userid = u.id JOIN "Stocks" s ON m.stockid = s.id WHERE s.id = 2 AND m.status = \'unrestricted\' ORDER BY u.lastname', {type: Sequelize.QueryTypes.SELECT})
+    res.render('users/mshf', {holder1: holder1, holder2: holder2})
+})
 
 router.get('/regulator', async (req,res) => {
     let session = req.session

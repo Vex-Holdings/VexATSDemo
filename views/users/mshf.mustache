@@ -1,0 +1,38 @@
+{{> header}}
+    <title>Master Securities Holder File</title>
+</head>
+<body>
+    <div class="container">
+        {{> principalmenu}}
+        <h2>ATS Demo - MSHF Record</h2>
+        <hr>
+        <table>
+            <tr><th>Customer</th><th>Stock</th><th>Amount</th><th>Status</th></tr>
+            {{#holder1}}
+            <tr>
+                <td>{{firstname}} {{lastname}}</td>
+                <td>{{name}}</td>
+                <td>{{holding}}</td>
+                <td>{{status}}</td>
+            </tr>
+            {{/holder1}}
+        </table>
+        <hr>
+        <table>
+            <tr><th>Customer</th><th>Stock</th><th>Amount</th><th>Status</th></tr>
+            {{#holder2}}
+            <tr>
+                <td>{{firstname}} {{lastname}}</td>
+                <td>{{name}}</td>
+                <td>{{holding}}</td>
+                <td>{{status}}</td>
+            </tr>
+            {{/holder2}}
+        </table>
+        {{#message}}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+        {{/message}}
+    </div>
+{{> footer}}   
