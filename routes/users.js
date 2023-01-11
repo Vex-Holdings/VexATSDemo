@@ -9,6 +9,8 @@ const models = require('../models')
 const Chart = require('chart.js')
 const request = require('request')
 
+const plotly = require('plotly')("jgcrossman", "nP44pe1MIKiibSeXQiZB")
+
 // create call_api function
 
 function call_api(finishedAPI, ticker) { 
@@ -60,52 +62,18 @@ router.get('/searchstock', (req,res) => {
 })
 
 router.get('/testdbquery', (req,res) => {
-    const myChart = new Chart({
-        type: 'bar',
-        data: {
-            labels: [10.00,
-                10.01,
-                10.02,
-                10.03,
-                10.04,
-                10.05,
-                10.06,
-                10.07,
-                10.08,
-                10.09,
-                10.10
-            ],
-            datasets: [{
-                label: 'Shares',
-                data: [0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                backgroundColor: ['gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray'
-            ]
-            }]
-        },
-        options:{}
-    });
-    res.render('users/testdbquery', {mychart: myChart})
+
+    var data = [
+    {
+        x: ["giraffes", "orangutans", "monkeys"],
+        y: [20, 14, 23],
+        type: "bar"
+    }
+    ];
+    var graphOptions = {filename: "basic-bar", fileopt: "overwrite"};
+    let chart = plotly.plot(data, graphOptions);
+    
+    res.render('users/testdbquery', {chart: chart})
 })
 
 router.get('/chart', async (req,res) => {
