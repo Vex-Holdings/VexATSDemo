@@ -13,7 +13,66 @@ global.document = document
 const Chart = require('chart.js')
 const request = require('request')
 
+
 const plotly = require('plotly')("jgcrossman", "nP44pe1MIKiibSeXQiZB")
+
+// create a pie chart for an example
+const Highcharts = require('highcharts');
+const fs = require("fs");
+const chartExporter = require("highcharts-export-server");
+// Initialize the exporter
+chartExporter.initPool();
+// Chart details object specifies chart type and data to plot
+const chartDetails = {
+   type: "png",
+   options: {
+       chart: {
+           type: "pie"
+       },
+       title: {
+           text: "Heading of Chart"
+       },
+       plotOptions: {
+           pie: {
+               dataLabels: {
+                   enabled: true,
+                   format: "<b>{point.name}</b>: {point.y}"
+               }
+           }
+       },
+       series: [
+           {
+               data: [
+                   {
+                       name: "a",
+                       y: 100
+                   },
+                   {
+                       name: "b",
+                       y: 20
+                   },
+                   {
+                       name: "c",
+                       y: 50
+                   }
+               ]
+           }
+       ]
+   }
+};
+chartExporter.export(chartDetails, (err, res) => {
+   // Get the image data (base64)
+   let imageb64 = res.data;
+   // Filename of the output
+   let outputFile = "images/pie.png";
+   // Save the image to file
+   fs.writeFileSync(outputFile, imageb64, "base64", function(err) {
+       if (err) console.log(err);
+   });
+   console.log("Saved image!");
+   chartExporter.killPool();
+});
+
 
 // create call_api function
 
@@ -66,41 +125,8 @@ router.get('/searchstock', (req,res) => {
 })
 
 router.get('/testdbquery', (req,res) => {
-        var data = {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        };
-        var canvas = window.document.createElement("canvas");
-        canvas.id = "myChart";
-        window.document.body.appendChild(canvas);
-        var ctx = canvas.getContext("2d");
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: {}
-        });
-        let img = myChart.toBase64Image();
-        res.render('users/testdbquery', { chart: img });
+        
+        res.render('users/testdbquery');
     });
 
 router.get('/chart', async (req,res) => {

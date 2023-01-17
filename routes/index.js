@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const models = require('../models')
-
+const Chart = require('chart.js')
 const SALT_ROUNDS = 10;
 
 // GET pages 
