@@ -189,8 +189,13 @@ router.get('/regulator', async (req,res) => {
             ['id', 'DESC']
         ]
     })
+    let orders = await models.Order.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    })
     let name = user.firstname + " " + user.lastname
-    res.render('users/regulator', {name: name, bids: bids, asks: asks, trades: trades})
+    res.render('users/regulator', {name: name, bids: bids, asks: asks, trades: trades, orders: orders})
 })
 
 router.get('/mshf-holding/:id', async (req,res) => {

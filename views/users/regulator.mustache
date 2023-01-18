@@ -18,11 +18,20 @@
             <tr><td></td><td>{{size}}</td><td>{{price}}</td><td>{{userid}}</td><td>{{updatedAt}}</td></tr>
         {{/bids}}
         </table>
+        <hr>
         <table>
-            <tr><th>Trades</th><th>Size</th><th>Price</th><th>Buy Order</th><th>Sell Order</th><th>Status</th><th>Timestamp</th></tr>
+            <tr><th>Trade #</th><th>Size</th><th>Price</th><th>Buy Order</th><th>Sell Order</th><th>Status</th><th>Timestamp</th></tr>
         {{#trades}}
             <tr><td>{{id}}</td><td>{{size}}</td><td>{{price}}</td><td>{{buyid}}</td><td>{{sellid}}</td><td>{{status}}</td><td>{{updatedAt}}</td></tr>
         {{/trades}}
+        </table>
+        <hr>
+        <h3>Historical Order Information</h3>
+        <table>
+            <tr><th>Order #</th><th>Subscriber</th><th>Order - Status</th><th>Size</th><th>Price</th><th>Created</th><th>Updated</th></tr>
+        {{#orders}}
+            <tr><td>{{id}}</td><td>{{userid}}</td><td>{{type}}</td><td>{{size}}</td><td>{{price}}</td><td>{{createdAt}}</td><td>{{updatedAt}}</td></tr>
+        {{/orders}}
         </table>
         <!--
         <tr></tr>
