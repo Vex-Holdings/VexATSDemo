@@ -19,7 +19,7 @@ const plotly = require('plotly')("jgcrossman", "nP44pe1MIKiibSeXQiZB")
 // create a pie chart for an example
 const Highcharts = require('highcharts');
 const fs = require("fs");
-const chartExporter = require("highcharts-export-server");
+const chartExporter = require('highcharts-export-server');
 // Initialize the exporter
 chartExporter.initPool();
 // Chart details object specifies chart type and data to plot
