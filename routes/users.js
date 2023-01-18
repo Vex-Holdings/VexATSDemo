@@ -291,11 +291,11 @@ router.get('/dashboard', async (req,res) => {
     if(status == 'user') {
         res.send(`Hi ${name}! The next step is to fill out the ${accounttype} <a href="/users/personal">new account form</a>.`)
     } else if(status == 'submitted') {
-        res.send(`Hi ${name}! Your form has been submitted. You will receive notification of approval soon.`)
+        res.send(`Hi ${name}! Your application has been submitted. As part of the review process, you will receive an electronic form by email for your review and e-signature.`)
     } else if(status == 'pending') {
         res.send(`Hi ${name}, your application requires additional information. We will contact you shortly.`)
     } else if(status == 'approved') {
-        res.render('users/dashboard',{holdings: holdings, orders: orders, bids: bids, asks: asks, trades: trades})
+        res.render('users/dashboard',{name: name, holdings: holdings, orders: orders, bids: bids, asks: asks, trades: trades})
     } else {
         res.send(`Hi ${name}! You are ready for the <a href="/users/market">market page</a>`)
     }
@@ -550,7 +550,7 @@ router.post('/place-sell-order', async (req,res) => {
     let bidUserId = bestBid[0]["userid"]
     let bidSize = bestBid[0]["size"]
     let bidPrice = bestBid[0]["price"]
-
+    
     if(price < bidPrice) {
         // don't want to cross the market
         res.render('user/crossedsell',{price: price, bidPrice: bidPrice})
