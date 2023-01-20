@@ -107,7 +107,7 @@ router.get('/ta-clear', async (req,res) => {
     const sstatus = codSell[0]["status"]
     const codBuyId = codBuy[0]["id"]
     const codSellId = codSell[0]["id"]
-    const codSellAmount = codSell[0]["amount"]
+    const newCodSellAmount = codSell[0]["amount"] - matchSize
     const mshfidDetails = await sequelize.query('SELECT * FROM "Mshfs" WHERE id = ' + sellOrderMshfId, {type: Sequelize.QueryTypes.SELECT})
     const mshfidHolding = mshfidDetails[0]["holding"]
     const matchConsideration = matchSize * matchPrice
@@ -117,7 +117,7 @@ router.get('/ta-clear', async (req,res) => {
     const sellerFees = parseFloat(matchConsideration - proceedsToSeller).toFixed(2)
     const totalFees = parseFloat(buyEnough) + parseFloat(sellerFees)
 
-    res.render('users/ta-clear', {matchedOrders: matchedOrders, codBuy: codBuy, codSell: codSell, mshfidDetails: mshfidDetails, buyEnough: buyEnough, sellerFees: sellerFees, proceedsToSeller: proceedsToSeller, newMshfHolding: newMshfHolding, bstatus: bstatus, sstatus: sstatus, codBuyAmount: codBuyAmount, sellOrderUserId: sellOrderUserId, sellOrderMshfId: sellOrderMshfId, mshfidHolding: mshfidHolding, buyOrderUserId: buyOrderUserId, matchSize: matchSize, codBuyId: codBuyId, codSellId: codSellId, matchId: matchId})
+    res.render('users/ta-clear', {matchedOrders: matchedOrders, codBuy: codBuy, codSell: codSell, mshfidDetails: mshfidDetails, buyEnough: buyEnough, sellerFees: sellerFees, proceedsToSeller: proceedsToSeller, newMshfHolding: newMshfHolding, bstatus: bstatus, sstatus: sstatus, codBuyAmount: codBuyAmount, sellOrderUserId: sellOrderUserId, sellOrderMshfId: sellOrderMshfId, mshfidHolding: mshfidHolding, buyOrderUserId: buyOrderUserId, matchSize: matchSize, codBuyId: codBuyId, codSellId: codSellId, matchId: matchId, newCodSellAmount: newCodSellAmount})
 })
 
 router.get('/searchstock', (req,res) => {
@@ -366,17 +366,19 @@ router.post('/ta-clear', async (req,res) => {
     const proceeds = req.body.proceeds
     const changecertamount = req.body.changecertamount
     const matchreportid = req.body.matchreportid
+    const newcodsellamount = req.body.newcodsellamount
 
     // Codsells get sellid, update status to "spent"
 
     await models.Codsell.update({
-        status: 'spent'
+        status: 'spent',
     },{
         where: {
             id: codsellid
         }
     })
 
+    
     // Codbuys get buyid, update status to "spent"
 
     await models.Codbuy.update({
@@ -448,11 +450,12 @@ router.post('/ta-clear', async (req,res) => {
     const codSellSize = codSellResults[0]["amount"]
     const newCodSellSize = codSellSize - size
     if(newCodSellSize > 0) {
-        await models.Codsell.build({
+        let newCodSellEntry = await models.Codsell.build({
             mshfid: changeid,
             amount: newCodSellSize,
             status: 'funded'
         })
+        await newCodSellEntry.save()
     }
 
     // update Orders page with new MSHF ID
