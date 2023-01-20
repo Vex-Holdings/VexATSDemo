@@ -261,6 +261,8 @@ router.get('/dashboard', async (req,res) => {
     
     let holdings = await sequelize.query('SELECT m.holding, m.status, s.name FROM "Mshfs" m JOIN "Stocks" s ON m.stockid = s.id WHERE m.userid = ' + id + 'AND m.status = \'unrestricted\'', {type: Sequelize.QueryTypes.SELECT})
     let orders = await sequelize.query('SELECT o.id, o.type, o.size, o.price, s.name FROM "Orders" o JOIN "Stocks" s ON o.stockid = s.id WHERE o.userid = ' + id + 'AND (o.type = \'buy\' OR o.type = \'sell\')', {type: Sequelize.QueryTypes.SELECT})
+    let buysettled = await sequelize.query('SELECT m.id, m.size, m.price, o.userid, o.type FROM "Matches" m JOIN "Orders" o ON m.buyid = o.id WHERE o.userid = ' +id + 'AND m.status = \'settled\'', {type: Sequelize.QueryTypes.SELECT})
+    let sellsettled = await sequelize.query('SELECT m.id, m.size, m.price, o.userid, o.type FROM "Matches" m JOIN "Orders" o ON m.sellid = o.id WHERE o.userid = ' +id + 'AND m.status = \'settled\'', {type: Sequelize.QueryTypes.SELECT})
     
     let bids = await models.Order.findAll({
         where: {
@@ -295,7 +297,7 @@ router.get('/dashboard', async (req,res) => {
     } else if(status == 'pending') {
         res.send(`Hi ${name}, your application requires additional information. We will contact you shortly.`)
     } else if(status == 'approved') {
-        res.render('users/dashboard',{name: name, holdings: holdings, orders: orders, bids: bids, asks: asks, trades: trades})
+        res.render('users/dashboard',{name: name, holdings: holdings, orders: orders, bids: bids, asks: asks, trades: trades, buysettled: buysettled, sellsettled: sellsettled})
     } else {
         res.send(`Hi ${name}! You are ready for the <a href="/users/market">market page</a>`)
     }
@@ -481,10 +483,10 @@ router.post('/ta-clear', async (req,res) => {
 
     await taClearEntry.save()
 
-    // Matches get matchreportid, update status to "cleared"
+    // Matches get matchreportid, update status to "settled"
 
     await models.Match.update({
-        status: 'cleared'
+        status: 'settled'
     },{
         where: {
             id: matchreportid

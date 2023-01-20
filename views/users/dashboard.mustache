@@ -7,6 +7,7 @@
         <h2>ATS Demo - {{name}}'s Dashboard</h2>
         <hr>
         <h3>Market - ABC SaaS Inc</h3>
+        <hr>
         <table>
             <tr><th class="redtext">Offers</th><th>Size</th><th>Price</th></tr>
         {{#asks}}
@@ -17,12 +18,14 @@
             <tr><td></td><td>{{size}}</td><td>{{price}}</td></tr>
         {{/bids}}
         </table>
+        <hr>
         <table>
             <tr><th>Trades</th><th>Size</th><th>Price</th></tr>
         {{#trades}}
             <tr><td>{{id}}</td><td>{{size}}</td><td>{{price}}</td></tr>
         {{/trades}}
         </table>
+        <hr>
         <!--
         <tr></tr>
         <th></th>
@@ -44,12 +47,24 @@
         {{/orders}}
         </table>
         <a href="/users/orders"><button class="btn btn-info">Go to Order Page</button></a>
+        <hr>
         <h3>Holdings</h3>
         <table>
             <tr><th>Stock</th><th>Holding</th><th>Status</th></tr>
         {{#holdings}}
             <tr><td>{{name}}</td><td>{{holding}}</td><td>{{status}}</td></tr>
         {{/holdings}}
+        </table>
+        <hr>
+        <h3>Settled Trades</h3>
+        <table>
+            <tr><th>Trade ID</th><th>Status</th><th>Size</th><th>Price</th><th>Link</th></tr>
+        {{#buysettled}}    
+            <tr><td>{{id}}</td><td>{{type}}</td><td>{{size}}</td><td>{{price}}</td>><td><button class="btn btn-success">Confirmation Link</button></a></td></tr>
+        {{/buysettled}}
+        {{#sellsettled}}    
+            <tr><td>{{id}}</td><td>{{type}}</td><td>{{size}}</td><td>{{price}}</td><td><button class="btn btn-danger">Confirmation Link</button></a></td></tr>
+        {{/sellsettled}}
         </table>
         {{#message}}
             <div class="alert alert-danger" role="alert">
