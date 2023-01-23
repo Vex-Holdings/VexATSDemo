@@ -241,10 +241,11 @@ router.get('/controlpanel', async (req,res) => {
         }
     })
     let matches = await models.Match.findAll()
-    let orders = await sequelize.query('SELECT o.id, u.firstname, u.lastname, s.name, o.type, o.size, o.price, o.mshfid FROM "Orders" o JOIN "Users" u ON o.userid = u.id JOIN "Stocks" s ON o.stockid = s.id WHERE o.type = \'buy\' OR o.type = \'sell\'', {type: Sequelize.QueryTypes.SELECT})
+    let orders = await sequelize.query('SELECT o.id, u.firstname, u.lastname, s.name, o.type, o.size, o.price, o.mshfid, o."updatedAt" FROM "Orders" o JOIN "Users" u ON o.userid = u.id JOIN "Stocks" s ON o.stockid = s.id WHERE o.type = \'buy\' OR o.type = \'sell\'', {type: Sequelize.QueryTypes.SELECT})
     let codlogs = await models.Codlog.findAll()
     let codbuys = await sequelize.query('SELECT c.id, u.firstname, u.lastname, c.amount, c.status FROM "Codbuys" c JOIN "Users" u ON c.userid = u.id', {type: Sequelize.QueryTypes.SELECT})
     let codsells = await models.Codsell.findAll()
+    console.log(orders)
     res.render('users/controlpanel', {users: users, matches: matches, orders: orders, codlogs: codlogs, codbuys: codbuys, codsells: codsells})
 })
 

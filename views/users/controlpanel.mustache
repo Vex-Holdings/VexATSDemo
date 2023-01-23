@@ -35,7 +35,7 @@
         </div>
         <h3>Trade Matches</h3>
         <table>
-            <tr><th>Index</th><th>Buy Order</th><th>Sell Order</th><th>Shares</th><th>Price</th><th>Status</th></tr>
+            <tr><th>Index</th><th>Buy Order</th><th>Sell Order</th><th>Shares</th><th>Price</th><th>Status</th><th>Timestamp</th></tr>
             {{#matches}}
             <tr>
             <td>{{id}}</td>
@@ -44,13 +44,14 @@
             <td>{{size}}</td>
             <td>{{price}}</td>
             <td>{{status}}</td>
+            <td>{{updatedAt}}</td>
             </tr>
             {{/matches}}
         </table>
         <hr>
         <h3>Orders</h3>
         <table>
-            <tr><th>Index</th><th>User</th><th>Stock</th><th>Buy/Sell</th><th>Shares</th><th>Price</th><th>MSHF Cert</th></tr>
+            <tr><th>Index</th><th>User</th><th>Stock</th><th>Buy/Sell</th><th>Shares</th><th>Price</th><th>MSHF Cert</th><th>Timestamp</th></tr>
             {{#orders}}
             <tr>
             <td>{{id}}</td>
@@ -60,6 +61,7 @@
             <td>{{size}}</td>
             <td>{{price}}</td>
             <td>{{mshfid}}</td>
+            <td>{{updatedAt}}</td>
             </tr>
             {{/orders}}
         </table>
