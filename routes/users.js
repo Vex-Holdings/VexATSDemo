@@ -245,7 +245,7 @@ router.get('/controlpanel', async (req,res) => {
     let codlogs = await models.Codlog.findAll()
     let codbuys = await sequelize.query('SELECT c.id, u.firstname, u.lastname, c.amount, c.status FROM "Codbuys" c JOIN "Users" u ON c.userid = u.id', {type: Sequelize.QueryTypes.SELECT})
     let codsells = await models.Codsell.findAll()
-    console.log(orders)
+    // console.log(orders)
     res.render('users/controlpanel', {users: users, matches: matches, orders: orders, codlogs: codlogs, codbuys: codbuys, codsells: codsells})
 })
 
