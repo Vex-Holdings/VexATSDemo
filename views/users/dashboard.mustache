@@ -8,6 +8,8 @@
         <hr>
         <h3>Market - ABC SaaS Inc</h3>
         <hr>
+        <div class="row">
+        <div class="col">
         <table>
             <tr><th class="redtext">Offers</th><th>Size</th><th>Price</th></tr>
         {{#asks}}
@@ -18,13 +20,16 @@
             <tr><td></td><td>{{size}}</td><td>{{price}}</td></tr>
         {{/bids}}
         </table>
-        <hr>
+        </div>
+        <div class="col">
         <table>
             <tr><th>Trades</th><th>Size</th><th>Price</th></tr>
         {{#trades}}
             <tr><td>{{id}}</td><td>{{size}}</td><td>{{price}}</td></tr>
         {{/trades}}
         </table>
+        </div>
+        </div>
         <hr>
         <!--
         <tr></tr>

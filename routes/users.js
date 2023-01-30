@@ -249,6 +249,45 @@ router.get('/controlpanel', async (req,res) => {
     res.render('users/controlpanel', {users: users, matches: matches, orders: orders, codlogs: codlogs, codbuys: codbuys, codsells: codsells})
 })
 
+router.get('/tacontrolpanel', async (req,res) => {
+    
+    let session = req.session
+    let id = session.user.userId
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+
+    let name = user.firstname + " " + user.lastname
+    let codlogs = await models.Codlog.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    })
+    let codbuys = await sequelize.query('SELECT c.id, u.firstname, u.lastname, c.amount, c.status FROM "Codbuys" c JOIN "Users" u ON c.userid = u.id ORDER BY c.id DESC', {type: Sequelize.QueryTypes.SELECT})
+    let codsells = await models.Codsell.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    })
+    let outbuys = await models.Codbuy.findAll({
+        where: {
+            status: ['funded']
+        }
+    })
+    let outsells = await models.Mshf.findAll({
+        where: {
+            status: ['cod']
+        }
+    })
+    let matched = await models.Match.findAll({
+        where: {
+            status: ['matched']
+        }
+    })
+    res.render('users/tacontrolpanel', {name: name, codlogs: codlogs, codbuys: codbuys, codsells: codsells, outbuys: outbuys, outsells: outsells, matched: matched})
+})
 
 router.get('/dashboard', async (req,res) => {
     
@@ -537,6 +576,7 @@ router.post('/delete-order',async (req,res) => {
         })
     }
     // Need to add a models.Mshf.update to change the status of the certificate attached to the sell order back to "unrestricted" as soon as I change the place sell order to ensure that it is changed to "COD Initiated"
+    console.log('Order ID:' + orderId + ' cancelled')
     res.redirect('/users/dashboard')
 })
 

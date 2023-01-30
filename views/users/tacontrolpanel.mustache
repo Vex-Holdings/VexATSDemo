@@ -1,0 +1,110 @@
+{{> header}}
+    <title>Transfer Agent Control Panel</title>
+</head>
+<body>
+    <div class="container">
+        {{> tamenu}}
+        <h2>{{name}} - Transfer Agent Control Panel</h2>
+        <hr>
+        <h3>Messages from ATS - Ready for Settlement</h3>
+        <table>
+            <tr><th>Index</th><th>Buy Order</th><th>Sell Order</th><th>Shares</th><th>Price</th><th>Status</th><th>Action</th></tr>
+        {{#matched}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{buyid}}</td>
+            <td>{{sellid}}</td>
+            <td>{{size}}</td>
+            <td>{{price}}</td>
+            <td>{{status}}</td>
+            <td><a href="/users/ta-clear"><button class="btn btn-primary">Settle CODs</button></a></td>
+            </tr>
+        {{/matched}}
+        </table>
+        <hr>
+        <h3>Messages from ATS - Open Consideration on Demand Contracts</h3>
+        <div class="row">
+        <div class="col">
+        <table>
+            <tr><th>Index</th><th>User ID</th><th>Amount</th><th>Status</th></tr>
+        {{#outbuys}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{userid}}</td>
+            <td>{{amount}}</td>
+            <td>{{status}}</td>
+            </tr>
+        {{/outbuys}}
+        </table>
+        </div>
+        <div class="col">
+        <table>
+            <tr><th>Certifcate</th><th>User ID</th><th>Holding</th><th>Status</th></tr>
+        {{#outsells}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{userid}}</td>
+            <td>{{holding}}</td>
+            <td>{{status}}</td>
+            </tr>
+        {{/outsells}}
+        </table>
+        </div>
+        </div>
+        <hr>
+        <div class="row">
+        <div class="col">
+        <h3>TA Ops - COD Buys</h3>
+        <table>
+            <tr><th>Index</th><th>User</th><th>Amount</th><th>Status</th></tr>
+            {{#codbuys}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{firstname}} {{lastname}}</td>
+            <td>{{amount}}</td>
+            <td>{{status}}</td>
+            </tr>
+            {{/codbuys}}
+        </table>
+        </div>
+        <div class="col">
+        <h3>TA Ops - COD Sells</h3>
+        <table>
+            <tr><th>Index</th><th>MSHF Cert</th><th>Shares</th><th>Status</th></tr>
+            {{#codsells}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{mshfid}}</td>
+            <td>{{amount}}</td>
+            <td>{{status}}</td>
+            </tr>
+            {{/codsells}}
+        </table>
+        </div>
+        </div>
+        <hr>
+        <h3>TA Ops - COD Log</h3>
+        <table>
+            <tr><th>Index</th><th>COD Sell</th><th>COD Buy</th><th>Shares</th><th>Amount</th></tr>
+            {{#codlogs}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{sellid}}</td>
+            <td>{{buyid}}</td>
+            <td>{{shares}}</td>
+            <td>{{dollars}}</td>
+            </tr>
+            {{/codlogs}}
+        </table>
+        {{#message}}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    {{/message}}
+    </div>
+{{> footer}}
+<!--
+        <tr></tr>
+        <th></th>
+        <td></td>
+        -->
