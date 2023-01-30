@@ -1,0 +1,56 @@
+{{> header}}
+    <title>Principal Control Panel</title>
+</head>
+<body>
+    <div class="container">
+        {{> principalmenu}}
+        <h2>ATS Demo - Principal Control Panel</h2>
+        <hr>
+        <h3>Buy Order Details</h3>
+        <div class="list-group">
+            <ul>
+                {{#buyorder}}
+                <div class="row">
+                <div class="col-2">Index:</div>
+                <div class="col-4">{{id}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Subscriber:</div>
+                <div class="col-4">{{firstname}} {{lastname}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Stock:</div>
+                <div class="col-4">{{name}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Size:</div>
+                <div class="col-4">{{size}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Price:</div>
+                <div class="col-4">{{price}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Status:</div>
+                <div class="col-4">{{type}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Timestamp:</div>
+                <div class="col-6">{{updatedAt}}</div>
+                </div>
+                {{/buyorder}}        
+            </ul>
+        </div>
+        <hr>
+{{> footer}}
+<!--
+        <tr></tr>
+        <th></th>
+        <td></td>
+        -->

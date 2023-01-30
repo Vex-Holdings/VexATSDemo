@@ -35,12 +35,13 @@
         </div>
         <h3>Trade Matches</h3>
         <table>
-            <tr><th>Index</th><th>Buy Order</th><th>Sell Order</th><th>Shares</th><th>Price</th><th>Status</th><th>Timestamp</th></tr>
+            <tr><th>Index</th><th>Stock</th><th>Buy Order</th><th>Sell Order</th><th>Shares</th><th>Price</th><th>Status</th><th>Timestamp</th></tr>
             {{#matches}}
             <tr>
             <td>{{id}}</td>
-            <td>{{buyid}}</td>
-            <td>{{sellid}}</td>
+            <td>ABC SaaS Inc</td>
+            <td><a href="/users/buyorder/{{buyid}}">{{buyid}}</a></td>
+            <td><a href="/users/sellorder/{{sellid}}">{{sellid}}</td>
             <td>{{size}}</td>
             <td>{{price}}</td>
             <td>{{status}}</td>
@@ -60,14 +61,44 @@
             <td>{{type}}</td>
             <td>{{size}}</td>
             <td>{{price}}</td>
-            <td>{{mshfid}}</td>
+            <td><a href="/users/certificate/{{mshfid}}">{{mshfid}}</td>
             <td>{{updatedAt}}</td>
             </tr>
             {{/orders}}
         </table>
         <hr>
-        <!--
-        <h3>TA Ops - COD Log</h3>
+        <div class="row">
+            <div class="col">
+                <h3>Message to Transfer Agent - COD Buy Contracts</h3>
+                <table>
+                    <tr><th>Index</th><th>User</th><th>Amount</th><th>Status</th></tr>
+                    {{#codbuys}}
+                    <tr>
+                    <td>{{id}}</td>
+                    <td>{{firstname}} {{lastname}}</td>
+                    <td>{{amount}}</td>
+                    <td>{{status}}</td>
+                    </tr>
+                    {{/codbuys}}
+                </table>
+            </div>
+            <div class="col">
+                 <h3>Message to Transfer Agent - COD Sell Contracts</h3>
+                <table>
+                    <tr><th>Index</th><th>MSHF Cert</th><th>Shares</th><th>Status</th></tr>
+                    {{#codsells}}
+                    <tr>
+                    <td>{{id}}</td>
+                    <td>{{mshfid}}</td>
+                    <td>{{amount}}</td>
+                    <td>{{status}}</td>
+                    </tr>
+                    {{/codsells}}
+                </table>
+            </div>
+        </div>
+        <hr>
+        <h3>Trade Log <-> COD Log</h3>
         <table>
             <tr><th>Index</th><th>COD Sell</th><th>COD Buy</th><th>Shares</th><th>Amount</th></tr>
             {{#codlogs}}
@@ -81,32 +112,6 @@
             {{/codlogs}}
         </table>
         <hr>
-        <h3>TA Ops - COD Buys</h3>
-        <table>
-            <tr><th>Index</th><th>User</th><th>Amount</th><th>Status</th></tr>
-            {{#codbuys}}
-            <tr>
-            <td>{{id}}</td>
-            <td>{{firstname}} {{lastname}}</td>
-            <td>{{amount}}</td>
-            <td>{{status}}</td>
-            </tr>
-            {{/codbuys}}
-        </table>
-        <hr>
-        <h3>TA Ops - COD Sells</h3>
-        <table>
-            <tr><th>Index</th><th>MSHF Cert</th><th>Shares</th><th>Status</th></tr>
-            {{#codsells}}
-            <tr>
-            <td>{{id}}</td>
-            <td>{{mshfid}}</td>
-            <td>{{amount}}</td>
-            <td>{{status}}</td>
-            </tr>
-            {{/codsells}}
-        </table>
-        -->
         {{#message}}
         <div class="alert alert-danger" role="alert">
             {{message}}
