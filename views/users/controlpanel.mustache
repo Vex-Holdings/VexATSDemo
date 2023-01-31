@@ -29,26 +29,9 @@
                 <div class="col-2">{{status}}</div>
                 </div>
                 <a href="/users/accountdetails/{{id}}"><button class="btn btn-info">Review Account</button></a>
-                <hr>
                 {{/users}}        
             </ul>
         </div>
-        <h3>Trade Matches</h3>
-        <table>
-            <tr><th>Index</th><th>Stock</th><th>Buy Order</th><th>Sell Order</th><th>Shares</th><th>Price</th><th>Status</th><th>Timestamp</th></tr>
-            {{#matches}}
-            <tr>
-            <td>{{id}}</td>
-            <td>ABC SaaS Inc</td>
-            <td><a href="/users/buyorder/{{buyid}}">{{buyid}}</a></td>
-            <td><a href="/users/sellorder/{{sellid}}">{{sellid}}</td>
-            <td>{{size}}</td>
-            <td>{{price}}</td>
-            <td>{{status}}</td>
-            <td>{{updatedAt}}</td>
-            </tr>
-            {{/matches}}
-        </table>
         <hr>
         <h3>Orders</h3>
         <table>
@@ -61,10 +44,27 @@
             <td>{{type}}</td>
             <td>{{size}}</td>
             <td>{{price}}</td>
-            <td><a href="/users/certificate/{{mshfid}}">{{mshfid}}</td>
+            <td><a href="/users/certificate/{{mshfid}}">{{mshfid}}</a></td>
             <td>{{updatedAt}}</td>
             </tr>
             {{/orders}}
+        </table>
+        <hr>
+        <h3>Trade Matches</h3>
+        <table>
+            <tr><th>Index</th><th>Stock</th><th>Buy Order</th><th>Sell Order</th><th>Shares</th><th>Price</th><th>Status</th><th>Timestamp</th></tr>
+            {{#matches}}
+            <tr>
+            <td>{{id}}</td>
+            <td>ABC SaaS Inc</td>
+            <td><a href="/users/buyorder/{{buyid}}">{{buyid}}</a></td>
+            <td><a href="/users/sellorder/{{sellid}}">{{sellid}}</a></td>
+            <td>{{size}}</td>
+            <td>{{price}}</td>
+            <td>{{status}}</td>
+            <td>{{updatedAt}}</td>
+            </tr>
+            {{/matches}}
         </table>
         <hr>
         <div class="row">
@@ -89,7 +89,7 @@
                     {{#codsells}}
                     <tr>
                     <td>{{id}}</td>
-                    <td>{{mshfid}}</td>
+                    <td><a href="/users/certificate/{{mshfid}}">{{mshfid}}</a></td>
                     <td>{{amount}}</td>
                     <td>{{status}}</td>
                     </tr>

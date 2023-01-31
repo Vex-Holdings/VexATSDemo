@@ -373,6 +373,56 @@ router.get('/dashboard', async (req,res) => {
     }
 })
 
+router.get('/buyconfirm/:matchId', async (req,res) => {
+
+    let session = req.session
+    let id = session.user.userId
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let matchid = req.params.matchId
+
+    let buyconfirm = await models.Match.findOne({
+        where: {
+            id: matchid
+        }
+    })
+    
+    let gross = (buyconfirm.size * buyconfirm.price).toFixed(2)
+    let commission = (gross * 0.005).toFixed(2)
+    let net = (parseFloat(gross) + parseFloat(commission)).toFixed(2)
+    let name = user.firstname + " " + user.lastname
+
+    res.render('users/buyconfirm', {name: name, buyconfirm: buyconfirm, gross: gross, commission: commission, net: net})
+})
+
+router.get('/sellconfirm/:matchId', async (req,res) => {
+
+    let session = req.session
+    let id = session.user.userId
+    let user = await models.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    let matchid = req.params.matchId
+
+    let sellconfirm = await models.Match.findOne({
+        where: {
+            id: matchid
+        }
+    })
+    
+    let gross = (sellconfirm.size * sellconfirm.price).toFixed(2)
+    let commission = (gross * 0.005).toFixed(2)
+    let net = (parseFloat(gross) - parseFloat(commission)).toFixed(2)
+    let name = user.firstname + " " + user.lastname
+
+    res.render('users/sellconfirm', {name: name, sellconfirm: sellconfirm, gross: gross, commission: commission, net: net})
+})
+
 router.get('/market', async (req,res) => {
     let session = req.session
     let id = session.user.userId

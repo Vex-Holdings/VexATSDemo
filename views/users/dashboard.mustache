@@ -65,10 +65,10 @@
         <table>
             <tr><th>Trade ID</th><th>Status</th><th>Size</th><th>Price</th><th>Link</th></tr>
         {{#buysettled}}    
-            <tr><td>{{id}}</td><td>{{type}}</td><td>{{size}}</td><td>{{price}}</td>><td><button class="btn btn-success">Confirmation Link</button></a></td></tr>
+            <tr><td>{{id}}</td><td>{{type}}</td><td>{{size}}</td><td>{{price}}</td>><td><a href="/users/buyconfirm/{{id}}"><button class="btn btn-success">Confirmation Link</button></a></td></tr>
         {{/buysettled}}
         {{#sellsettled}}    
-            <tr><td>{{id}}</td><td>{{type}}</td><td>{{size}}</td><td>{{price}}</td><td><button class="btn btn-danger">Confirmation Link</button></a></td></tr>
+            <tr><td>{{id}}</td><td>{{type}}</td><td>{{size}}</td><td>{{price}}</td><td><a href="/users/sellconfirm/{{id}}"><button class="btn btn-danger">Confirmation Link</button></a></td></tr>
         {{/sellsettled}}
         </table>
         {{#message}}

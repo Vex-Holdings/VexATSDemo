@@ -1,0 +1,57 @@
+{{> header}}
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        {{> menu}}
+        <h2>ATS Demo - {{name}}'s Dashboard</h2>
+        <hr>
+        <h3>Confirmation - You Sold</h3>
+        <div class="list-group">
+            <ul>
+                {{#sellconfirm}}
+                <div class="row">
+                <div class="col-2">Stock:</div>
+                <div class="col-4">ABC SaaS Inc</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Shares:</div>
+                <div class="col-4">{{size}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Price:</div>
+                <div class="col-4">{{price}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Gross Amount:</div>
+                <div class="col-4">${{gross}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Commission:</div>
+                <div class="col-4">${{commission}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Net Cost:</div>
+                <div class="col-4">${{net}}</div>
+                </div>
+
+                <div class="row">
+                <div class="col-2">Timestamp:</div>
+                <div class="col-6">{{updatedAt}}</div>
+                </div>
+                {{/sellconfirm}}        
+            </ul>
+        </div>
+        <hr>
+        <a href="/users/dashboard"><button class="btn btn-info">Return to Dashboard</button></a>
+{{> footer}}
+<!--
+        <tr></tr>
+        <th></th>
+        <td></td>
+        -->
