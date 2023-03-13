@@ -12,7 +12,7 @@
             <tr><td><span class="redtext bold">SELL</span></td><td>{{stock.name}}</td><td>{{shares}}</td><td>{{price}}</td></tr>
         </table>
         <h3>Funding/Settlement</h3>
-        <p>Per the Subscriber Agreement I, {{user.firstname}} {{user.lastname}}, agree to fund a Consideration on Demand Order at the Transfer Agent in my account with the Certificate selected below. <br /> If matched in part or in whole, I agree to pay a total fee of 0.5% from the proceeds.</p>
+        <p>Per the Subscriber Agreement I, {{user.firstname}} {{user.lastname}}, instruct the Transfer Agency, through the API connection with Vex ATS, to fund a Consideration on Demand Order in my account with the Certificate selected below. <br /> If matched in part or in whole, I agree to pay a total fee of 0.5% from the proceeds.</p>
         <form action="/users/place-sell-order" method="POST">
             <table>
                 <tr><th>Certificate</th><th>Holding</th><th>Status</th></tr>
