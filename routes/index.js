@@ -1,9 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
-const models = require('../models')
-const Chart = require('chart.js')
+const models = require('../models');
+const Chart = require('chart.js');
 const SALT_ROUNDS = 10;
+const { Magic } = require('magic-sdk');
+const magic = new Magic('pk_live_09EF4F8C09120D83');
 
 // GET pages 
 router.get('/',(req,res) => {
@@ -48,6 +50,24 @@ router.get('/logout',(req,res,next) => {
 })
 
 // POST pages
+
+router.post('/slogin'), async (req,res) => {
+
+    let email = req.body.email
+
+    let user = await models.User.findOne({
+        where: {
+            email: email
+        }
+    })
+    if(user != null) {
+        req.session.user = {userId: user.id}
+    }
+    if(email) {
+        await magic.auth.loginWithEmailOTP({ email })
+        res.redirect('/users/dashboard')
+    }
+}
 
 router.post('/login', async (req,res) => {
     let username = req.body.username

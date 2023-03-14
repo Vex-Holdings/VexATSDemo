@@ -13,6 +13,8 @@ const getAllUsers = require('./middlewares/getallusers')
 const userRoutes = require('./routes/users');
 const indexRoutes = require('./routes/index');
 const request = require('request')
+const { Magic } = require('magic-sdk');
+const magic = new Magic('pk_live_09EF4F8C09120D83');
 
 const PORT = 3000;
 const CONNECTION_STRING = "postgres://localhost:5432/atsdemodb";
