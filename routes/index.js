@@ -30,6 +30,10 @@ router.get('/login',(req,res) => {
     res.render('login')
 })
 
+router.get('/slogin',(req,res) => {
+    res.render('slogin')
+})
+
 router.get('/logout',(req,res,next) => {
 
     if(req.session) {
