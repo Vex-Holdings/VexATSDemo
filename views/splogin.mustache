@@ -1,0 +1,15 @@
+{{> header}}
+<title>ATS Demo - Login</title>
+</head>
+<body>
+    <div class="container">
+    {{> menu}}
+        <h1>ATS Demo - Secure Login</h1>
+        <p>You have logged in securely with Magic Link</p>
+        <form action="/splogin" method="POST">
+            <input type="hidden" id="username" name="username" value="johncustomer" />
+            <input type="hidden" id="password" name="password" value="FPrhd#fp$EQp@9a4" />
+            <button type="submit" class="btn btn-primary">Dashboard</button>
+        </form>
+    </div>
+{{> footer}}

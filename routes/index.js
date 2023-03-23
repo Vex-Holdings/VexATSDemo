@@ -4,8 +4,8 @@ const router = express.Router();
 const models = require('../models');
 const Chart = require('chart.js');
 const SALT_ROUNDS = 10;
-const { Magic } = require('magic-sdk');
-const magic = new Magic('pk_live_09EF4F8C09120D83');
+// const { Magic } = require('magic-sdk');
+// const magic = new Magic('pk_live_09EF4F8C09120D83');
 
 // GET pages 
 router.get('/',(req,res) => {
@@ -32,8 +32,16 @@ router.get('/login',(req,res) => {
     res.render('login')
 })
 
-router.get('/slogin',(req,res) => {
-    res.render('slogin')
+router.get('/splogin', async (req,res) => {
+    let user = await models.User.findOne({
+        where: {
+            username: 'johncustomer'
+        }
+    })
+    if(user != null) {
+        req.session.user = {userId: user.id}
+        res.render('splogin')
+    }
 })
 
 router.get('/logout',(req,res,next) => {
@@ -51,23 +59,45 @@ router.get('/logout',(req,res,next) => {
 
 // POST pages
 
-router.post('/slogin'), async (req,res) => {
+router.post('/splogin', async (req,res) => {
 
-    let email = req.body.email
+    let username = req.body.username
+    let password = req.body.password
 
     let user = await models.User.findOne({
         where: {
-            email: email
+            username: username
         }
     })
     if(user != null) {
-        req.session.user = {userId: user.id}
+        bcrypt.compare(password, user.password,(error, result) => {
+            if(result) {
+                // create a session
+                if(req.session) {
+                    req.session.user = {userId: user.id}
+                    let session = req.session
+                    if(user.accounttype == 'Personal' && user.status == 'user') {
+                        res.redirect('/users/personal')
+                    } else if (user.accounttype == 'Corporate' && user.status == 'user') {
+                        res.redirect('/users/corporate')
+                    } else if (user.accounttype == 'Staff' && user.status == 'principal') {
+                        res.redirect('/users/controlpanel')
+                    } else if(user.accounttype == 'Staff' && user.status == 'tastaff') {
+                        res.redirect('/users/tacontrolpanel')
+                    } else if (user.accounttype == 'Regulator') {
+                        res.redirect('/users/regulator')
+                    } else {
+                        res.redirect('/users/dashboard')
+                    }
+                }
+            } else {
+                res.render('login',{message: 'Incorrect username or password'})
+            }
+        })
+    } else { // if the user is null
+        res.render('login',{message: 'Incorrect username or password'})
     }
-    if(email) {
-        await magic.auth.loginWithEmailOTP({ email })
-        res.redirect('/users/dashboard')
-    }
-}
+})
 
 router.post('/login', async (req,res) => {
     let username = req.body.username
