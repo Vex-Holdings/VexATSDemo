@@ -130,8 +130,88 @@ router.get('/testdbquery', (req,res) => {
     });
 
 router.get('/chart', async (req,res) => {
-    let chartfill = [0,0,0,0,0,0,0,0,0,0,0]
-    res.render('users/chart', {chartfill: chartfill})
+    /* const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [10.00,
+                10.01,
+                10.02,
+                10.03,
+                10.04,
+                10.05,
+                10.06,
+                10.07,
+                10.08,
+                10.09,
+                10.10
+            ],
+            datasets: [{
+                label: 'Shares',
+                data: [0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                backgroundColor: ['gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray',
+                                'gray'
+            ]
+            }]
+        },
+        options:{}
+    }) */
+    // const ctx = document.getElementById('myChart');
+
+    const createCanvas = require('canvas');
+    // Create a new canvas with desired width and height
+    const canvas = createCanvas(600, 400);
+    // Get the 2D rendering context
+    const ctx = canvas.getContext('2d');
+    // Create a new Chart instance
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+        }
+    });
+    // Save the chart as an image file
+    canvas.toBuffer('image/png', (err, buffer) => {
+    if (err) throw err;
+    // Save the chart as a PNG file
+    const fs = require('fs');
+    fs.writeFileSync('chart.png', buffer);
+    });
+    console.log('Chart created successfully!');
+
+    res.render('users/chart')
 })
 
 router.get('/orders', async (req,res) => {
