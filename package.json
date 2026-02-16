@@ -36,5 +36,10 @@
     "puppeteer": "^24.37.3",
     "sequelize": "^6.21.3",
     "serve-favicon": "^2.5.0"
+  },
+  "overrides": {
+    "highcharts-export-server": {
+      "puppeteer": "$puppeteer"
+    }
   }
 }
