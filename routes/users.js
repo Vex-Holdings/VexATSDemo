@@ -13,6 +13,32 @@ const fs = require("fs");
 let JSDOM, Chart, Highcharts, chartExporter, plotly, createCanvas;
 let chartingAvailable = false;
 let exportServerAvailable = false;
+
+// Init highcharts export server first (before jsdom sets global.document)
+try {
+    chartExporter = require('highcharts-export-server');
+    chartExporter.initPool({
+        highcharts: {
+            version: 'latest',
+            cdnURL: 'https://code.highcharts.com/',
+            coreScripts: ['highcharts', 'highcharts-more', 'highcharts-3d'],
+            modules: ['exporting', 'data'],
+            indicators: [],
+            scripts: []
+        },
+        puppeteer: {
+            args: ['--no-sandbox', '--disable-gpu']
+        }
+    }).then(() => {
+        exportServerAvailable = true;
+        console.log('Highcharts export server initialized');
+    }).catch(e => {
+        console.warn('Highcharts export server unavailable:', e.message || e);
+    });
+} catch (e) {
+    console.warn('Highcharts export server unavailable:', e.message);
+}
+
 try {
     JSDOM = require('jsdom').JSDOM;
     const { window } = new JSDOM();
@@ -26,15 +52,6 @@ try {
     console.log('Charting libraries loaded successfully');
 } catch (e) {
     console.warn('Charting libraries unavailable (canvas/jsdom failed to load):', e.message);
-}
-
-try {
-    chartExporter = require('highcharts-export-server');
-    chartExporter.initPool();
-    exportServerAvailable = true;
-    console.log('Highcharts export server initialized');
-} catch (e) {
-    console.warn('Highcharts export server unavailable:', e.message);
 }
 
 
