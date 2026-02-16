@@ -2,6 +2,6 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Codsells');
+    await queryInterface.dropTable('Codbuys');
   }
 };

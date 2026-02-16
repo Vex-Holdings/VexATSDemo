@@ -8,11 +8,9 @@ const session = require('express-session');
 const path = require('path');
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 const checkAuthorization = require('./middlewares/authorization');
-const Chart = require('chart.js')
 const getAllUsers = require('./middlewares/getallusers')
 const userRoutes = require('./routes/users');
 const indexRoutes = require('./routes/index');
-const request = require('request')
 // const { Magic } = require('magic-sdk');
 // const magic = new Magic('pk_live_09EF4F8C09120D83');
 
@@ -22,23 +20,14 @@ const CONNECTION_STRING = "postgres://localhost:5432/atsdemodb";
 
 // create call_api function
 
-function call_api() {
-    request('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_bec7f490df724db984b38b543237b37a', { json: true }, (err, res, body) => {
-    if(err) {return console.log(err)}
-    if (res.statusCode === 200) {
-        return body
+async function call_api() {
+    try {
+        const res = await fetch('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_bec7f490df724db984b38b543237b37a');
+        if (res.ok) return await res.json();
+    } catch (err) {
+        console.log(err);
     }
-})
 }
-
-/* API Key for IEX site: pk_bec7f490df724db984b38b543237b37a
-request('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_bec7f490df724db984b38b543237b37a', { json: true }, (err, res, body) => {
-    if(err) {return console.log(err)}
-    if (res.statusCode === 200) {
-        console.log(body)
-    }
-})
-*/
 
 const VIEWS_PATH = path.join(__dirname,'/views');
 
@@ -74,8 +63,7 @@ db = pgp(CONNECTION_STRING);
 
 // set up a middleware for routes
 app.use('/',indexRoutes);
-app.use('/users',checkAuthorization,userRoutes);
-app.use('/users',getAllUsers,userRoutes);
+app.use('/users',checkAuthorization,getAllUsers,userRoutes);
 
 app.listen(PORT,() => {
     console.log(`Server has started on ${PORT}`)

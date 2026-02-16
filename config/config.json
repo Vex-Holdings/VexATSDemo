@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "mdbzbwtw",
-    "password": "Ktl1pViYahnHoNrO9aPqNd54491eIqFB",
-    "database": "mdbzbwtw",
-    "host": "heffalump.db.elephantsql.com",
+    "username": "postgres",
+    "password": null,
+    "database": "atsdemodb",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {

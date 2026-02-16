@@ -6,83 +6,40 @@ const router = express.Router()
 // const chart = require('../middlewares/chart')
 const getAllUsers = require('../middlewares/getallusers')
 const models = require('../models')
-const { JSDOM } = require('jsdom')
-const { window } = new JSDOM()
-const { document } = (new JSDOM('')).window
-global.document = document
-const Chart = require('chart.js')
-const request = require('request')
-
-
-const plotly = require('plotly')("jgcrossman", "nP44pe1MIKiibSeXQiZB")
-
-// create a pie chart for an example
-const Highcharts = require('highcharts');
 const fs = require("fs");
-const chartExporter = require('highcharts-export-server');
-// Initialize the exporter
-chartExporter.initPool();
-// Chart details object specifies chart type and data to plot
-const chartDetails = {
-   type: "png",
-   options: {
-       chart: {
-           type: "pie"
-       },
-       title: {
-           text: "Heading of Chart"
-       },
-       plotOptions: {
-           pie: {
-               dataLabels: {
-                   enabled: true,
-                   format: "<b>{point.name}</b>: {point.y}"
-               }
-           }
-       },
-       series: [
-           {
-               data: [
-                   {
-                       name: "a",
-                       y: 100
-                   },
-                   {
-                       name: "b",
-                       y: 20
-                   },
-                   {
-                       name: "c",
-                       y: 50
-                   }
-               ]
-           }
-       ]
-   }
-};
-chartExporter.export(chartDetails, (err, res) => {
-   // Get the image data (base64)
-   let imageb64 = res.data;
-   // Filename of the output
-   let outputFile = "images/pie.png";
-   // Save the image to file
-   fs.writeFileSync(outputFile, imageb64, "base64", function(err) {
-       if (err) console.log(err);
-   });
-   console.log("Saved image!");
-   chartExporter.killPool();
-});
+
+// Charting libraries — wrapped in try/catch because native modules (canvas)
+// may not compile on all Node versions
+let JSDOM, Chart, Highcharts, chartExporter, plotly, createCanvas;
+let chartingAvailable = false;
+try {
+    JSDOM = require('jsdom').JSDOM;
+    const { window } = new JSDOM();
+    const { document } = (new JSDOM('')).window;
+    global.document = document;
+    Chart = require('chart.js');
+    createCanvas = require('canvas');
+    Highcharts = require('highcharts');
+    chartExporter = require('highcharts-export-server');
+    plotly = require('plotly')("jgcrossman", "nP44pe1MIKiibSeXQiZB");
+    chartExporter.initPool();
+    chartingAvailable = true;
+    console.log('Charting libraries loaded successfully');
+} catch (e) {
+    console.warn('Charting libraries unavailable (canvas/jsdom failed to load):', e.message);
+}
 
 
 // create call_api function
 
-function call_api(finishedAPI, ticker) { 
-    request('https://cloud.iexapis.com/stable/stock/' + ticker + '/quote?token=pk_bec7f490df724db984b38b543237b37a', { json: true }, (err, res, body) => {
-    if(err) {return console.log(err)}
-    if (res.statusCode === 200) {
-        finishedAPI(body)
-    }
-})
+function call_api(finishedAPI, ticker) {
+    fetch('https://cloud.iexapis.com/stable/stock/' + encodeURIComponent(ticker) + '/quote?token=pk_bec7f490df724db984b38b543237b37a')
+        .then(res => {
+            if (res.ok) return res.json();
+            throw new Error('API request failed: ' + res.status);
+        })
+        .then(body => finishedAPI(body))
+        .catch(err => console.log(err));
 }
 
 // GET Pages
@@ -130,60 +87,12 @@ router.get('/testdbquery', (req,res) => {
     });
 
 router.get('/chart', async (req,res) => {
-    /* const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [10.00,
-                10.01,
-                10.02,
-                10.03,
-                10.04,
-                10.05,
-                10.06,
-                10.07,
-                10.08,
-                10.09,
-                10.10
-            ],
-            datasets: [{
-                label: 'Shares',
-                data: [0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                backgroundColor: ['gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray',
-                                'gray'
-            ]
-            }]
-        },
-        options:{}
-    }) */
-    // const ctx = document.getElementById('myChart');
+    if (!chartingAvailable) {
+        return res.send('Charting is currently unavailable (native canvas module not loaded).');
+    }
 
-    const createCanvas = require('canvas');
-    // Create a new canvas with desired width and height
     const canvas = createCanvas(600, 400);
-    // Get the 2D rendering context
     const ctx = canvas.getContext('2d');
-    // Create a new Chart instance
     const chart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -202,12 +111,9 @@ router.get('/chart', async (req,res) => {
         }
         }
     });
-    // Save the chart as an image file
     canvas.toBuffer('image/png', (err, buffer) => {
-    if (err) throw err;
-    // Save the chart as a PNG file
-    const fs = require('fs');
-    fs.writeFileSync('chart.png', buffer);
+        if (err) throw err;
+        fs.writeFileSync('chart.png', buffer);
     });
     console.log('Chart created successfully!');
 
