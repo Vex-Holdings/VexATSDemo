@@ -12,6 +12,7 @@ const fs = require("fs");
 // may not compile on all Node versions
 let JSDOM, Chart, Highcharts, chartExporter, plotly, createCanvas;
 let chartingAvailable = false;
+let exportServerAvailable = false;
 try {
     JSDOM = require('jsdom').JSDOM;
     const { window } = new JSDOM();
@@ -20,13 +21,20 @@ try {
     Chart = require('chart.js');
     createCanvas = require('canvas');
     Highcharts = require('highcharts');
-    chartExporter = require('highcharts-export-server');
     plotly = require('plotly')("jgcrossman", "nP44pe1MIKiibSeXQiZB");
-    chartExporter.initPool();
     chartingAvailable = true;
     console.log('Charting libraries loaded successfully');
 } catch (e) {
     console.warn('Charting libraries unavailable (canvas/jsdom failed to load):', e.message);
+}
+
+try {
+    chartExporter = require('highcharts-export-server');
+    chartExporter.initPool();
+    exportServerAvailable = true;
+    console.log('Highcharts export server initialized');
+} catch (e) {
+    console.warn('Highcharts export server unavailable:', e.message);
 }
 
 
