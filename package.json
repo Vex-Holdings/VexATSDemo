@@ -39,7 +39,8 @@
   },
   "overrides": {
     "highcharts-export-server": {
-      "puppeteer": "$puppeteer"
+      "puppeteer": "$puppeteer",
+      "multer": "2.0.2"
     }
   }
 }
