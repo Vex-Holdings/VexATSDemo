@@ -1,9 +1,10 @@
 const models = require('../models')
 
-function getAllUsers(req,res,next) {
+async function getAllUsers(req,res,next) {
 
-    let allusers = models.User.findAll()
-    return allusers
+    let allusers = await models.User.findAll()
+    res.locals.allusers = allusers
+    next()
 }
 
 module.exports = getAllUsers
